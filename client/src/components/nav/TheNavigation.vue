@@ -2,10 +2,9 @@
   <header>
     <nav>
       <ul>
-        <li><router-link to="/my-recipes">Home</router-link></li>
-        <li><router-link to="/my-recipes">News</router-link></li>
-        <li><router-link to="/my-recipes">Contact</router-link></li>
-        <li><router-link to="/my-recipes">About</router-link></li>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/my-recipes">My Recipes</router-link></li>
+        <li><router-link to="/my-profile">My Profile</router-link></li>
       </ul>
     </nav>
   </header>

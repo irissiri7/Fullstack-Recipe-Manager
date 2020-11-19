@@ -1,37 +1,41 @@
 <template>
+  <the-navigation></the-navigation>
   <main>
-    <Test message="Fullstack yay!"/>
+    <router-view></router-view>
   </main>
 </template>
 
 <script>
-import Test from './components/Test.vue'
+import TheNavigation from "./components/nav/TheNavigation.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Test,
+    TheNavigation,
   },
-  
-}
+};
 </script>
 
 <style>
-*{
+* {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+  font-family: sans-serif;
 }
-body, html, #app{
+
+body,
+html,
+#app {
   height: 100vh;
   width: 100vw;
 }
-main{
-  box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.69);
+
+main {
+  box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
   min-height: 100%;
   margin: 0 auto;
   width: 50%;
-  -webkit-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.69); 
-
+  -webkit-box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
 }
 </style>

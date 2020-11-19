@@ -18,6 +18,7 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0px;
@@ -30,13 +31,30 @@ html,
 #app {
   height: 100vh;
   width: 100vw;
+  background-image: url("./assets/spinach.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+h1 {
+  color: white;
+  text-align: center;
 }
 
 main {
-  /* box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69); */
   min-height: 100%;
-  margin: 1em auto;
+  margin: 0 auto;
   width: 50%;
-  /* -webkit-box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69); */
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
+  margin: 2rem auto;
+  width: 80%;
+  padding: 2rem;
+  background-color: white;
 }
 </style>

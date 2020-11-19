@@ -6,4 +6,12 @@
 export default {};
 </script>
 
-<style></style>
+<style scoped>
+h1 {
+  font-size: 100px;
+  position: relative;
+  top: 300px;
+  font-family: Lobster;
+  font-weight: 200;
+}
+</style>

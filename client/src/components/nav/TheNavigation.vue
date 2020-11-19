@@ -1,6 +1,11 @@
 <template>
   <header>
-    <h1>My recipies</h1>
+    <h2 class="ui header">
+      <i class="lemon outline icon"></i>
+      <div class="content">
+        Recipe Manager
+      </div>
+    </h2>
     <nav>
       <ul>
         <li><router-link to="/">Home</router-link></li>
@@ -16,12 +21,11 @@ export default {};
 </script>
 
 <style scoped>
-h1 {
-  padding-top: 8px;
-  padding-left: 24px;
-  border-bottom: 2px solid #30292f;
-  font-family: Lobster;
-  font-weight: 200;
+.ui.header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin: 0px;
 }
 header {
   width: 100%;
@@ -35,9 +39,10 @@ nav {
 ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding-bottom: 1rem;
   height: 100%;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }
 

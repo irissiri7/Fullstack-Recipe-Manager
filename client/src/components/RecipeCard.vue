@@ -1,5 +1,5 @@
 <template>
-  <div class="recipe-card">
+  <div class="card">
     <h2>Mumisg Gryta</h2>
     <div img-cnt>
       <img
@@ -40,12 +40,5 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.recipe-card {
-  border-radius: 10px;
-  box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
-  margin: 2rem;
-  width: 80%;
-  padding: 2rem;
 }
 </style>

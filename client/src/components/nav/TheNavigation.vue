@@ -1,5 +1,6 @@
 <template>
   <header>
+    <h1>My recipies</h1>
     <nav>
       <ul>
         <li><router-link to="/">Home</router-link></li>
@@ -14,10 +15,16 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
+h1 {
+  padding-top: 8px;
+  padding-left: 24px;
+  border-bottom: 2px solid #30292f;
+  font-family: Lobster;
+  font-weight: 200;
+}
 header {
   width: 100%;
-  height: 5rem;
   background-color: #f1a80a;
 }
 
@@ -31,12 +38,7 @@ ul {
   padding: 0;
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-li {
-  margin: 0 2rem;
+  flex-wrap: wrap;
 }
 
 a {

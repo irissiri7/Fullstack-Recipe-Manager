@@ -17,6 +17,7 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans&display=swap");
 * {
   box-sizing: border-box;
   margin: 0px;
@@ -32,10 +33,10 @@ html,
 }
 
 main {
-  box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
+  /* box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69); */
   min-height: 100%;
-  margin: 0 auto;
+  margin: 1em auto;
   width: 50%;
-  -webkit-box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
+  /* -webkit-box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69); */
 }
 </style>

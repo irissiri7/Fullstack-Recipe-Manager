@@ -24,12 +24,17 @@ export default {};
 .ui.header {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
   margin: 0px;
+  color: var(--main-coffee);
+}
+.content {
+  font-family: Rochester, sans-serif;
+  font-size: 50px;
 }
 header {
   width: 100%;
-  background-color: #f1a80a;
+  background-color: var(--main-orange);
 }
 
 nav {
@@ -51,7 +56,7 @@ a {
   background: transparent;
   border: 1px solid transparent;
   cursor: pointer;
-  color: #30292f;
+  color: var(--main-coffee);
   padding: 0.5rem 1.5rem;
   display: inline-block;
 }

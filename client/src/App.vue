@@ -17,13 +17,18 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Rochester&display=swap");
+
+:root {
+  --main-orange: #f1a80a;
+  --main-coffee: #30292f;
+}
 
 * {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 body,

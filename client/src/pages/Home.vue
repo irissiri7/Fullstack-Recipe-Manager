@@ -11,7 +11,6 @@ h1 {
   font-size: 100px;
   position: relative;
   top: 300px;
-  font-family: Lobster;
-  font-weight: 200;
+  font-family: Rochester, sans-serif;
 }
 </style>

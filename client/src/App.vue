@@ -1,7 +1,7 @@
 <template>
-  <the-navigation></the-navigation>
+  <the-navigation v-if="isLoggedIn"></the-navigation>
   <main>
-    <router-view></router-view>
+    <router-view @log-in="signIn"></router-view>
   </main>
 </template>
 
@@ -12,6 +12,16 @@ export default {
   name: "App",
   components: {
     TheNavigation,
+  },
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  methods: {
+    signIn() {
+      this.isLoggedIn = !this.isLoggedIn;
+    },
   },
 };
 </script>

@@ -6,6 +6,18 @@
       <div class="field">
         <input type="text" name="first-name" placeholder="Recipe Name" />
       </div>
+      <h4 class="ui dividing header">Image</h4>
+      <div class="field">
+        <div class="img-cnt">
+          <img :src="src" />
+        </div>
+      </div>
+      <div class="field">
+        <button class="ui icon button">
+          Upload image
+          <i class="upload icon"></i>
+        </button>
+      </div>
       <h4 class="ui dividing header">Ingredients</h4>
       <div class="field">
         <div class="fields">
@@ -51,6 +63,8 @@ export default {
     return {
       ingredients: [],
       ingredient: "",
+      src:
+        "https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg",
     };
   },
   methods: {

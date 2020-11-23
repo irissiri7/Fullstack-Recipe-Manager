@@ -77,6 +77,48 @@ main {
   color: white;
 }
 
+.img-cnt {
+  width: 100%;
+  height: 10rem;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.fade-box {
+  max-height: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fade-box .read-more {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 10px 0;
+  height: 50%;
+  /* "transparent" only works here because == rgba(0,0,0,0) */
+  background-image: linear-gradient(to bottom, transparent, white);
+}
+
+/* utility classes */
+.flex {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Media queries */
 @media screen and (max-width: 768px) {
   main {
     width: 90%;

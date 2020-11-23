@@ -18,18 +18,37 @@
       />
     </div>
     <h3>Ingredients</h3>
-    <ul>
-      <li>Ingredient 1</li>
-      <li>Ingredient 2</li>
-      <li>Ingredient 3</li>
-    </ul>
+    <div class="fade-box">
+      <ul>
+        <li>Ingredient 1</li>
+        <li>Ingredient 2</li>
+        <li>Ingredient 3</li>
+      </ul>
+      <div class="fade-box read-more"></div>
+    </div>
     <h3>Description</h3>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium
-      maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam
-      placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa
-      soluta.
-    </p>
+    <div class="fade-box">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
+        praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero
+        sint magnam placeat corrupti laborum, sit adipisci vero, quaerat
+        excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi
+        praesentium reprehenderit libero sint magnam placeat corrupti laborum,
+        sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor
+        sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil
+        dicta, quasi praesentium reprehenderit libero sint magnam placeat
+        corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa
+        soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
+        praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero
+        sint magnam placeat corrupti laborum, sit adipisci vero, quaerat
+        excepturi ipsam ipsa soluta.
+      </p>
+      <div class="fade-box read-more"></div>
+    </div>
+    <div class="flex center">
+      <button class="ui button">Read more</button>
+    </div>
   </div>
 </template>
 
@@ -40,17 +59,6 @@ export default {};
 <style scoped>
 ul {
   list-style: none;
-}
-.img-cnt {
-  width: 100%;
-  height: 10rem;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
 }
 
 .flex-cnt {

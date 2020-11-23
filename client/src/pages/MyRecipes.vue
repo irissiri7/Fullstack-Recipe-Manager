@@ -1,8 +1,8 @@
 <template>
   <div class="flex-corners">
     <h1>My Recipes</h1>
-    <button class="circular ui icon button" @click="addRecipe">
-      <i class="icon plus"></i>
+    <button class="circular ui huge icon button" @click="addRecipe">
+      <i class="icon inverted plus"></i>
     </button>
   </div>
   <template v-for="n in 10" v-bind:key="n">
@@ -26,13 +26,18 @@ export default {
 
 <style scoped>
 h1 {
-  font-family: "Opens Sans", sans-serif;
+  font-family: Rochester, sans-serif;
   margin: 0px;
+  font-size: 4rem;
 }
 .flex-corners {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px 0px;
+}
+
+.circular.ui.huge.icon.button {
+  background-color: #7ea172;
 }
 </style>

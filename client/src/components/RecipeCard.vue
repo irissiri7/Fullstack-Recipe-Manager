@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="flex-cnt">
+    <div v-if="showCompact" class="flex-cnt">
       <h2>Mumisg Gryta</h2>
       <div>
         <button class="ui icon button">
@@ -11,23 +11,23 @@
         </button>
       </div>
     </div>
-    <div img-cnt>
+    <div class="img-cnt">
       <img
-        src="https://img.koket.se/wide-large/chicken-cashew.jpg"
+        src="https://i.pinimg.com/originals/d6/aa/ba/d6aabaa757b4abbea1d739bd849795e6.jpg"
         alt="dish"
       />
     </div>
     <h3>Ingredients</h3>
-    <div class="fade-box">
+    <div v-bind:class="{ 'fade-box': showCompact }">
       <ul>
         <li>Ingredient 1</li>
         <li>Ingredient 2</li>
         <li>Ingredient 3</li>
       </ul>
-      <div class="fade-box read-more"></div>
+      <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
     <h3>Description</h3>
-    <div class="fade-box">
+    <div v-bind:class="{ 'fade-box': showCompact }">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
         praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero
@@ -44,16 +44,30 @@
         sint magnam placeat corrupti laborum, sit adipisci vero, quaerat
         excepturi ipsam ipsa soluta.
       </p>
-      <div class="fade-box read-more"></div>
+      <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
-    <div class="flex center">
-      <button class="ui button">Read more</button>
+    <div v-if="showCompact" class="flex center">
+      <button class="ui button" @click.prevent="showDetails">
+        Show Recipe
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    showCompact: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    showDetails() {
+      this.$router.push("/my-recipes/recipe-id");
+    },
+  },
+};
 </script>
 
 <style scoped>

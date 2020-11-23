@@ -30,7 +30,7 @@
             />
           </div>
           <div class="four wide field">
-            <button class="ui button" @click.prevent="addIngredient">
+            <button class="ui button full-width" @click.prevent="addIngredient">
               Add
             </button>
           </div>
@@ -84,5 +84,8 @@ h1 {
 }
 ul {
   list-style: none;
+}
+.full-width {
+  width: 100%;
 }
 </style>

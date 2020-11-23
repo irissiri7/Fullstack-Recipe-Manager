@@ -56,6 +56,7 @@ html,
 h1 {
   color: white;
   text-align: center;
+  color: var(--main-coffee);
 }
 
 main {
@@ -104,7 +105,6 @@ img {
   margin: 0;
   padding: 10px 0;
   height: 50%;
-  /* "transparent" only works here because == rgba(0,0,0,0) */
   background-image: linear-gradient(to bottom, transparent, white);
 }
 

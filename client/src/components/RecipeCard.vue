@@ -3,7 +3,12 @@
     <div v-if="showCompact" class="flex-cnt">
       <h2>Mumisg Gryta</h2>
       <div>
-        <button class="ui icon button">
+        <button
+          class="ui icon button"
+          @click.prevent="
+            this.$router.push('/my-recipes/edit-recipe/placeholder')
+          "
+        >
           <i class="pencil alternate icon inverted"></i>
         </button>
         <button class="ui icon button">

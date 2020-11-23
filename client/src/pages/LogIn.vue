@@ -3,13 +3,13 @@
     <h1>Log In</h1>
     <form class="ui form">
       <div class="field">
-        <label>Username</label>
+        <label>Email</label>
         <div class="field">
-          <input type="text" name="first-name" placeholder="First Name" />
+          <input type="text" name="email" placeholder="Email" />
         </div>
         <label>Password</label>
         <div class="field">
-          <input type="text" name="last-name" placeholder="Last Name" />
+          <input type="password" name="password" placeholder="Password" />
         </div>
       </div>
       <div class="field">
@@ -17,7 +17,7 @@
       </div>
       <div class="field">
         <p>Not a user?</p>
-        <button class="ui button">Sign Up</button>
+        <button class="ui button" @click.prevent="signUp">Sign Up</button>
       </div>
     </form>
   </div>
@@ -30,6 +30,9 @@ export default {
       this.$emit("log-in");
       this.$router.push("/home");
     },
+    signUp() {
+      this.$router.push("/sign-up");
+    },
   },
 };
 </script>
@@ -40,5 +43,9 @@ h1 {
 }
 p {
   margin: 0px;
+}
+
+.ui.button {
+  width: 7rem;
 }
 </style>

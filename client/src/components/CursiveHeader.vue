@@ -13,10 +13,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 h1 {
   font-family: Rochester, sans-serif;
   margin: 0px;
   font-size: 4rem;
+  color: white;
 }
 </style>

@@ -10,5 +10,6 @@ export default {};
 h1 {
   font-size: 100px;
   font-family: Rochester, sans-serif;
+  color: white;
 }
 </style>

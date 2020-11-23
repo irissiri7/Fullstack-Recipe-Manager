@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h2 class="ui header">
+    <h2 class="ui header" @click.prevent="backToHome">
       <i class="lemon outline icon"></i>
       <div class="content">
         Recipe Manager
@@ -8,7 +8,7 @@
     </h2>
     <nav>
       <ul>
-        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/home">Home</router-link></li>
         <li><router-link to="/my-recipes">My Recipes</router-link></li>
         <li><router-link to="/my-profile">My Profile</router-link></li>
       </ul>
@@ -17,7 +17,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    backToHome() {
+      this.$router.push("/home");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -31,6 +37,7 @@ header {
   padding: 1.5rem;
   margin: 0px;
   color: var(--main-coffee);
+  cursor: pointer;
 }
 .content {
   font-family: Rochester, sans-serif;

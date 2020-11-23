@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <h1>Add New Recipe</h1>
+    <h1>Edit recipe</h1>
     <recipe-form />
   </div>
 </template>
@@ -15,4 +15,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style></style>

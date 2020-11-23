@@ -12,7 +12,10 @@
           <input type="text" name="last-name" placeholder="Last Name" />
         </div>
       </div>
-      <button class="ui button" @click.prevent="logIn">Log In</button>
+      <div class="field">
+        <button class="ui button" @click.prevent="logIn">Log In</button>
+        <button class="ui button">Sign Up</button>
+      </div>
     </form>
   </div>
 </template>

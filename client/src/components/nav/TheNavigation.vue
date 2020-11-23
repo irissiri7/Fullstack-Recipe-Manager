@@ -6,7 +6,7 @@
         Recipe Manager
       </div>
     </h2>
-    <nav>
+    <nav v-if="isLoggedIn">
       <ul>
         <li><router-link to="/home">Home</router-link></li>
         <li><router-link to="/my-recipes">My Recipes</router-link></li>
@@ -18,9 +18,16 @@
 
 <script>
 export default {
+  props: {
+    isLoggedIn: {
+      type: Boolean,
+      required: true,
+    },
+  },
   methods: {
     backToHome() {
-      this.$router.push("/home");
+      if (this.isLoggedIn) this.$router.push("/home");
+      else this.$router.push("/");
     },
   },
 };

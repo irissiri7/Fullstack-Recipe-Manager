@@ -51,6 +51,18 @@
       </p>
       <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
+    <h3 v-if="!showCompact">Details</h3>
+    <div v-if="!showCompact">
+      <h4>Category</h4>
+      <a class="ui blue circular label">Dinner</a>
+      <h4>Qualitys</h4>
+      <div>
+        <a class="ui red circular label">Gluten free</a>
+        <a class="ui olive circular label">Vegetarian</a>
+      </div>
+      <h4>Time to cook</h4>
+      <p>Quick dinner (less than 30min)</p>
+    </div>
     <div v-if="showCompact" class="flex center">
       <button class="ui button" @click.prevent="showDetails">
         Show Recipe
@@ -83,5 +95,8 @@ ul {
 .flex-cnt {
   display: flex;
   justify-content: space-between;
+}
+.ui.circular.label {
+  cursor: default;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <the-navigation v-if="isLoggedIn"></the-navigation>
+  <the-navigation :isLoggedIn="isLoggedIn"></the-navigation>
   <main>
     <router-view @log-in="signIn"></router-view>
   </main>

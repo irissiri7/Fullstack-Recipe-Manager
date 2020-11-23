@@ -1,6 +1,16 @@
 <template>
   <div class="card">
-    <h2>Mumisg Gryta</h2>
+    <div class="flex-cnt">
+      <h2>Mumisg Gryta</h2>
+      <div>
+        <button class="ui icon button">
+          <i class="pencil alternate icon inverted"></i>
+        </button>
+        <button class="ui icon button">
+          <i class="trash icon inverted"></i>
+        </button>
+      </div>
+    </div>
     <div img-cnt>
       <img
         src="https://img.koket.se/wide-large/chicken-cashew.jpg"
@@ -40,5 +50,11 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px;
+}
+
+.flex-cnt {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

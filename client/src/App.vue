@@ -61,15 +61,25 @@ h1 {
 main {
   min-height: 100%;
   margin: 0 auto;
-  width: 50%;
+  width: 40%;
 }
 
 .card {
   border-radius: 10px;
   box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
-  margin: 2rem auto;
-  width: 80%;
+  margin: 1rem auto 2rem;
   padding: 2rem;
   background-color: white;
+}
+
+.ui.button {
+  background-color: #502419;
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    width: 90%;
+  }
 }
 </style>

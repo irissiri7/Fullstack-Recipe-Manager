@@ -9,8 +9,6 @@ export default {};
 <style scoped>
 h1 {
   font-size: 100px;
-  position: relative;
-  top: 300px;
   font-family: Rochester, sans-serif;
 }
 </style>

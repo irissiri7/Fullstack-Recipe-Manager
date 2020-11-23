@@ -21,6 +21,10 @@ export default {};
 </script>
 
 <style scoped>
+header {
+  display: flex;
+  align-items: center;
+}
 .ui.header {
   display: flex;
   justify-content: center;
@@ -44,7 +48,7 @@ nav {
 ul {
   list-style: none;
   margin: 0;
-  padding-bottom: 1rem;
+  padding: 0;
   height: 100%;
   display: flex;
   justify-content: center;

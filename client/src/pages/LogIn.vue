@@ -14,6 +14,9 @@
       </div>
       <div class="field">
         <button class="ui button" @click.prevent="logIn">Log In</button>
+      </div>
+      <div class="field">
+        <p>Not a user?</p>
         <button class="ui button">Sign Up</button>
       </div>
     </form>
@@ -34,5 +37,8 @@ export default {
 <style scoped>
 h1 {
   color: var(--main-coffee);
+}
+p {
+  margin: 0px;
 }
 </style>

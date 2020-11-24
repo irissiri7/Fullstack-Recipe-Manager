@@ -61,7 +61,7 @@
         <a class="ui olive circular label">Vegetarian</a>
       </div>
       <h4>Time to cook</h4>
-      <p>Quick dinner (less than 30min)</p>
+      <p>About 30min</p>
     </div>
     <div v-if="showCompact" class="flex center">
       <button class="ui button" @click.prevent="showDetails">

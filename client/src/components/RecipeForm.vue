@@ -1,6 +1,6 @@
 <template>
   <form class="ui form">
-    <h4 class="ui dividing header">Recipe Name</h4>
+    <h3 class="ui dividing header">Recipe Name</h3>
     <div class="field">
       <input
         type="text"
@@ -9,7 +9,7 @@
         v-model="title"
       />
     </div>
-    <h4 class="ui dividing header">Image</h4>
+    <h3 class="ui dividing header">Image</h3>
     <div class="field">
       <div class="img-cnt">
         <img :src="src" />
@@ -21,7 +21,7 @@
         <i class="upload icon"></i>
       </button>
     </div>
-    <h4 class="ui dividing header">Ingredients</h4>
+    <h3 class="ui dividing header">Ingredients</h3>
     <div class="field">
       <div class="fields">
         <div class="twelve wide field">
@@ -44,9 +44,71 @@
         {{ ingredient }}
       </li>
     </ul>
-    <h4 class="ui dividing header">Description</h4>
+    <h3 class="ui dividing header">Description</h3>
     <div class="field">
       <textarea v-model="description"></textarea>
+    </div>
+    <h3 class="ui dividing header">Details</h3>
+    <h4>Category</h4>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="category" />
+        <label>Breakfast</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="category" />
+        <label>Lunch</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="category" />
+        <label>Dinner</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="category" />
+        <label>Starter</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="category" />
+        <label>Dessert</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="category" />
+        <label>Other</label>
+      </div>
+    </div>
+    <h4>Quality</h4>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="quality" />
+        <label>Gluten Free</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="quality" />
+        <label>Lactose Free</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="quality" />
+        <label>Vegetarian</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="quality" />
+        <label>Vegan</label>
+      </div>
+    </div>
+    <h4>Time to cook</h4>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="time-to-cook" />
+        <label>About 15 min</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="time-to-cook" />
+        <label>About 30 min</label>
+      </div>
+      <div class="ui checkbox">
+        <input type="checkbox" name="time-to-cook" />
+        <label>60 min or more</label>
+      </div>
     </div>
     <div class="field">
       <button class="ui button" @click.prevent="">
@@ -98,5 +160,8 @@ ul {
 }
 .full-width {
   width: 100%;
+}
+div.ui.checkbox {
+  margin-right: 5px;
 }
 </style>

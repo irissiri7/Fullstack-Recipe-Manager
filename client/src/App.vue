@@ -1,5 +1,5 @@
 <template>
-  <the-navigation :isLoggedIn="isLoggedIn"></the-navigation>
+  <the-navigation></the-navigation>
   <main>
     <router-view @log-in="signIn"></router-view>
   </main>
@@ -12,11 +12,6 @@ export default {
   name: "App",
   components: {
     TheNavigation,
-  },
-  data() {
-    return {
-      isLoggedIn: false,
-    };
   },
   methods: {
     signIn() {

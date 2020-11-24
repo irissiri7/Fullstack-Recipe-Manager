@@ -27,7 +27,7 @@
 export default {
   methods: {
     logIn() {
-      this.$emit("log-in");
+      this.$store.dispatch("logIn");
       this.$router.push("/home");
     },
     signUp() {

@@ -59,23 +59,69 @@
           </div>
         </div>
       </div>
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password" />
+          </div>
+          <div class="field">
+            <label style="visibility:hidden">Change Password</label>
+            <button
+              v-if="!changePassword"
+              class="ui button"
+              @click.prevent="changePassword = !changePassword"
+            >
+              Change Password
+            </button>
+          </div>
+        </div>
+      </div>
+      <div v-if="changePassword" class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>New Password</label>
+            <input
+              type="password"
+              name="new-password"
+              placeholder="New Password"
+            />
+          </div>
+          <div class="field">
+            <label>Confirm New Password</label>
+            <input
+              type="password"
+              name="new-password-confirmed"
+              placeholder="Confirmed Password"
+            />
+          </div>
+        </div>
+      </div>
+      <div v-if="changePassword" class="field">
+        <button class="ui button">Change Password</button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      changePassword: false,
+    };
+  },
+};
 </script>
 
 <style scoped>
-/* .flex {
-  display: flex;
-  justify-content: space-between;
-} */
 h1 {
   display: inline;
   margin-left: 2rem;
   color: #30292f;
+}
+.ui.button {
+  width: 100%;
 }
 .cnt {
   margin-bottom: 2rem;

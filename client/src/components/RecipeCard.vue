@@ -55,7 +55,7 @@
     <div v-if="!showCompact">
       <h4>Category</h4>
       <a class="ui blue circular label">Dinner</a>
-      <h4>Qualitys</h4>
+      <h4>Qualities</h4>
       <div>
         <a class="ui red circular label">Gluten free</a>
         <a class="ui olive circular label">Vegetarian</a>

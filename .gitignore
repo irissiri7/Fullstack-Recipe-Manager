@@ -2,6 +2,7 @@
 node_modules
 /dist
 .env
+server/src/firebase/service-account-key.js
 
 # local env files
 .env.local
@@ -21,3 +22,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+client/src/assets/api-key.js

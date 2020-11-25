@@ -6,6 +6,7 @@
         <label>Email</label>
         <div class="field">
           <input
+            v-model="email"
             type="text"
             name="email"
             placeholder="name@email.com"
@@ -15,6 +16,7 @@
         <label>Password</label>
         <div class="field">
           <input
+            v-model="password"
             type="password"
             name="password"
             placeholder="Password"
@@ -49,15 +51,34 @@
 </template>
 
 <script>
+import apiKey from "../assets/api-key.js";
+
 export default {
   data() {
     return {
+      email: "",
+      password: "",
       acceptsTermsOfUse: false,
     };
   },
   methods: {
     signUp() {
-      this.$router.push("/");
+      fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+            returnSecureTokeN: true,
+          }),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

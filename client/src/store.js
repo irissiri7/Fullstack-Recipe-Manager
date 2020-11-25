@@ -4,6 +4,9 @@ const store = createStore({
   state() {
     return {
       isAuth: false,
+      token: null,
+      userId: null,
+      tokenExpiration: null,
     };
   },
   mutations: {

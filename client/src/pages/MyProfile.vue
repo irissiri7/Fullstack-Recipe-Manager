@@ -62,10 +62,6 @@
       <div class="field">
         <div class="two fields">
           <div class="field">
-            <label>Password</label>
-            <input type="password" name="password" placeholder="Password" />
-          </div>
-          <div class="field">
             <label style="visibility:hidden">Change Password</label>
             <button
               v-if="!changePassword"

@@ -5,11 +5,16 @@
       <div class="field">
         <label>Email</label>
         <div class="field">
-          <input type="text" name="email" placeholder="Email" />
+          <input type="text" name="email" placeholder="Email" v-model="email" />
         </div>
         <label>Password</label>
         <div class="field">
-          <input type="password" name="password" placeholder="Password" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            v-model="password"
+          />
         </div>
       </div>
       <div class="field">
@@ -25,10 +30,19 @@
 
 <script>
 export default {
+  data() {
+    return {
+      email: "lydia@example.com",
+      password: "123456",
+    };
+  },
   methods: {
     logIn() {
-      this.$store.dispatch("logIn");
-      this.$router.push("/home");
+      this.$store.dispatch("logIn", {
+        email: this.email,
+        password: this.password,
+      });
+      // this.$router.push("/home");
     },
     signUp() {
       this.$router.push("/sign-up");

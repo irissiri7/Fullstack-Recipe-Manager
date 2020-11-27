@@ -15,6 +15,7 @@ const app = express();
 app.use(helmet());
 app.use(morgan("common"));
 
+//Controllers
 import recipeController from "./src/controllers/recipe.js";
 
 //Test route for MongoDb

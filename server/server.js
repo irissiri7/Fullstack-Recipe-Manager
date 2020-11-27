@@ -1,14 +1,12 @@
 import express from "express";
-import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 
-//Database
-import db from "./src/firebase/adminSetUp.js";
-
 //Configurations
-dotenv.config();
-const PORT = process.env.PORT;
+import Configurations from "./src/configurations/Configurations.js";
+
+//Middlewares
+import Middlewares from "./src/middleware/Middlewares.js";
 
 //Creating the server
 const app = express();
@@ -17,20 +15,18 @@ const app = express();
 app.use(helmet());
 app.use(morgan("common"));
 
-//Test route
-app.get("/", async (req, res, next) => {
-  const testRef = db.collection("recipes").doc("test");
-  const doc = await testRef.get();
-  if (!doc.exists) {
-    console.log("No such document!");
-  } else {
-    console.log("Document data:", doc.data());
-  }
+import recipeController from "./src/controllers/recipe.js";
 
+//Test route for MongoDb
+app.get("/", (req, res, next) => {
   res.send("<h1>Hello world!</h1>");
 });
 
-//Kick off
-app.listen(PORT, () => {
-  console.log("Server is running on " + PORT);
-});
+app.get("/add-recipe", recipeController.addRecipe);
+
+app.use(Middlewares.notFound);
+app.use(Middlewares.errorHandler);
+
+//Connect to db and start server
+Configurations.connectToDatabase();
+Configurations.connectToPort(app);

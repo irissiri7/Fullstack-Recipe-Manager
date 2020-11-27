@@ -8,6 +8,9 @@ import Configurations from "./src/configurations/Configurations.js";
 //Middlewares
 import Middlewares from "./src/middleware/Middlewares.js";
 
+//Controllers
+import recipeController from "./src/controllers/recipe.js";
+
 //Creating the server
 const app = express();
 
@@ -15,16 +18,14 @@ const app = express();
 app.use(helmet());
 app.use(morgan("common"));
 
-//Controllers
-import recipeController from "./src/controllers/recipe.js";
-
-//Test route for MongoDb
+//Routes
 app.get("/", (req, res, next) => {
   res.send("<h1>Hello world!</h1>");
 });
 
 app.get("/add-recipe", recipeController.addRecipe);
 
+//Error handling
 app.use(Middlewares.notFound);
 app.use(Middlewares.errorHandler);
 

@@ -27,6 +27,7 @@ export default {
 :root {
   --main-orange: #f1a80a;
   --main-coffee: #30292f;
+  --main-pine: #63a088;
 }
 
 * {
@@ -68,9 +69,20 @@ main {
   background-color: white;
 }
 
+/* Semantic overrrides */
 .ui.button {
-  background-color: #502419;
+  background-color: var(--main-pine);
+  border: 1px solid var(--main-pine);
   color: white;
+}
+
+.ui.button:hover {
+  background-color: white !important;
+  color: var(--main-pine);
+}
+
+i.icon:hover {
+  color: var(--main-pine) !important;
 }
 
 .img-cnt {

@@ -36,6 +36,6 @@ export default {
 }
 
 .circular.ui.huge.icon.button {
-  background-color: #7ea172;
+  background-color: var(--main-pine);
 }
 </style>

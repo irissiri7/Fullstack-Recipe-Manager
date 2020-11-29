@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import router from "./router.js";
 import apiKey from "./assets/api-key";
 
 const store = createStore({
@@ -11,9 +12,10 @@ const store = createStore({
   },
   mutations: {
     setUser(state, payload) {
-      (state.token = payload.token),
-        (state.userId = payload.userId),
-        (state.tokenExpiration = payload.tokenExpiration);
+      state.token = payload.token;
+      state.userId = payload.userId;
+      state.tokenExpiration = payload.tokenExpiration;
+      router.push("/home");
     },
   },
   actions: {

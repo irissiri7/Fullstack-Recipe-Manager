@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const recipeSchema = new Schema({
   creator: { type: String, required: true },
@@ -10,8 +10,8 @@ const recipeSchema = new Schema({
   details: {
     category: [String],
     qualitys: [String],
-    "time to cook": String,
-  },
-});
+    'time to cook': String
+  }
+})
 
-export default mongoose.model("Recipe", recipeSchema);
+export default mongoose.model('Recipe', recipeSchema)

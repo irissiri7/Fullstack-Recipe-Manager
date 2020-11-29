@@ -1,18 +1,18 @@
-import admin from "firebase-admin";
-import dotenv from "dotenv";
+import admin from 'firebase-admin'
+import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
-import serviceKey from "./service-account-key.js";
+import serviceKey from './service-account-key.js'
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceKey),
-  databaseURL: process.env.firestore_URL,
-});
+  databaseURL: process.env.firestore_URL
+})
 
-const db = admin.firestore();
+const db = admin.firestore()
 
-export default db;
+export default db
 
 //Test route for firebase
 // app.get("/", async (req, res, next) => {

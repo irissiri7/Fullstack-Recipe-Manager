@@ -1,17 +1,18 @@
+/* eslint-disable no-undef */
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    node: true,
+    es2021: true
   },
-  extends: "eslint:recommended",
+  extends: 'eslint:recommended',
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: "module",
+    sourceType: 'module'
   },
   rules: {
-    indent: ["error", "tab"],
-    "linebreak-style": ["error", "windows"],
-    quotes: ["error", "single"],
-    semi: ["error", "always"],
-  },
-};
+    // 'linebreak-style': ['error', 'windows'],
+    quotes: ['error', 'single'],
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+  }
+}

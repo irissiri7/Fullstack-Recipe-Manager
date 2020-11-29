@@ -104,10 +104,10 @@
 export default {
   data() {
     return {
-      changePassword: false,
-    };
-  },
-};
+      changePassword: false
+    }
+  }
+}
 </script>
 
 <style scoped>

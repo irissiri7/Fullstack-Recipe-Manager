@@ -125,33 +125,33 @@
 export default {
   data() {
     return {
-      title: "",
+      title: '',
       src:
-        "https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg",
-      ingredient: "",
+        'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg',
+      ingredient: '',
       ingredients: [],
-      description: "",
-    };
+      description: ''
+    }
   },
   mounted() {
     if (this.$route.params.id) {
-      this.title = "Mumsig gryta";
-      (this.src =
-        "https://i.pinimg.com/originals/d6/aa/ba/d6aabaa757b4abbea1d739bd849795e6.jpg"),
-        (this.ingredients = ["Banana", "Apple", "Potatoe"]),
-        (this.description =
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit liberosint magnam placeat corrupti laborum, sit adipisci vero, quaeratexcepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.");
+      this.title = 'Mumsig gryta'
+      this.src =
+        'https://i.pinimg.com/originals/d6/aa/ba/d6aabaa757b4abbea1d739bd849795e6.jpg'
+      this.ingredients = ['Banana', 'Apple', 'Potatoe']
+      this.description =
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit liberosint magnam placeat corrupti laborum, sit adipisci vero, quaeratexcepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.'
     }
   },
   methods: {
     addIngredient() {
-      if (this.ingredient != "") {
-        this.ingredients.push(this.ingredient);
-        this.ingredient = "";
+      if (this.ingredient != '') {
+        this.ingredients.push(this.ingredient)
+        this.ingredient = ''
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

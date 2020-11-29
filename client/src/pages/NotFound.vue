@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import CursiveHeader from "../components/CursiveHeader.vue";
+import CursiveHeader from '../components/CursiveHeader.vue'
 
 export default {
-  components: { CursiveHeader },
-};
+  components: { CursiveHeader }
+}
 </script>
 
 <style></style>

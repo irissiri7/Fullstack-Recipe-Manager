@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import RecipeForm from "../components/RecipeForm.vue";
+import RecipeForm from '../components/RecipeForm.vue'
 
 export default {
   components: {
-    RecipeForm,
-  },
-};
+    RecipeForm
+  }
+}
 </script>
 
 <style></style>

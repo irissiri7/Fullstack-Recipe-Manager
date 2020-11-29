@@ -6,23 +6,23 @@
 </template>
 
 <script>
-import TheNavigation from "./components/nav/TheNavigation.vue";
+import TheNavigation from './components/nav/TheNavigation.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    TheNavigation,
+    TheNavigation
   },
   methods: {
     signIn() {
-      this.isLoggedIn = !this.isLoggedIn;
-    },
-  },
-};
+      this.isLoggedIn = !this.isLoggedIn
+    }
+  }
+}
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Rochester&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Rochester&display=swap');
 
 :root {
   --main-orange: #f1a80a;
@@ -34,7 +34,7 @@ export default {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body,
@@ -42,7 +42,7 @@ html,
 #app {
   height: 100vh;
   width: 100vw;
-  background-image: url("./assets/spinach.jpg");
+  background-image: url('./assets/spinach.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

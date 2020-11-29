@@ -4,15 +4,15 @@
 </template>
 
 <script>
-import RecipeCard from "../components/RecipeCard";
-import CursiveHeader from "../components/CursiveHeader";
+import RecipeCard from '../components/RecipeCard'
+import CursiveHeader from '../components/CursiveHeader'
 
 export default {
   components: {
     RecipeCard,
-    CursiveHeader,
-  },
-};
+    CursiveHeader
+  }
+}
 </script>
 
 <style></style>

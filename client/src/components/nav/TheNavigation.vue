@@ -20,11 +20,11 @@
 export default {
   methods: {
     backToHome() {
-      if (this.$store.getters.isAuth) this.$router.push("/home");
-      else this.$router.push("/");
-    },
-  },
-};
+      if (this.$store.getters.isAuth) this.$router.push('/home')
+      else this.$router.push('/')
+    }
+  }
+}
 </script>
 
 <style scoped>

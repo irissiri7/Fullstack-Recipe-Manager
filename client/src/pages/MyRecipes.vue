@@ -11,20 +11,20 @@
 </template>
 
 <script>
-import RecipeCard from "../components/RecipeCard.vue";
-import CursiveHeader from "../components/CursiveHeader.vue";
+import RecipeCard from '../components/RecipeCard.vue'
+import CursiveHeader from '../components/CursiveHeader.vue'
 
 export default {
   components: {
     RecipeCard,
-    CursiveHeader,
+    CursiveHeader
   },
   methods: {
     addRecipe() {
-      this.$router.push("/my-recipes/add-recipe");
-    },
-  },
-};
+      this.$router.push('/my-recipes/add-recipe')
+    }
+  }
+}
 </script>
 
 <style scoped>

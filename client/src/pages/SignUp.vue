@@ -51,37 +51,37 @@
 </template>
 
 <script>
-import apiKey from "../assets/api-key.js";
+import apiKey from '../assets/api-key.js'
 
 export default {
   data() {
     return {
-      email: "",
-      password: "",
-      acceptsTermsOfUse: false,
-    };
+      email: '',
+      password: '',
+      acceptsTermsOfUse: false
+    }
   },
   methods: {
     signUp() {
       fetch(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             email: this.email,
             password: this.password,
-            returnSecureTokeN: true,
-          }),
+            returnSecureTokeN: true
+          })
         }
       )
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-};
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+}
 </script>
 
 <style></style>

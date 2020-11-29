@@ -32,23 +32,23 @@
 export default {
   data() {
     return {
-      email: "lydia@example.com",
-      password: "123456",
-    };
+      email: 'lydia@example.com',
+      password: '123456'
+    }
   },
   methods: {
     logIn() {
-      this.$store.dispatch("logIn", {
+      this.$store.dispatch('logIn', {
         email: this.email,
-        password: this.password,
-      });
+        password: this.password
+      })
       // this.$router.push("/home");
     },
     signUp() {
-      this.$router.push("/sign-up");
-    },
-  },
-};
+      this.$router.push('/sign-up')
+    }
+  }
+}
 </script>
 
 <style scoped>

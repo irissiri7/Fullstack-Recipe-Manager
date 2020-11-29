@@ -76,15 +76,15 @@ export default {
   props: {
     showCompact: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   methods: {
     showDetails() {
-      this.$router.push("/my-recipes/recipe-id");
-    },
-  },
-};
+      this.$router.push('/my-recipes/recipe-id')
+    }
+  }
+}
 </script>
 
 <style scoped>

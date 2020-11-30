@@ -19,33 +19,38 @@ const store = createStore({
     }
   },
   actions: {
-    async logIn(context, payload) {
-      const response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: payload.email,
-            password: payload.password,
-            returnSecureToken: true
-          })
-        }
-      )
-      const responseData = await response.json()
-      if (!response.ok) {
-        const error = new Error(
-          responseData.message || 'Failed to authenticate'
+    logIn(context, payload) {
+      return new Promise((resolve, reject) => {
+        fetch(
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: payload.email,
+              password: payload.password,
+              returnSecureToken: true
+            })
+          }
         )
-        throw error
-      }
-
-      context.commit('setUser', {
-        token: responseData.idToken,
-        userId: responseData.localId,
-        tokenExpiration: responseData.tokenExpiration
+          .then(response => {
+            if (response.ok) return response.json()
+            else {
+              const error = new Error('Failed to authenticate')
+              throw error
+            }
+          })
+          .then(responseData => {
+            context.commit('setUser', {
+              token: responseData.idToken,
+              userId: responseData.localId,
+              tokenExpiration: responseData.tokenExpiration
+            })
+            resolve('success')
+          })
+          .catch(error => reject(error))
       })
     }
   },

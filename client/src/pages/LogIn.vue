@@ -38,11 +38,17 @@ export default {
   },
   methods: {
     logIn() {
-      this.$store.dispatch('logIn', {
-        email: this.email,
-        password: this.password
-      })
-      // this.$router.push("/home");
+      this.$store
+        .dispatch('logIn', {
+          email: this.email,
+          password: this.password
+        })
+        .then(_success => {
+          this.$router.push('/home')
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     signUp() {
       this.$router.push('/sign-up')

@@ -1,13 +1,13 @@
 <template>
   <div class="card">
     <h1>Sign Up</h1>
-    <form class="ui form">
+    <form class="ui form" @submit.prevent="signUp">
       <div class="field">
         <label>Email</label>
         <div class="field">
           <input
             v-model="email"
-            type="text"
+            type="email"
             name="email"
             placeholder="name@email.com"
             required
@@ -20,15 +20,18 @@
             type="password"
             name="password"
             placeholder="Password"
+            minlength="6"
             required
           />
         </div>
         <label>Confirm password</label>
         <div class="field">
           <input
+            v-model="confirmedPassword"
             type="password"
-            name="password"
-            placeholder="Password"
+            name="confirmedPassword"
+            placeholder="Confirm Password"
+            minlength="6"
             required
           />
         </div>
@@ -38,13 +41,20 @@
         <label>I agree to terms of use</label>
       </div>
       <div class="field">
-        <button
-          class="ui button"
-          v-bind:class="{ disabled: !acceptsTermsOfUse }"
-          @click.prevent="signUp"
-        >
+        <button class="ui button" v-bind:class="{ disabled: !validForm }">
           Sign Up
         </button>
+      </div>
+      <div class="field">
+        <p v-if="error">
+          Something went wrong, could not sign up new user
+        </p>
+        <div v-if="successfullSignUp">
+          <h4>
+            Welcome new user!
+          </h4>
+          <p>Redirecting to log in page...</p>
+        </div>
       </div>
     </form>
   </div>
@@ -56,9 +66,23 @@ import apiKey from '../assets/api-key.js'
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      acceptsTermsOfUse: false
+      email: null,
+      password: null,
+      confirmedPassword: null,
+      acceptsTermsOfUse: false,
+      error: false,
+      successfullSignUp: false
+    }
+  },
+  computed: {
+    validForm() {
+      return (
+        this.email &&
+        this.password &&
+        this.confirmedPassword &&
+        this.acceptsTermsOfUse &&
+        this.password === this.confirmedPassword
+      )
     }
   },
   methods: {
@@ -74,10 +98,18 @@ export default {
           })
         }
       )
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => {
-          console.log(err)
+        .then(response => {
+          if (response.ok) {
+            this.successfullSignUp = true
+            setTimeout(() => {
+              this.$router.push('/')
+            }, 1500)
+          } else {
+            this.error = true
+          }
+        })
+        .catch(_err => {
+          this.error = true
         })
     }
   }

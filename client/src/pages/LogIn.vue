@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       email: 'lydia@example.com',
-      password: '123456'
+      password: '123123'
     }
   },
   methods: {

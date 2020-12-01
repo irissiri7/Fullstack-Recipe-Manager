@@ -43,7 +43,8 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(_success => {
+        .then(success => {
+          console.log(success)
           this.$router.push('/home')
         })
         .catch(error => {

@@ -61,8 +61,6 @@
 </template>
 
 <script>
-import apiKey from '../assets/api-key.js'
-
 export default {
   data() {
     return {
@@ -86,32 +84,32 @@ export default {
     }
   },
   methods: {
-    signUp() {
-      fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-            returnSecureTokeN: true
-          })
-        }
-      )
-        .then(response => {
-          if (response.ok) {
-            this.successfullSignUp = true
-            setTimeout(() => {
-              this.$router.push('/')
-            }, 1500)
-          } else {
-            this.error = true
-          }
-        })
-        .catch(_err => {
-          this.error = true
-        })
-    }
+    // signUp() {
+    //   fetch(
+    //     `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
+    //     {
+    //       method: 'POST',
+    //       body: JSON.stringify({
+    //         email: this.email,
+    //         password: this.password,
+    //         returnSecureTokeN: true
+    //       })
+    //     }
+    //   )
+    //     .then(response => {
+    //       if (response.ok) {
+    //         this.successfullSignUp = true
+    //         setTimeout(() => {
+    //           this.$router.push('/')
+    //         }, 1500)
+    //       } else {
+    //         this.error = true
+    //       }
+    //     })
+    //     .catch(_err => {
+    //       this.error = true
+    //     })
+    // }
   }
 }
 </script>

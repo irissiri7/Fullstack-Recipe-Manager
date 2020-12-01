@@ -1,6 +1,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import bodyParser from 'body-parser'
 
 //Configurations
 import Configurations from './src/configurations/Configurations.js'
@@ -11,14 +12,24 @@ import Middlewares from './src/middleware/Middlewares.js'
 //Controllers
 import recipeController from './src/controllers/recipe.js'
 
+//Models
+// import User from './src/models/User.js'
+
+//Routers
+import usersRouter from './src/routes/users.js'
+
 //Creating the server
 const app = express()
 
 //Apply middleware packages
 app.use(helmet())
 app.use(morgan('common'))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-//Routes
+//Apply routes
+app.use('/users', usersRouter)
+
 app.get('/', (req, res, _next) => {
   res.send('<h1>Hello world!</h1>')
 })

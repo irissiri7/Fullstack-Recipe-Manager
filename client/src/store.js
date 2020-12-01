@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import router from './router.js'
-import apiKey from './assets/api-key'
 
 const store = createStore({
   state() {
@@ -21,20 +20,17 @@ const store = createStore({
   actions: {
     logIn(context, payload) {
       return new Promise((resolve, reject) => {
-        fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              email: payload.email,
-              password: payload.password,
-              returnSecureToken: true
-            })
-          }
-        )
+        fetch('http://localhost:3001/users/user/sign-in', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: payload.email,
+            password: payload.password,
+            returnSecureToken: true
+          })
+        })
           .then(response => {
             if (response.ok) return response.json()
             else {

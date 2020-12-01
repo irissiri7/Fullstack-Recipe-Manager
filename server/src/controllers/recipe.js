@@ -2,7 +2,7 @@ import Recipe from '../models/Recipe.js'
 
 const addRecipe = (_req, res, _next) => {
   const recipe = new Recipe({
-    creator: 'Lydia Lind',
+    userId: 'Lydia Lind',
     title: 'Mango Chimken',
     ingredients: ['chicken', 'mango chutney', 'creme fraiche'],
     description: 'Mix all and throw in the oven',

@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="field">
-        <button class="ui button" @click.prevent="logIn">Log In</button>
+        <button class="ui button" @click.prevent="signIn">Log In</button>
       </div>
       <div class="field">
         <p>Not a user?</p>
@@ -37,9 +37,9 @@ export default {
     }
   },
   methods: {
-    logIn() {
+    signIn() {
       this.$store
-        .dispatch('logIn', {
+        .dispatch('signIn', {
           email: this.email,
           password: this.password
         })

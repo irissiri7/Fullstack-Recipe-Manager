@@ -18,7 +18,7 @@ const store = createStore({
     }
   },
   actions: {
-    logIn(context, payload) {
+    signIn(context, payload) {
       return new Promise((resolve, reject) => {
         fetch('http://localhost:3001/users/user/sign-in', {
           method: 'POST',

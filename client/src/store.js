@@ -48,6 +48,37 @@ const store = createStore({
           })
           .catch(error => reject(error))
       })
+    },
+    signUp(context, payload) {
+      return new Promise((resolve, reject) => {
+        fetch('http://localhost:3001/users/user/sign-up', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: payload.email,
+            password: payload.password,
+            returnSecureToken: true
+          })
+        })
+          .then(response => {
+            if (response.ok) return response.json()
+            else {
+              const error = new Error('Failed to sign up')
+              throw error
+            }
+          })
+          .then(responseData => {
+            context.commit('setUser', {
+              token: responseData.idToken,
+              userId: responseData.localId,
+              tokenExpiration: responseData.tokenExpiration
+            })
+            resolve('success')
+          })
+          .catch(error => reject(error))
+      })
     }
   },
   getters: {

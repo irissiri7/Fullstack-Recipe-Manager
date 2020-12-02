@@ -84,32 +84,20 @@ export default {
     }
   },
   methods: {
-    // signUp() {
-    //   fetch(
-    //     `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`,
-    //     {
-    //       method: 'POST',
-    //       body: JSON.stringify({
-    //         email: this.email,
-    //         password: this.password,
-    //         returnSecureTokeN: true
-    //       })
-    //     }
-    //   )
-    //     .then(response => {
-    //       if (response.ok) {
-    //         this.successfullSignUp = true
-    //         setTimeout(() => {
-    //           this.$router.push('/')
-    //         }, 1500)
-    //       } else {
-    //         this.error = true
-    //       }
-    //     })
-    //     .catch(_err => {
-    //       this.error = true
-    //     })
-    // }
+    signUp() {
+      this.$store
+        .dispatch('signUp', {
+          email: this.email,
+          password: this.password
+        })
+        .then(success => {
+          console.log(success)
+          this.$router.push('/home')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

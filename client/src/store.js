@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
 import router from './router.js'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const store = createStore({
   state() {
@@ -20,7 +23,7 @@ const store = createStore({
   actions: {
     signIn(context, payload) {
       return new Promise((resolve, reject) => {
-        fetch('http://localhost:3001/users/user/sign-in', {
+        fetch(`${process.env.VUE_APP_MY_URL}users/user/sign-in`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -51,7 +54,7 @@ const store = createStore({
     },
     signUp(context, payload) {
       return new Promise((resolve, reject) => {
-        fetch('http://localhost:3001/users/user/sign-up', {
+        fetch(`${process.env.VUE_APP_MY_URL}users/user/sign-up`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -84,6 +87,9 @@ const store = createStore({
   getters: {
     isAuth(state) {
       return !!state.token
+    },
+    user(state) {
+      return state.userId
     }
   }
 })

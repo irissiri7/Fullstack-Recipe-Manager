@@ -1,7 +1,7 @@
 <template>
   <the-navigation></the-navigation>
   <main>
-    <router-view @log-in="signIn"></router-view>
+    <router-view></router-view>
   </main>
 </template>
 
@@ -12,11 +12,6 @@ export default {
   name: 'App',
   components: {
     TheNavigation
-  },
-  methods: {
-    signIn() {
-      this.isLoggedIn = !this.isLoggedIn
-    }
   }
 }
 </script>

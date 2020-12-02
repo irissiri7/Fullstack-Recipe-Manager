@@ -10,14 +10,9 @@ import Configurations from './src/configurations/Configurations.js'
 //Middlewares
 import Middlewares from './src/middleware/Middlewares.js'
 
-//Controllers
-import recipeController from './src/controllers/recipe.js'
-
-//Models
-// import User from './src/models/User.js'
-
 //Routers
 import usersRouter from './src/routes/users.js'
+import recipesRouter from './src/routes/recipes.js'
 
 //Creating the server
 const app = express()
@@ -31,12 +26,11 @@ app.use(bodyParser.json())
 
 //Apply routes
 app.use('/users', usersRouter)
+app.use('/recipes', recipesRouter)
 
 app.get('/', (req, res, _next) => {
   res.send('<h1>Hello world!</h1>')
 })
-
-app.get('/add-recipe', recipeController.addRecipe)
 
 //Error handling
 app.use(Middlewares.notFound)

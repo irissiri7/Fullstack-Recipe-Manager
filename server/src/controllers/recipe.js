@@ -1,26 +1,25 @@
 import Recipe from '../models/Recipe.js'
 
-const addRecipe = (_req, res, _next) => {
+const addRecipe = (req, res, _next) => {
   const recipe = new Recipe({
-    userId: 'Lydia Lind',
-    title: 'Mango Chimken',
-    ingredients: ['chicken', 'mango chutney', 'creme fraiche'],
-    description: 'Mix all and throw in the oven',
+    userId: req.body.userId,
+    title: req.body.title,
+    ingredients: req.body.ingredients,
+    description: req.body.description,
     details: {
-      category: ['dinner', 'snack'],
-      qualitys: ['gluten free'],
-      'time to cook': '<15 min'
+      categories: req.body.details.categories,
+      qualities: req.body.details.qualities,
+      'time to cook': req.body.details.timeToCook
     }
   })
   recipe
     .save()
     .then((result) => {
-      console.log(result)
-      res.send('<h1>Added recipe</h1>')
+      res.status(201).send(result)
     })
     .catch((err) => {
       console.log(err)
-      res.send('<h1>Could not add recipe :( ...</h1>')
+      res.status(500).send(err)
     })
 }
 

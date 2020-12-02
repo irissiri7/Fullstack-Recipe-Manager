@@ -1,6 +1,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 
 //Configurations
@@ -24,6 +25,7 @@ const app = express()
 //Apply middleware packages
 app.use(helmet())
 app.use(morgan('common'))
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 

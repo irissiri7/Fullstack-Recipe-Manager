@@ -14,7 +14,7 @@ const addRecipe = (req, res, _next) => {
         details: {
           categories: req.body.details.categories,
           qualities: req.body.details.qualities,
-          'time to cook': req.body.details.timeToCook
+          timeToCook: req.body.details.timeToCook
         }
       })
       recipe
@@ -36,9 +36,17 @@ const getRecipes = async (req, res, next) => {
     const user = await User.findOne({ firebaseId: req.query.firebaseId }).exec()
     const recipes = await Recipe.find(
       { userId: user._id },
-      'details ingredients title description -_id'
+      'details ingredients title description'
     ).exec()
     res.status(200).send(recipes)
+  } catch (error) {
+    next(error)
+  }
+}
+const getRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.query.recipeId).exec()
+    recipe ? res.status(200).send(recipe) : res.sendStatus(404)
   } catch (error) {
     next(error)
   }
@@ -46,5 +54,6 @@ const getRecipes = async (req, res, next) => {
 
 export default {
   addRecipe,
-  getRecipes
+  getRecipes,
+  getRecipe
 }

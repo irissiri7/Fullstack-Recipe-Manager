@@ -55,7 +55,7 @@
         >
       </div>
       <h4>Time to cook</h4>
-      <p>{{ recipe.detail.timeToCook }}</p>
+      <p>{{ recipe.details.timeToCook }}</p>
     </div>
     <div v-if="showCompact" class="flex center">
       <button class="ui button" @click.prevent="showDetails">
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     showDetails() {
-      this.$router.push('/my-recipes/recipe-id')
+      this.$router.push(`/my-recipes/${this.recipe._id}`)
     }
   }
 }

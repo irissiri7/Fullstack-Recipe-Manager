@@ -10,7 +10,7 @@ const recipeSchema = new Schema({
   details: {
     categories: [String],
     qualities: [String],
-    'time to cook': String
+    timeToCook: String
   }
 })
 

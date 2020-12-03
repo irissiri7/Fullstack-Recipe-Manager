@@ -19,7 +19,7 @@ const router = createRouter({
     { path: '/my-recipes', component: MyRecipes },
     { path: '/my-recipes/add-recipe', component: AddRecipe },
     { path: '/my-recipes/edit-recipe/:id', component: EditRecipe },
-    { path: '/my-recipes/recipe-id', component: RecipeDetail },
+    { path: '/my-recipes/:id', component: RecipeDetail },
     { path: '/my-profile', component: MyProfile },
     { path: '/:notFound(.*)', component: NotFound }
   ]

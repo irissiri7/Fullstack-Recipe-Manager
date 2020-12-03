@@ -8,14 +8,14 @@ const store = createStore({
   state() {
     return {
       token: null,
-      userId: null,
+      firebaseId: null,
       tokenExpiration: null
     }
   },
   mutations: {
     setUser(state, payload) {
+      state.firebaseId = payload.firebaseId
       state.token = payload.token
-      state.userId = payload.userId
       state.tokenExpiration = payload.tokenExpiration
       router.push('/home')
     }
@@ -43,8 +43,8 @@ const store = createStore({
           })
           .then(responseData => {
             context.commit('setUser', {
+              firebaseId: responseData.localId,
               token: responseData.idToken,
-              userId: responseData.localId,
               tokenExpiration: responseData.tokenExpiration
             })
             resolve('success')
@@ -74,8 +74,8 @@ const store = createStore({
           })
           .then(responseData => {
             context.commit('setUser', {
+              firebaseId: responseData.localId,
               token: responseData.idToken,
-              userId: responseData.localId,
               tokenExpiration: responseData.tokenExpiration
             })
             resolve('success')
@@ -89,7 +89,7 @@ const store = createStore({
       return !!state.token
     },
     user(state) {
-      return state.userId
+      return state.firebaseId
     }
   }
 })

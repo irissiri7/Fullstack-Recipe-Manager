@@ -163,7 +163,7 @@ export default {
     },
     addRecipe() {
       const data = {
-        userId: this.$store.getters.user,
+        firebaseId: this.$store.getters.user,
         title: this.title,
         ingredients: this.ingredients,
         description: this.description,

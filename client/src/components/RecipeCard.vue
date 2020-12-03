@@ -3,12 +3,7 @@
     <div v-if="showCompact" class="flex-cnt">
       <h2>{{ recipe.title }}</h2>
       <div>
-        <button
-          class="ui icon button"
-          @click.prevent="
-            this.$router.push('/my-recipes/edit-recipe/placeholder')
-          "
-        >
+        <button class="ui icon button" @click.prevent="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </button>
         <button class="ui icon button">
@@ -79,6 +74,9 @@ export default {
   methods: {
     showDetails() {
       this.$router.push(`/my-recipes/${this.recipe._id}`)
+    },
+    editRecipe() {
+      this.$router.push(`/my-recipes/edit-recipe/${this.recipe._id}`)
     }
   }
 }

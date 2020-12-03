@@ -52,61 +52,78 @@
     <h4>Category</h4>
     <div class="field">
       <div class="ui checkbox">
-        <input type="checkbox" value="breakfast" v-model="categories" />
+        <input type="checkbox" value="breakfast" v-model="details.categories" />
         <label>Breakfast</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="lunch" v-model="categories" />
+        <input type="checkbox" value="lunch" v-model="details.categories" />
         <label>Lunch</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="dinner" v-model="categories" />
+        <input type="checkbox" value="dinner" v-model="details.categories" />
         <label>Dinner</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="starter" v-model="categories" />
+        <input type="checkbox" value="starter" v-model="details.categories" />
         <label>Starter</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="dessert" v-model="categories" />
+        <input type="checkbox" value="dessert" v-model="details.categories" />
         <label>Dessert</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="other" v-model="categories" />
+        <input type="checkbox" value="other" v-model="details.categories" />
         <label>Other</label>
       </div>
     </div>
     <h4>Quality</h4>
     <div class="field">
       <div class="ui checkbox">
-        <input type="checkbox" value="gluten free" v-model="qualities" />
+        <input
+          type="checkbox"
+          value="gluten free"
+          v-model="details.qualities"
+        />
         <label>Gluten Free</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="lactose free" v-model="qualities" />
+        <input
+          type="checkbox"
+          value="lactose free"
+          v-model="details.qualities"
+        />
         <label>Lactose Free</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="vegetarian" v-model="qualities" />
+        <input type="checkbox" value="vegetarian" v-model="details.qualities" />
         <label>Vegetarian</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="vegan" v-model="qualities" />
+        <input type="checkbox" value="vegan" v-model="details.qualities" />
         <label>Vegan</label>
       </div>
     </div>
     <h4>Time to cook</h4>
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" value="About 15 min" v-model="timeToCook" />
+        <input
+          type="radio"
+          value="About 15 min"
+          v-model="details.timeToCook"
+          checked="checked"
+        />
         <label>About 15 min</label>
       </div>
       <div class="ui radio checkbox">
-        <input type="radio" value="About 30 min" v-model="timeToCook" />
+        <input type="radio" value="About 30 min" v-model="details.timeToCook" />
         <label>About 30 min</label>
       </div>
       <div class="ui radio checkbox">
-        <input type="radio" value="60 min or more" v-model="timeToCook" />
+        <input
+          type="radio"
+          value="60 min or more"
+          v-model="details.timeToCook"
+        />
         <label>60 min or more</label>
       </div>
     </div>
@@ -130,6 +147,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export default {
+  //Refactor to recipe object
   data() {
     return {
       title: '',
@@ -138,20 +156,28 @@ export default {
       ingredient: '',
       ingredients: [],
       description: '',
-      categories: [],
-      qualities: [],
-      timeToCook: '',
+      details: {
+        categories: [],
+        qualities: [],
+        timeToCook: 'About 15 min'
+      },
       message: null
     }
   },
-  mounted() {
-    if (this.$route.params.id) {
-      this.title = 'Mumsig gryta'
+  props: {
+    recipe: {
+      type: Object,
+      default: null
+    }
+  },
+  created() {
+    if (this.recipe) {
+      this.title = this.recipe.title
       this.src =
         'https://i.pinimg.com/originals/d6/aa/ba/d6aabaa757b4abbea1d739bd849795e6.jpg'
-      this.ingredients = ['Banana', 'Apple', 'Potatoe']
-      this.description =
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit liberosint magnam placeat corrupti laborum, sit adipisci vero, quaeratexcepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero sint magnam placeat corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa soluta.'
+      this.ingredients = this.recipe.ingredients
+      this.description = this.recipe.description
+      this.details = this.recipe.details
     }
   },
   methods: {
@@ -168,11 +194,12 @@ export default {
         ingredients: this.ingredients,
         description: this.description,
         details: {
-          categories: this.categories,
-          qualities: this.qualities,
-          timeToCook: this.timeToCook
+          categories: this.details.categories,
+          qualities: this.details.qualities,
+          timeToCook: this.details.timeToCook
         }
       }
+      //Refactor to axios
       fetch(`${process.env.VUE_APP_MY_URL}recipes/recipe/add-recipe`, {
         method: 'POST',
         headers: {

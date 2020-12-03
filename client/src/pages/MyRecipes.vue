@@ -16,66 +16,35 @@
 <script>
 import RecipeCard from '../components/RecipeCard.vue'
 import CursiveHeader from '../components/CursiveHeader.vue'
+import dotenv from 'dotenv'
+import axios from 'axios'
+
+dotenv.config()
 
 export default {
   components: {
     RecipeCard,
     CursiveHeader
   },
+  created() {
+    this.fetchData()
+  },
   data() {
     return {
-      recipes: [
-        {
-          title: 'Recipe1',
-          ingredients: [
-            'ingredient1',
-            'ingredient2',
-            'ingredient3',
-            'ingredient4'
-          ],
-          description: 'Lorem lorem lorem',
-          details: {
-            categories: ['Dinner'],
-            details: ['Lactose free'],
-            timeToCook: 'About 30 min'
-          }
-        },
-        {
-          title: 'Recipe2',
-          ingredients: [
-            'ingredient1',
-            'ingredient2',
-            'ingredient3',
-            'ingredient4'
-          ],
-          description: 'Lorem lorem lorem',
-          details: {
-            categories: ['Dinner'],
-            details: ['Lactose free'],
-            timeToCook: 'About 30 min'
-          }
-        },
-        {
-          title: 'Recipe3',
-          ingredients: [
-            'ingredient1',
-            'ingredient2',
-            'ingredient3',
-            'ingredient4'
-          ],
-          description: 'Lorem lorem lorem',
-          details: {
-            categories: ['Dinner'],
-            details: ['Lactose free'],
-            timeToCook: 'About 30 min'
-          }
-        }
-      ]
+      recipes: []
     }
   },
   methods: {
     addRecipe() {
       this.$router.push('/my-recipes/add-recipe')
+    },
+    fetchData() {
+      axios
+        .get(
+          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.user}`
+        )
+        .then(response => (this.recipes = response.data))
+        .catch(error => console.log(error))
     }
   }
 }

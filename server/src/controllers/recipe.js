@@ -31,7 +31,20 @@ const addRecipe = (req, res, _next) => {
       res.status(500).send(error)
     })
 }
+const getRecipes = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ firebaseId: req.query.firebaseId }).exec()
+    const recipes = await Recipe.find(
+      { userId: user._id },
+      'details ingredients title description -_id'
+    ).exec()
+    res.status(200).send(recipes)
+  } catch (error) {
+    next(error)
+  }
+}
 
 export default {
-  addRecipe
+  addRecipe,
+  getRecipes
 }

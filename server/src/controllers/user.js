@@ -39,12 +39,14 @@ const signUp = (req, res, _next) => {
     )
     .then((response) => {
       const newUser = new User({
-        _id: response.data.localId,
+        firebaseId: response.data.localId,
         email: response.data.email
       })
       newUser
         .save()
-        .then((_result) => res.status(200).json(response.data))
+        .then((_result) => {
+          res.status(200).json(response.data)
+        })
         .catch((_err) => {
           throw new Error('Failed to sign up new user')
         })

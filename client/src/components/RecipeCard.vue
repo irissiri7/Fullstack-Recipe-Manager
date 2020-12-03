@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div v-if="showCompact" class="flex-cnt">
-      <h2>Mumisg Gryta</h2>
+      <h2>{{ recipe.title }}</h2>
       <div>
         <button
           class="ui icon button"
@@ -25,43 +25,37 @@
     <h3>Ingredients</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
       <ul>
-        <li>Ingredient 1</li>
-        <li>Ingredient 2</li>
-        <li>Ingredient 3</li>
+        <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+          {{ ingredient }}
+        </li>
       </ul>
       <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
     <h3>Description</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
-        praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero
-        sint magnam placeat corrupti laborum, sit adipisci vero, quaerat
-        excepturi ipsam ipsa soluta.Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Esse, praesentium maiores? Nihil dicta, quasi
-        praesentium reprehenderit libero sint magnam placeat corrupti laborum,
-        sit adipisci vero, quaerat excepturi ipsam ipsa soluta.Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. Esse, praesentium maiores? Nihil
-        dicta, quasi praesentium reprehenderit libero sint magnam placeat
-        corrupti laborum, sit adipisci vero, quaerat excepturi ipsam ipsa
-        soluta.Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
-        praesentium maiores? Nihil dicta, quasi praesentium reprehenderit libero
-        sint magnam placeat corrupti laborum, sit adipisci vero, quaerat
-        excepturi ipsam ipsa soluta.
-      </p>
+      <p>{{ recipe.description }}</p>
       <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
     <h3 v-if="!showCompact">Details</h3>
     <div v-if="!showCompact">
       <h4>Category</h4>
-      <a class="ui blue circular label">Dinner</a>
+      <a
+        v-for="category in recipe.details.categories"
+        :key="category"
+        class="ui blue circular label"
+        >{{ category }}</a
+      >
       <h4>Qualities</h4>
       <div>
-        <a class="ui red circular label">Gluten free</a>
-        <a class="ui olive circular label">Vegetarian</a>
+        <a
+          v-for="quality in recipe.details.qualities"
+          :key="quality"
+          class="ui red circular label"
+          >{{ quality }}</a
+        >
       </div>
       <h4>Time to cook</h4>
-      <p>About 30min</p>
+      <p>{{ recipe.detail.timeToCook }}</p>
     </div>
     <div v-if="showCompact" class="flex center">
       <button class="ui button" @click.prevent="showDetails">
@@ -77,6 +71,9 @@ export default {
     showCompact: {
       type: Boolean,
       default: false
+    },
+    recipe: {
+      type: Object
     }
   },
   methods: {

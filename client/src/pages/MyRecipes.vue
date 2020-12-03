@@ -5,9 +5,12 @@
       <i class="icon inverted plus"></i>
     </button>
   </div>
-  <template v-for="n in 10" v-bind:key="n">
-    <recipe-card show-compact></recipe-card>
-  </template>
+  <recipe-card
+    v-for="recipe in recipes"
+    :key="recipe.title"
+    :recipe="recipe"
+    show-compact
+  ></recipe-card>
 </template>
 
 <script>
@@ -18,6 +21,57 @@ export default {
   components: {
     RecipeCard,
     CursiveHeader
+  },
+  data() {
+    return {
+      recipes: [
+        {
+          title: 'Recipe1',
+          ingredients: [
+            'ingredient1',
+            'ingredient2',
+            'ingredient3',
+            'ingredient4'
+          ],
+          description: 'Lorem lorem lorem',
+          details: {
+            categories: ['Dinner'],
+            details: ['Lactose free'],
+            timeToCook: 'About 30 min'
+          }
+        },
+        {
+          title: 'Recipe2',
+          ingredients: [
+            'ingredient1',
+            'ingredient2',
+            'ingredient3',
+            'ingredient4'
+          ],
+          description: 'Lorem lorem lorem',
+          details: {
+            categories: ['Dinner'],
+            details: ['Lactose free'],
+            timeToCook: 'About 30 min'
+          }
+        },
+        {
+          title: 'Recipe3',
+          ingredients: [
+            'ingredient1',
+            'ingredient2',
+            'ingredient3',
+            'ingredient4'
+          ],
+          description: 'Lorem lorem lorem',
+          details: {
+            categories: ['Dinner'],
+            details: ['Lactose free'],
+            timeToCook: 'About 30 min'
+          }
+        }
+      ]
+    }
   },
   methods: {
     addRecipe() {

@@ -1,7 +1,10 @@
 <template>
   <div class="card">
     <h1>Edit recipe</h1>
-    <recipe-form v-if="recipe" :recipe="recipe" />
+    <recipe-form
+      v-if="initialRecipeData"
+      :initialRecipeData="initialRecipeData"
+    />
   </div>
 </template>
 
@@ -15,7 +18,7 @@ export default {
   },
   data() {
     return {
-      recipe: null
+      initialRecipeData: null
     }
   },
   created() {
@@ -24,8 +27,7 @@ export default {
         `${process.env.VUE_APP_MY_URL}recipes/recipe/get-recipe/?recipeId=${this.$route.params.id}`
       )
       .then(response => {
-        this.recipe = response.data
-        console.log(this.recipe)
+        this.initialRecipeData = response.data
       })
       .catch(error => console.log(error))
   }

@@ -6,13 +6,15 @@
         type="text"
         name="first-name"
         placeholder="Recipe Name"
-        v-model.trim="title"
+        v-model.trim="recipe.title"
       />
     </div>
     <h3 class="ui dividing header">Image</h3>
     <div class="field">
       <div class="img-cnt">
-        <img :src="src" />
+        <img
+          src="https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg"
+        />
       </div>
     </div>
     <div class="field">
@@ -40,39 +42,69 @@
       </div>
     </div>
     <ul>
-      <li v-for="ingredient in ingredients" v-bind:key="ingredient">
-        {{ ingredient }}
+      <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+        <span>{{ ingredient }}</span>
+        <button
+          @click.prevent="removeIngredient(index)"
+          class="circular ui icon button"
+        >
+          <i class="icon trash alternate outline red"></i>
+        </button>
       </li>
     </ul>
     <h3 class="ui dividing header">Description</h3>
     <div class="field">
-      <textarea v-model="description"></textarea>
+      <textarea v-model="recipe.description"></textarea>
     </div>
     <h3 class="ui dividing header">Details</h3>
     <h4>Category</h4>
     <div class="field">
       <div class="ui checkbox">
-        <input type="checkbox" value="breakfast" v-model="details.categories" />
+        <input
+          type="checkbox"
+          value="breakfast"
+          v-model="recipe.details.categories"
+        />
         <label>Breakfast</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="lunch" v-model="details.categories" />
+        <input
+          type="checkbox"
+          value="lunch"
+          v-model="recipe.details.categories"
+        />
         <label>Lunch</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="dinner" v-model="details.categories" />
+        <input
+          type="checkbox"
+          value="dinner"
+          v-model="recipe.details.categories"
+        />
         <label>Dinner</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="starter" v-model="details.categories" />
+        <input
+          type="checkbox"
+          value="starter"
+          v-model="recipe.details.categories"
+        />
         <label>Starter</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="dessert" v-model="details.categories" />
+        <input
+          type="checkbox"
+          value="dessert"
+          v-model="recipe.details.categories"
+        />
         <label>Dessert</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="other" v-model="details.categories" />
+        <input
+          type="checkbox"
+          value="other"
+          v-model="recipe.details.categories"
+        />
         <label>Other</label>
       </div>
     </div>
@@ -82,7 +114,7 @@
         <input
           type="checkbox"
           value="gluten free"
-          v-model="details.qualities"
+          v-model="recipe.details.qualities"
         />
         <label>Gluten Free</label>
       </div>
@@ -90,16 +122,24 @@
         <input
           type="checkbox"
           value="lactose free"
-          v-model="details.qualities"
+          v-model="recipe.details.qualities"
         />
         <label>Lactose Free</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="vegetarian" v-model="details.qualities" />
+        <input
+          type="checkbox"
+          value="vegetarian"
+          v-model="recipe.details.qualities"
+        />
         <label>Vegetarian</label>
       </div>
       <div class="ui checkbox">
-        <input type="checkbox" value="vegan" v-model="details.qualities" />
+        <input
+          type="checkbox"
+          value="vegan"
+          v-model="recipe.details.qualities"
+        />
         <label>Vegan</label>
       </div>
     </div>
@@ -109,20 +149,24 @@
         <input
           type="radio"
           value="About 15 min"
-          v-model="details.timeToCook"
+          v-model="recipe.details.timeToCook"
           checked="checked"
         />
         <label>About 15 min</label>
       </div>
       <div class="ui radio checkbox">
-        <input type="radio" value="About 30 min" v-model="details.timeToCook" />
+        <input
+          type="radio"
+          value="About 30 min"
+          v-model="recipe.details.timeToCook"
+        />
         <label>About 30 min</label>
       </div>
       <div class="ui radio checkbox">
         <input
           type="radio"
           value="60 min or more"
-          v-model="details.timeToCook"
+          v-model="recipe.details.timeToCook"
         />
         <label>60 min or more</label>
       </div>
@@ -131,7 +175,7 @@
       <button class="ui button" @click.prevent="addRecipe">
         Add
       </button>
-      <button class="ui button" @click.prevent="">
+      <button class="ui button" @click.prevent="discardRecipe">
         Discard
       </button>
     </div>
@@ -147,56 +191,48 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export default {
-  //Refactor to recipe object
   data() {
     return {
-      title: '',
-      src:
-        'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg',
-      ingredient: '',
-      ingredients: [],
-      description: '',
-      details: {
-        categories: [],
-        qualities: [],
-        timeToCook: 'About 15 min'
+      recipe: {
+        title: '',
+        ingredients: [],
+        description: '',
+        details: {
+          categories: [],
+          qualities: [],
+          timeToCook: 'About 15 min'
+        }
       },
+      ingredient: '',
       message: null
     }
   },
   props: {
-    recipe: {
+    initialRecipeData: {
       type: Object,
       default: null
-    }
-  },
-  created() {
-    if (this.recipe) {
-      this.title = this.recipe.title
-      this.src =
-        'https://i.pinimg.com/originals/d6/aa/ba/d6aabaa757b4abbea1d739bd849795e6.jpg'
-      this.ingredients = this.recipe.ingredients
-      this.description = this.recipe.description
-      this.details = this.recipe.details
     }
   },
   methods: {
     addIngredient() {
       if (this.ingredient != '') {
-        this.ingredients.push(this.ingredient)
+        this.recipe.ingredients.push(this.ingredient)
         this.ingredient = ''
       }
+    },
+    removeIngredient(index) {
+      this.recipe.ingredients.splice(index, 1)
     },
     addRecipe() {
       const data = {
         firebaseId: this.$store.getters.user,
-        title: this.title,
-        ingredients: this.ingredients,
-        description: this.description,
+        title: this.recipe.title,
+        ingredients: this.recipe.ingredients,
+        description: this.recipe.description,
         details: {
-          categories: this.details.categories,
-          qualities: this.details.qualities,
-          timeToCook: this.details.timeToCook
+          categories: this.recipe.details.categories,
+          qualities: this.recipe.details.qualities,
+          timeToCook: this.recipe.details.timeToCook
         }
       }
       //Refactor to axios
@@ -208,13 +244,43 @@ export default {
         body: JSON.stringify(data)
       })
         .then(response => {
-          response.ok
-            ? (this.message = 'Recipe added!')
-            : (this.message = 'Could not add recipe :(')
+          if (response.ok) {
+            this.message = 'Recipe added!'
+            this.recipe = {
+              title: '',
+              ingredients: [],
+              description: '',
+              details: {
+                categories: [],
+                qualities: [],
+                timeToCook: 'About 15 min'
+              }
+            }
+          } else {
+            this.message = 'Could not add recipe :('
+          }
         })
         .catch(_err => {
           this.message = 'Something went wrong :('
         })
+    },
+    discardRecipe() {
+      this.ingredient = ''
+      this.recipe = {
+        title: '',
+        ingredients: [],
+        description: '',
+        details: {
+          categories: [],
+          qualities: [],
+          timeToCook: 'About 15 min'
+        }
+      }
+    }
+  },
+  created() {
+    if (this.initialRecipeData) {
+      this.recipe = this.initialRecipeData
     }
   }
 }
@@ -229,5 +295,11 @@ ul {
 }
 div.ui.checkbox {
   margin-right: 5px;
+}
+.circular.ui.icon.button {
+  background: none;
+}
+.circular.ui.icon.button:hover {
+  font-size: 15px;
 }
 </style>

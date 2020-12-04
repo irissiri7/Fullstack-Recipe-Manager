@@ -83,10 +83,6 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  list-style: none;
-}
-
 .fade-box {
   max-height: 100px;
   position: relative;

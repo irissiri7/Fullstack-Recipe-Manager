@@ -56,6 +56,24 @@ main {
   width: 40%;
 }
 
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+a {
+  color: var(--main-coffee);
+}
+a:hover {
+  color: var(--main-pine);
+  font-weight: 600;
+}
+a:visited {
+  color: none;
+}
+
 .card {
   border-radius: 10px;
   box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
@@ -64,32 +82,9 @@ main {
   background-color: white;
 }
 
-/* Semantic overrrides */
-/* .ui.button {
-  background-color: var(--main-pine);
-  border: 1px solid var(--main-pine);
-  color: white;
-}
-
-.ui.button:hover {
-  background-color: white !important;
-  color: var(--main-pine);
-}
-
-i.icon:hover {
-  color: var(--main-pine) !important;
-} */
-
 .img-cnt {
   width: 100%;
   height: 10rem;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
 }
 
 .fade-box {

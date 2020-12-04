@@ -4,41 +4,41 @@
     <form class="ui form" @submit.prevent="signUp">
       <div class="field">
         <label>Email</label>
-        <div class="field">
-          <input
-            v-model="email"
-            type="email"
-            name="email"
-            placeholder="name@email.com"
-            required
-          />
-        </div>
-        <label>Password</label>
-        <div class="field">
-          <input
-            v-model="password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            minlength="6"
-            required
-          />
-        </div>
-        <label>Confirm password</label>
-        <div class="field">
-          <input
-            v-model="confirmedPassword"
-            type="password"
-            name="confirmedPassword"
-            placeholder="Confirm Password"
-            minlength="6"
-            required
-          />
-        </div>
+        <input
+          v-model="email"
+          type="email"
+          name="email"
+          placeholder="name@email.com"
+          required
+        />
       </div>
-      <div class="ui checkbox">
-        <input type="checkbox" name="example" v-model="acceptsTermsOfUse" />
-        <label>I agree to terms of use</label>
+      <div class="field">
+        <label>Password</label>
+        <input
+          v-model="password"
+          type="password"
+          name="password"
+          placeholder="Password"
+          minlength="6"
+          required
+        />
+      </div>
+      <div class="field">
+        <label>Confirm password</label>
+        <input
+          v-model="confirmedPassword"
+          type="password"
+          name="confirmedPassword"
+          placeholder="Confirm Password"
+          minlength="6"
+          required
+        />
+      </div>
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox" name="example" v-model="acceptsTermsOfUse" />
+          <label>I agree to terms of use</label>
+        </div>
       </div>
       <div class="field">
         <button class="ui button" v-bind:class="{ disabled: !validForm }">
@@ -57,6 +57,7 @@
         </div>
       </div>
     </form>
+    <router-link to="/">Back to log in</router-link>
   </div>
 </template>
 

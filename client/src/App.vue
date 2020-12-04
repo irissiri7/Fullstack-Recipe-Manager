@@ -65,7 +65,7 @@ main {
 }
 
 /* Semantic overrrides */
-.ui.button {
+/* .ui.button {
   background-color: var(--main-pine);
   border: 1px solid var(--main-pine);
   color: white;
@@ -78,7 +78,7 @@ main {
 
 i.icon:hover {
   color: var(--main-pine) !important;
-}
+} */
 
 .img-cnt {
   width: 100%;

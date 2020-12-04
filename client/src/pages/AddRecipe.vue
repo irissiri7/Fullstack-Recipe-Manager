@@ -1,8 +1,8 @@
 <template>
-  <div class="card">
+  <base-card>
     <h1>Add New Recipe</h1>
     <recipe-form />
-  </div>
+  </base-card>
 </template>
 
 <script>

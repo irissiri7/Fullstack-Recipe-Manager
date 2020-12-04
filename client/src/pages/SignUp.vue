@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <base-card>
     <h1>Sign Up</h1>
     <form class="ui form" @submit.prevent="signUp">
       <div class="field">
@@ -41,9 +41,9 @@
         </div>
       </div>
       <div class="field">
-        <button class="ui button" v-bind:class="{ disabled: !validForm }">
+        <base-button v-bind:class="{ disabled: !validForm }">
           Sign Up
-        </button>
+        </base-button>
       </div>
       <div class="field">
         <p v-if="error">
@@ -58,7 +58,7 @@
       </div>
     </form>
     <router-link to="/">Back to log in</router-link>
-  </div>
+  </base-card>
 </template>
 
 <script>

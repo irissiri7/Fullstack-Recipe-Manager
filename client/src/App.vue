@@ -44,16 +44,19 @@ html,
   background-attachment: fixed;
 }
 
-h1 {
-  color: white;
-  text-align: center;
-  color: var(--main-coffee);
-}
-
 main {
   min-height: 100%;
   margin: 0 auto;
   width: 40%;
+}
+/* list styles */
+ul {
+  list-style: none;
+}
+/* image styles */
+.img-cnt {
+  width: 100%;
+  height: 10rem;
 }
 
 img {
@@ -62,7 +65,7 @@ img {
   object-fit: cover;
   border-radius: 10px;
 }
-
+/* link-styles */
 a {
   color: var(--main-coffee);
 }
@@ -72,37 +75,6 @@ a:hover {
 }
 a:visited {
   color: none;
-}
-
-.card {
-  border-radius: 10px;
-  box-shadow: 0px 0px 21px -1px rgba(0, 0, 0, 0.69);
-  margin: 1rem auto 2rem;
-  padding: 2rem;
-  background-color: white;
-}
-
-.img-cnt {
-  width: 100%;
-  height: 10rem;
-}
-
-.fade-box {
-  max-height: 100px;
-  position: relative;
-  overflow: hidden;
-}
-
-.fade-box .read-more {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  margin: 0;
-  padding: 10px 0;
-  height: 50%;
-  background-image: linear-gradient(to bottom, transparent, white);
 }
 
 /* utility classes */

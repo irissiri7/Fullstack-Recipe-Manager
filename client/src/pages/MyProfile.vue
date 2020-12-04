@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <base-card>
     <div class="cnt">
       <img
         class="ui middle aligned small circular bordered image"
@@ -63,13 +63,13 @@
         <div class="two fields">
           <div class="field">
             <label style="visibility:hidden">Change Password</label>
-            <button
+            <base-button
               v-if="!changePassword"
-              class="ui button"
               @click.prevent="changePassword = !changePassword"
+              class="full-width"
             >
               Change Password
-            </button>
+            </base-button>
           </div>
         </div>
       </div>
@@ -94,10 +94,10 @@
         </div>
       </div>
       <div v-if="changePassword" class="field">
-        <button class="ui button">Change Password</button>
+        <base-button class="full-width">Change Password</base-button>
       </div>
     </form>
-  </div>
+  </base-card>
 </template>
 
 <script>
@@ -116,7 +116,7 @@ h1 {
   margin-left: 2rem;
   color: #30292f;
 }
-.ui.button {
+.full-width {
   width: 100%;
 }
 .cnt {

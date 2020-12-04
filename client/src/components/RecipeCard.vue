@@ -1,14 +1,14 @@
 <template>
-  <div class="card">
+  <base-card>
     <div v-if="showCompact" class="flex-cnt">
       <h2>{{ recipe.title }}</h2>
       <div>
-        <button class="ui icon button" @click.prevent="editRecipe">
+        <base-button class="ui icon button" @click.prevent="editRecipe">
           <i class="pencil alternate icon inverted"></i>
-        </button>
-        <button class="ui icon button">
+        </base-button>
+        <base-button class="ui icon button">
           <i class="trash icon inverted"></i>
-        </button>
+        </base-button>
       </div>
     </div>
     <div class="img-cnt">
@@ -53,11 +53,11 @@
       <p>{{ recipe.details.timeToCook }}</p>
     </div>
     <div v-if="showCompact" class="flex center">
-      <button class="ui button" @click.prevent="showDetails">
+      <base-button @click.prevent="showDetails">
         Show Recipe
-      </button>
+      </base-button>
     </div>
-  </div>
+  </base-card>
 </template>
 
 <script>
@@ -87,11 +87,32 @@ ul {
   list-style: none;
 }
 
+.fade-box {
+  max-height: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fade-box .read-more {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 10px 0;
+  height: 50%;
+  background-image: linear-gradient(to bottom, transparent, white);
+}
+
 .flex-cnt {
   display: flex;
   justify-content: space-between;
 }
 .ui.circular.label {
   cursor: default;
+}
+i:hover {
+  color: var(--main-pine);
 }
 </style>

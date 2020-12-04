@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <base-card>
     <h1>Log In</h1>
     <form class="ui form">
       <div class="field">
@@ -18,14 +18,18 @@
         </div>
       </div>
       <div class="field">
-        <button class="ui button" @click.prevent="signIn">Log In</button>
+        <base-button class="same-width" @click.prevent="signIn"
+          >Log In</base-button
+        >
       </div>
       <div class="field">
         <p>Not a user?</p>
-        <button class="ui button" @click.prevent="signUp">Sign Up</button>
+        <base-button class="same-width" @click.prevent="signUp"
+          >Sign Up</base-button
+        >
       </div>
     </form>
-  </div>
+  </base-card>
 </template>
 
 <script>
@@ -65,8 +69,7 @@ h1 {
 p {
   margin: 0px;
 }
-
-.ui.button {
+.same-width {
   width: 7rem;
 }
 </style>

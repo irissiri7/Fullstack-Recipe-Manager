@@ -18,10 +18,10 @@
       </div>
     </div>
     <div class="field">
-      <button class="ui icon button">
+      <base-button class="ui icon button">
         Upload image
         <i class="upload icon"></i>
-      </button>
+      </base-button>
     </div>
     <h3 class="ui dividing header">Ingredients</h3>
     <div class="field">
@@ -35,9 +35,12 @@
           />
         </div>
         <div class="four wide field">
-          <button class="ui button full-width" @click.prevent="addIngredient">
+          <base-button
+            class="ui button full-width"
+            @click.prevent="addIngredient"
+          >
             Add
-          </button>
+          </base-button>
         </div>
       </div>
     </div>
@@ -172,12 +175,12 @@
       </div>
     </div>
     <div class="field">
-      <button class="ui button" @click.prevent="addRecipe">
+      <base-button class="ui button" @click.prevent="addRecipe">
         Add
-      </button>
-      <button class="ui button" @click.prevent="discardRecipe">
+      </base-button>
+      <base-button class="ui button" @click.prevent="discardRecipe">
         Discard
-      </button>
+      </base-button>
     </div>
     <div v-if="message">
       <p>{{ message }}</p>

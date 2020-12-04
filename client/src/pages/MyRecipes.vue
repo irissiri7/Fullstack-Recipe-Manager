@@ -2,7 +2,7 @@
   <div class="flex-corners">
     <cursive-header title="My Recipes!"></cursive-header>
     <button class="circular ui huge icon button" @click="addRecipe">
-      <i class="icon inverted plus"></i>
+      <i id="add-icon" class="icon inverted plus"></i>
     </button>
   </div>
   <recipe-card
@@ -60,5 +60,12 @@ export default {
 
 .circular.ui.huge.icon.button {
   background-color: var(--main-pine);
+  border: 1px solid var(--main-pine);
+}
+.circular.ui.huge.icon.button:hover {
+  background-color: white;
+}
+#add-icon:hover {
+  color: var(--main-pine);
 }
 </style>

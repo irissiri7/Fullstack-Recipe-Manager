@@ -1,11 +1,11 @@
 <template>
-  <div class="card">
+  <base-card>
     <h1>Edit recipe</h1>
     <recipe-form
       v-if="initialRecipeData"
       :initialRecipeData="initialRecipeData"
     />
-  </div>
+  </base-card>
 </template>
 
 <script>

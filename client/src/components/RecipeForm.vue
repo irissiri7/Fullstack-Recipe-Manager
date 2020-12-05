@@ -306,6 +306,8 @@ div.ui.checkbox {
 .circular.ui.icon.button:hover {
   font-size: 15px;
 }
+
+/* Css for overriding the default file uploader, its just too damn ugly */
 #file-upload-cnt {
   position: relative;
 }

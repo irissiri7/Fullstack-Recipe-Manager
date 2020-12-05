@@ -17,8 +17,9 @@
         />
       </div>
     </div>
-    <div class="field">
-      <base-button class="ui icon button">
+    <div class="field" id="file-upload-cnt">
+      <input type="file" name="image" id="image" />
+      <base-button class="ui icon button" id="image-btn" @click.prevent="">
         Upload image
         <i class="upload icon"></i>
       </base-button>
@@ -304,5 +305,18 @@ div.ui.checkbox {
 }
 .circular.ui.icon.button:hover {
   font-size: 15px;
+}
+#file-upload-cnt {
+  position: relative;
+}
+#file-upload-cnt:hover > #image-btn {
+  background-color: white;
+  color: var(--main-pine);
+}
+
+#image {
+  position: absolute;
+  z-index: 99;
+  opacity: 0;
 }
 </style>

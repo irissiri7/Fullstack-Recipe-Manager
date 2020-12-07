@@ -10,6 +10,7 @@
     :key="recipe.title"
     :recipe="recipe"
     show-compact
+    @deletedRecipe="refreshData"
   ></recipe-card>
 </template>
 
@@ -45,6 +46,9 @@ export default {
         )
         .then(response => (this.recipes = response.data))
         .catch(error => console.log(error))
+    },
+    refreshData() {
+      this.fetchData()
     }
   }
 }

@@ -6,7 +6,7 @@
         <base-button class="ui icon button" @click.prevent="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </base-button>
-        <base-button class="ui icon button" alert>
+        <base-button class="ui icon button" alert @click.prevent="deleteRecipe">
           <i class="trash icon inverted"></i>
         </base-button>
       </div>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   props: {
     showCompact: {
@@ -81,6 +82,18 @@ export default {
     },
     editRecipe() {
       this.$router.push(`/my-recipes/edit-recipe/${this.recipe._id}`)
+    },
+    deleteRecipe() {
+      if (confirm('Are you sure you want to delete this recipe?')) {
+        axios
+          .delete(
+            `${process.env.VUE_APP_MY_URL}recipes/recipe/delete-recipe/${this.recipe._id}`
+          )
+          .then(_result => {
+            this.$emit('deleted-recipe')
+          })
+          .catch(error => console.log(error))
+      }
     }
   }
 }

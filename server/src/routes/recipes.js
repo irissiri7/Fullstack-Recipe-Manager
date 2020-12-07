@@ -6,6 +6,8 @@ import recipeController from '../controllers/recipe.js'
 router.post('/recipe/add-image', recipeController.addRecipeImage)
 router.post('/recipe/add-recipe', recipeController.addRecipe)
 router.get('/recipe/get-recipe', recipeController.getRecipe)
+router.delete('/recipe/delete-recipe/:recipeId', recipeController.deleteRecipe)
+router.put('/recipe/update-recipe/', recipeController.updateRecipe)
 
 //multiple recipe routes
 router.get('/get-recipes', recipeController.getRecipes)

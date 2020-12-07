@@ -180,12 +180,22 @@
       </div>
     </div>
     <div class="field">
-      <base-button class="ui button" @click.prevent="addRecipe">
-        Add
-      </base-button>
-      <base-button class="ui button" alert @click.prevent="discardRecipe">
-        Discard
-      </base-button>
+      <div v-if="initialRecipeData">
+        <base-button class="ui button" @click.prevent="updateRecipe">
+          Update
+        </base-button>
+        <base-button class="ui button" alert @click.prevent="deleteRecipe">
+          Delete
+        </base-button>
+      </div>
+      <div v-else>
+        <base-button class="ui button" @click.prevent="addRecipe">
+          Add
+        </base-button>
+        <base-button class="ui button" alert @click.prevent="discardRecipe">
+          Discard
+        </base-button>
+      </div>
     </div>
     <div v-if="message">
       <p>{{ message }}</p>
@@ -240,6 +250,7 @@ export default {
     removeIngredient(index) {
       this.recipe.ingredients.splice(index, 1)
     },
+    //Refactor to 'recipe: this.recipe', must be easier, right?? Less verbose....
     addRecipe() {
       const data = {
         firebaseId: this.$store.getters.user,
@@ -286,6 +297,7 @@ export default {
       this.ingredient = ''
       this.recipe = {
         title: '',
+        imageURL: null,
         ingredients: [],
         description: '',
         details: {
@@ -313,6 +325,32 @@ export default {
           this.recipe.imageURL = response.data.src
         })
         .catch(error => console.log(error.response.data.message))
+    },
+    updateRecipe() {
+      axios
+        .put(
+          `${process.env.VUE_APP_MY_URL}recipes/recipe/update-recipe`,
+          JSON.stringify(this.recipe),
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        .then(result => console.log('Updated prodict:' + result))
+        .catch(_error => console.log('Could not update product'))
+    },
+    deleteRecipe() {
+      if (confirm('Are you sure you want to delete this recipe?')) {
+        axios
+          .delete(
+            `${process.env.VUE_APP_MY_URL}recipes/recipe/delete-recipe/${this.recipe._id}`
+          )
+          .then(_result => {
+            this.$router.push('/my-recipes')
+          })
+          .catch(error => console.log(error))
+      }
     }
   },
   created() {

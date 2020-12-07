@@ -6,7 +6,7 @@
         <base-button class="ui icon button" @click.prevent="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </base-button>
-        <base-button class="ui icon button">
+        <base-button class="ui icon button" alert>
           <i class="trash icon inverted"></i>
         </base-button>
       </div>
@@ -114,5 +114,8 @@ export default {
 }
 i:hover {
   color: var(--main-pine);
+}
+.trash.icon.inverted:hover {
+  color: var(--main-alert);
 }
 </style>

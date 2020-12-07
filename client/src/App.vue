@@ -23,6 +23,7 @@ export default {
   --main-orange: #f1a80a;
   --main-coffee: #30292f;
   --main-pine: #63a088;
+  --main-alert: #e3655b;
 }
 
 * {

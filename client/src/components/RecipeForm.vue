@@ -183,7 +183,7 @@
       <base-button class="ui button" @click.prevent="addRecipe">
         Add
       </base-button>
-      <base-button class="ui button" @click.prevent="discardRecipe">
+      <base-button class="ui button" alert @click.prevent="discardRecipe">
         Discard
       </base-button>
     </div>

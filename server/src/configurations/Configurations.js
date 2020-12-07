@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import multer from 'multer'
 
 dotenv.config()
 
@@ -24,7 +25,30 @@ const connectToPort = (app) => {
   })
 }
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now().toString() + '-' + file.originalname)
+  }
+})
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg'
+  ) {
+    return cb(null, true)
+  } else {
+    return cb(new Error('Wrong file type, must be .jpg, .jpeg or .png'))
+  }
+}
+
 export default {
   connectToDatabase,
-  connectToPort
+  connectToPort,
+  fileStorage,
+  fileFilter
 }

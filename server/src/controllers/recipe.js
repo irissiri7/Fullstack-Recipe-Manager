@@ -1,5 +1,6 @@
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
+import Middlewares from '../middleware/Middlewares.js'
 
 const addRecipe = (req, res, _next) => {
   User.findOne({
@@ -31,6 +32,19 @@ const addRecipe = (req, res, _next) => {
       res.status(500).send(error)
     })
 }
+
+const addRecipeImage = (req, res, _next) => {
+  Middlewares.upload(req, res, (error) => {
+    if (error) {
+      res.status(400).send({ message: error.message })
+    } else {
+      res
+        .status(200)
+        .send({ src: `http://localhost:3001/${req.file.filename}` })
+    }
+  })
+}
+
 const getRecipes = async (req, res, next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId }).exec()
@@ -43,6 +57,7 @@ const getRecipes = async (req, res, next) => {
     next(error)
   }
 }
+
 const getRecipe = async (req, res, next) => {
   try {
     const recipe = await Recipe.findById(req.query.recipeId).exec()
@@ -54,6 +69,7 @@ const getRecipe = async (req, res, next) => {
 
 export default {
   addRecipe,
+  addRecipeImage,
   getRecipes,
   getRecipe
 }

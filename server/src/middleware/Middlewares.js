@@ -1,4 +1,6 @@
 import dotenv from 'dotenv'
+import multer from 'multer'
+import Configurations from '../configurations/Configurations.js'
 
 dotenv.config()
 
@@ -18,7 +20,13 @@ const errorHandler = (error, req, res, _next) => {
   })
 }
 
+const upload = multer({
+  storage: Configurations.fileStorage,
+  fileFilter: Configurations.fileFilter
+}).single('image')
+
 export default {
   notFound,
-  errorHandler
+  errorHandler,
+  upload
 }

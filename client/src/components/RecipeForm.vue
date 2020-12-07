@@ -12,13 +12,17 @@
     <h3 class="ui dividing header">Image</h3>
     <div class="field">
       <div class="img-cnt">
-        <img
-          src="https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg"
-        />
+        <img :src="src" />
       </div>
     </div>
     <div class="field" id="file-upload-cnt">
-      <input type="file" name="image" id="image" />
+      <input
+        type="file"
+        name="image"
+        ref="image"
+        id="file-uploader"
+        @change="handleFileUpload"
+      />
       <base-button class="ui icon button" id="image-btn" @click.prevent="">
         Upload image
         <i class="upload icon"></i>
@@ -191,6 +195,7 @@
 
 <script>
 import dotenv from 'dotenv'
+import axios from 'axios'
 
 dotenv.config()
 
@@ -199,6 +204,7 @@ export default {
     return {
       recipe: {
         title: '',
+        imageURL: null,
         ingredients: [],
         description: '',
         details: {
@@ -217,6 +223,13 @@ export default {
       default: null
     }
   },
+  computed: {
+    src() {
+      return this.recipe.imageURL
+        ? this.recipe.imageURL
+        : 'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg'
+    }
+  },
   methods: {
     addIngredient() {
       if (this.ingredient != '') {
@@ -232,6 +245,7 @@ export default {
         firebaseId: this.$store.getters.user,
         title: this.recipe.title,
         ingredients: this.recipe.ingredients,
+        imageURL: this.recipe.imageURL,
         description: this.recipe.description,
         details: {
           categories: this.recipe.details.categories,
@@ -280,6 +294,25 @@ export default {
           timeToCook: 'About 15 min'
         }
       }
+    },
+    handleFileUpload() {
+      const image = this.$refs.image.files[0]
+      const formData = new FormData()
+      formData.append('image', image)
+      axios
+        .post(
+          `${process.env.VUE_APP_MY_URL}recipes/recipe/add-image`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        .then(response => {
+          this.recipe.imageURL = response.data.src
+        })
+        .catch(error => console.log(error.response.data.message))
     }
   },
   created() {
@@ -316,7 +349,7 @@ div.ui.checkbox {
   color: var(--main-pine);
 }
 
-#image {
+#file-uploader {
   position: absolute;
   z-index: 99;
   opacity: 0;

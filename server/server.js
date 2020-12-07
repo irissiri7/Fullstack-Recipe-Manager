@@ -24,6 +24,9 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+//serve static files/images
+app.use(express.static('images'))
+
 //Apply routes
 app.use('/users', usersRouter)
 app.use('/recipes', recipesRouter)

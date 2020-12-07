@@ -3,6 +3,7 @@ const router = express.Router()
 import recipeController from '../controllers/recipe.js'
 
 //single recipe routes
+router.post('/recipe/add-image', recipeController.addRecipeImage)
 router.post('/recipe/add-recipe', recipeController.addRecipe)
 router.get('/recipe/get-recipe', recipeController.getRecipe)
 

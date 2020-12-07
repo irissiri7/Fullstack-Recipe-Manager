@@ -12,10 +12,7 @@
       </div>
     </div>
     <div class="img-cnt">
-      <img
-        src="https://i.pinimg.com/originals/d6/aa/ba/d6aabaa757b4abbea1d739bd849795e6.jpg"
-        alt="dish"
-      />
+      <img :src="src" alt="dish" />
     </div>
     <h3>Ingredients</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
@@ -69,6 +66,13 @@ export default {
     },
     recipe: {
       type: Object
+    }
+  },
+  computed: {
+    src() {
+      return this.recipe.imageURL
+        ? this.recipe.imageURL
+        : 'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg'
     }
   },
   methods: {

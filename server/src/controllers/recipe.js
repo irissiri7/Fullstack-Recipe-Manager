@@ -10,6 +10,7 @@ const addRecipe = (req, res, _next) => {
       const recipe = new Recipe({
         userId: user._id,
         title: req.body.title,
+        imageURL: req.body.imageURL,
         ingredients: req.body.ingredients,
         description: req.body.description,
         details: {
@@ -50,7 +51,7 @@ const getRecipes = async (req, res, next) => {
     const user = await User.findOne({ firebaseId: req.query.firebaseId }).exec()
     const recipes = await Recipe.find(
       { userId: user._id },
-      'details ingredients title description'
+      'details ingredients title description imageURL'
     ).exec()
     res.status(200).send(recipes)
   } catch (error) {

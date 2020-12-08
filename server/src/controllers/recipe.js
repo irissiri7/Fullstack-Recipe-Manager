@@ -1,11 +1,9 @@
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
 import Middlewares from '../middleware/Middlewares.js'
-import auth from '../firebase/authenticator.js'
 
 const addRecipe = async (req, res, _next) => {
   try {
-    await auth.authenticateUser(req.body.firebaseId, req.body.token)
     const user = await User.findOne({ firebaseId: req.body.firebaseId })
     const newRecipe = new Recipe({
       userId: user._id,

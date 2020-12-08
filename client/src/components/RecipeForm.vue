@@ -256,7 +256,6 @@ export default {
     addRecipe() {
       const data = {
         firebaseId: this.$store.getters.user,
-        token: this.$store.getters.token,
         title: this.recipe.title,
         ingredients: this.recipe.ingredients,
         imageURL: this.recipe.imageURL,
@@ -271,7 +270,8 @@ export default {
       fetch(`${process.env.VUE_APP_MY_URL}recipes/recipe/add-recipe`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${this.$store.getters.token}`
         },
         body: JSON.stringify(data)
       })

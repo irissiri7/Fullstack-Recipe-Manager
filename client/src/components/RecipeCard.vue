@@ -54,11 +54,15 @@
         Show Recipe
       </base-button>
     </div>
+    <div v-if="!showCompact" class="flex float-right">
+      <base-button class="ui icon button" alert @click.prevent="deleteRecipe">
+        Delete
+      </base-button>
+    </div>
   </base-card>
 </template>
 
 <script>
-// import axios from 'axios'
 import service from '../util/services.js'
 export default {
   props: {
@@ -127,5 +131,9 @@ i:hover {
 }
 .trash.icon.inverted:hover {
   color: var(--main-alert);
+}
+.float-right {
+  justify-content: flex-end;
+  margin-top: 15px;
 }
 </style>

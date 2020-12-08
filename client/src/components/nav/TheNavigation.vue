@@ -1,18 +1,25 @@
 <template>
   <header>
-    <h2 class="ui header" @click.prevent="backToHome">
-      <i class="lemon outline icon"></i>
-      <div class="content">
-        Recipe Manager
-      </div>
-    </h2>
-    <nav v-if="$store.getters.isAuth">
-      <ul>
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/my-recipes">My Recipes</router-link></li>
-        <li><router-link to="/my-profile">My Profile</router-link></li>
-      </ul>
-    </nav>
+    <div class="flex center">
+      <h2 class="ui header" @click.prevent="backToHome">
+        <i class="lemon outline icon"></i>
+        <div class="content">
+          Recipe Manager
+        </div>
+      </h2>
+      <nav v-if="$store.getters.isAuth">
+        <ul>
+          <li><router-link to="/home">Home</router-link></li>
+          <li><router-link to="/my-recipes">My Recipes</router-link></li>
+          <li><router-link to="/my-profile">My Profile</router-link></li>
+        </ul>
+      </nav>
+    </div>
+    <div>
+      <button class="ui icon button" @click="signOut">
+        <i class="sign out alternate icon large"></i>
+      </button>
+    </div>
   </header>
 </template>
 
@@ -22,6 +29,10 @@ export default {
     backToHome() {
       if (this.$store.getters.isAuth) this.$router.push('/home')
       else this.$router.push('/')
+    },
+    signOut() {
+      this.$store.dispatch('signOut')
+      this.$router.push('/')
     }
   }
 }
@@ -30,6 +41,7 @@ export default {
 <style scoped>
 header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 .ui.header {
@@ -80,5 +92,19 @@ a.active {
   border-color: #30292f;
   background-color: #eeb63d;
   border-radius: 10px;
+}
+
+.ui.icon.button {
+  background-color: var(--main-orange);
+
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.ui.icon.button:hover {
+  background-color: #eeb63d;
+  border: 1px solid #30292f;
+}
+.sign.out.alternate.icon {
+  color: var(--main-coffee);
 }
 </style>

@@ -7,8 +7,8 @@ dotenv.config()
 const store = createStore({
   state() {
     return {
-      token: null,
       firebaseId: null,
+      token: null,
       tokenExpiration: null
     }
   },
@@ -81,6 +81,13 @@ const store = createStore({
             resolve('success')
           })
           .catch(error => reject(error))
+      })
+    },
+    signOut(context, _payload) {
+      context.commit('setUser', {
+        firebaseId: null,
+        token: null,
+        tokenExpiration: null
       })
     }
   },

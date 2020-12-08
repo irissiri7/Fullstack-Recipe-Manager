@@ -45,6 +45,16 @@ html,
   background-attachment: fixed;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Firefox, Edge */
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 main {
   min-height: 100%;
   margin: 0 auto;

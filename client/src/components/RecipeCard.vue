@@ -58,7 +58,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import service from '../util/services.js'
 export default {
   props: {
     showCompact: {
@@ -83,16 +84,12 @@ export default {
     editRecipe() {
       this.$router.push(`/my-recipes/edit-recipe/${this.recipe._id}`)
     },
-    deleteRecipe() {
-      if (confirm('Are you sure you want to delete this recipe?')) {
-        axios
-          .delete(
-            `${process.env.VUE_APP_MY_URL}recipes/recipe/delete-recipe/${this.recipe._id}`
-          )
-          .then(_result => {
-            this.$emit('deleted-recipe')
-          })
-          .catch(error => console.log(error))
+    async deleteRecipe() {
+      const success = await service.deleteRecipe(this.recipe._id)
+      if (success) {
+        this.$emit('deleted-recipe')
+      } else {
+        console.log('could not delete recipe')
       }
     }
   }

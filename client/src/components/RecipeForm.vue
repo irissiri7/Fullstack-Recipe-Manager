@@ -37,6 +37,7 @@
             name="ingredient"
             placeholder="Add ingredients"
             v-model.trim="ingredient"
+            v-on:keyup.enter="addIngredient"
           />
         </div>
         <div class="four wide field">
@@ -206,6 +207,7 @@
 <script>
 import dotenv from 'dotenv'
 import axios from 'axios'
+import service from '../util/services.js'
 
 dotenv.config()
 
@@ -340,16 +342,12 @@ export default {
         .then(result => console.log('Updated prodict:' + result))
         .catch(_error => console.log('Could not update product'))
     },
-    deleteRecipe() {
-      if (confirm('Are you sure you want to delete this recipe?')) {
-        axios
-          .delete(
-            `${process.env.VUE_APP_MY_URL}recipes/recipe/delete-recipe/${this.recipe._id}`
-          )
-          .then(_result => {
-            this.$router.push('/my-recipes')
-          })
-          .catch(error => console.log(error))
+    async deleteRecipe() {
+      const success = await service.deleteRecipe(this.recipe._id)
+      if (success) {
+        this.$router.push('/my-recipes')
+      } else {
+        console.log('could not delete recipe')
       }
     }
   },

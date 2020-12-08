@@ -1,40 +1,32 @@
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
 import Middlewares from '../middleware/Middlewares.js'
+import auth from '../firebase/authenticator.js'
 
-const addRecipe = (req, res, _next) => {
-  User.findOne({
-    firebaseId: req.body.firebaseId
-  })
-    .then((user) => {
-      const recipe = new Recipe({
-        userId: user._id,
-        title: req.body.title,
-        imageURL: req.body.imageURL,
-        ingredients: req.body.ingredients,
-        description: req.body.description,
-        details: {
-          categories: req.body.details.categories,
-          qualities: req.body.details.qualities,
-          timeToCook: req.body.details.timeToCook
-        }
-      })
-      recipe
-        .save()
-        .then((result) => {
-          res.status(201).send(result)
-        })
-        .catch((err) => {
-          console.log(err)
-          throw new Error('Could not add recipe')
-        })
+const addRecipe = async (req, res, _next) => {
+  try {
+    await auth.authenticateUser(req.body.firebaseId, req.body.token)
+    const user = await User.findOne({ firebaseId: req.body.firebaseId })
+    const newRecipe = new Recipe({
+      userId: user._id,
+      title: req.body.title,
+      imageURL: req.body.imageURL,
+      ingredients: req.body.ingredients,
+      description: req.body.description,
+      details: {
+        categories: req.body.details.categories,
+        qualities: req.body.details.qualities,
+        timeToCook: req.body.details.timeToCook
+      }
     })
-    .catch((error) => {
-      res.status(500).send(error)
-    })
+    await newRecipe.save()
+    res.status(201).send(newRecipe)
+  } catch (error) {
+    res.status(400).send({ message: error.message })
+  }
 }
 
-const addRecipeImage = (req, res, _next) => {
+const addRecipeImage = async (req, res, _next) => {
   Middlewares.upload(req, res, (error) => {
     if (error) {
       res.status(400).send({ message: error.message })

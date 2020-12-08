@@ -256,6 +256,7 @@ export default {
     addRecipe() {
       const data = {
         firebaseId: this.$store.getters.user,
+        token: this.$store.getters.token,
         title: this.recipe.title,
         ingredients: this.recipe.ingredients,
         imageURL: this.recipe.imageURL,

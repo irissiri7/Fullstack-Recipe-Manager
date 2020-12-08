@@ -97,6 +97,9 @@ const store = createStore({
     },
     user(state) {
       return state.firebaseId
+    },
+    token(state) {
+      return state.token
     }
   }
 })

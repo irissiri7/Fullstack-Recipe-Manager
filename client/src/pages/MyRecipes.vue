@@ -42,7 +42,12 @@ export default {
     fetchData() {
       axios
         .get(
-          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.user}`
+          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.user}`,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
         )
         .then(response => (this.recipes = response.data))
         .catch(error => console.log(error))

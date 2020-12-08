@@ -25,7 +25,12 @@ export default {
     fetchRecipe() {
       axios
         .get(
-          `${process.env.VUE_APP_MY_URL}recipes/recipe/get-recipe/?recipeId=${this.$route.params.id}`
+          `${process.env.VUE_APP_MY_URL}recipes/recipe/get-recipe/?recipeId=${this.$route.params.id}`,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
         )
         .then(response => {
           this.recipe = response.data

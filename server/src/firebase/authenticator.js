@@ -5,7 +5,8 @@ const authenticateUser = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization
     const token = authHeader.split(' ')[1]
-    await auth.verifyIdToken(token)
+    const decodedToken = await auth.verifyIdToken(token)
+    req.decodedToken = decodedToken
     next()
   } catch (error) {
     res.sendStatus(401)

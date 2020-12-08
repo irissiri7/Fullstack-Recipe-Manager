@@ -320,7 +320,8 @@ export default {
           formData,
           {
             headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Basic ${this.$store.getters.token}`
             }
           }
         )
@@ -336,7 +337,8 @@ export default {
           JSON.stringify(this.recipe),
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              Authorization: `Basic ${this.$store.getters.token}`
             }
           }
         )

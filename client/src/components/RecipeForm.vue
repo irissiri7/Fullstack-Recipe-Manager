@@ -232,8 +232,8 @@ export default {
       ingredient: '',
       feedback: {
         message: null,
-        bulletPoints: ['Recipe must have title', 'test'],
-        style: 'error'
+        bulletPoints: [],
+        style: 'informational'
       }
     }
   },
@@ -248,6 +248,9 @@ export default {
       return this.recipe.imageURL
         ? this.recipe.imageURL
         : 'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg'
+    },
+    formIsValid() {
+      return !!this.recipe.title
     }
   },
   methods: {
@@ -260,49 +263,30 @@ export default {
     removeIngredient(index) {
       this.recipe.ingredients.splice(index, 1)
     },
-    //Refactor to 'recipe: this.recipe', must be easier, right?? Less verbose....
-    addRecipe() {
-      const data = {
-        firebaseId: this.$store.getters.user,
-        title: this.recipe.title,
-        ingredients: this.recipe.ingredients,
-        imageURL: this.recipe.imageURL,
-        description: this.recipe.description,
-        details: {
-          categories: this.recipe.details.categories,
-          qualities: this.recipe.details.qualities,
-          timeToCook: this.recipe.details.timeToCook
-        }
+    async addRecipe() {
+      if (!this.formIsValid) {
+        this.feedback.message = 'Recipes must have a name!'
+        this.feedback.style = 'error'
+        window.scrollTo(0, 0)
+        return
       }
-      //Refactor to axios
-      fetch(`${process.env.VUE_APP_MY_URL}recipes/recipe/add-recipe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${this.$store.getters.token}`
-        },
-        body: JSON.stringify(data)
-      })
-        .then(response => {
-          if (response.ok) {
-            this.feedback.message = 'Recipe added!'
-            this.recipe = {
-              title: '',
-              ingredients: [],
-              description: '',
-              details: {
-                categories: [],
-                qualities: [],
-                timeToCook: 'About 15 min'
-              }
-            }
-          } else {
-            this.feedback.message = 'Could not add recipe :('
-          }
-        })
-        .catch(_err => {
-          this.feedback.message = 'Something went wrong :('
-        })
+      const data = {
+        ...this.recipe,
+        ...{ firebaseId: this.$store.getters.user }
+      }
+      try {
+        await axios.post(
+          `${process.env.VUE_APP_MY_URL}recipes/recipe/add-recipe`,
+          data,
+          { headers: { Authorization: `Basic ${this.$store.getters.token}` } }
+        )
+        this.feedback.style = 'informational'
+        this.feedback.message = 'Recipe added!'
+        this.discardRecipe()
+        window.scrollTo(0, 0)
+      } catch (_error) {
+        this.feedback.message = 'Could not add recipe :( ...'
+      }
     },
     discardRecipe() {
       this.ingredient = ''
@@ -318,12 +302,12 @@ export default {
         }
       }
     },
-    handleFileUpload() {
+    async handleFileUpload() {
       const image = this.$refs.image.files[0]
       const formData = new FormData()
       formData.append('image', image)
-      axios
-        .post(
+      try {
+        const response = await axios.post(
           `${process.env.VUE_APP_MY_URL}recipes/recipe/add-image`,
           formData,
           {
@@ -333,14 +317,15 @@ export default {
             }
           }
         )
-        .then(response => {
-          this.recipe.imageURL = response.data.src
-        })
-        .catch(error => console.log(error.response.data.message))
+        this.recipe.imageURL = response.data.src
+      } catch (error) {
+        this.feedback.message = error.response.data.message
+        this.feedback.style = 'error'
+      }
     },
-    updateRecipe() {
-      axios
-        .put(
+    async updateRecipe() {
+      try {
+        await axios.put(
           `${process.env.VUE_APP_MY_URL}recipes/recipe/update-recipe`,
           JSON.stringify(this.recipe),
           {
@@ -350,8 +335,14 @@ export default {
             }
           }
         )
-        .then(result => console.log('Updated prodict:' + result))
-        .catch(_error => console.log('Could not update product'))
+        this.feedback.message = 'Recipe updated!'
+        this.feedback.style = 'informational'
+        window.scrollTo(0, 0)
+      } catch (error) {
+        this.feedback.message = 'Could not update recipe :( ...'
+        this.feedback.style = 'error'
+        window.scrollTo(0, 0)
+      }
     },
     async deleteRecipe() {
       const success = await service.deleteRecipe(this.recipe._id)

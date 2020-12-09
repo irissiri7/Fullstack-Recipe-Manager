@@ -17,7 +17,7 @@ const signIn = async (req, res, _next) => {
     )
     res.status(200).send(response.data)
   } catch (error) {
-    if (error.isAxiosError) {
+    if (error.response) {
       res.status(400).send({ message: error.response.data.error.message })
     } else {
       res.status(400).send({ message: error.message })
@@ -42,7 +42,7 @@ const signUp = async (req, res, _next) => {
     await newUser.save()
     res.status(201).send(response.data)
   } catch (error) {
-    if (error.isAxiosError) {
+    if (error.response) {
       res.status(400).send({ message: error.response.data.error.message })
     } else {
       res.status(400).send({ message: error.message })

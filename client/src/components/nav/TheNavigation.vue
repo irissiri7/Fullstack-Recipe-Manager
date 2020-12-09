@@ -15,7 +15,7 @@
         </ul>
       </nav>
     </div>
-    <div>
+    <div v-if="$store.getters.isAuth">
       <button class="ui icon button" @click="signOut">
         <i class="sign out alternate icon large"></i>
       </button>

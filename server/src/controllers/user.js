@@ -27,9 +27,9 @@ const signIn = (req, res, _next) => {
     })
 }
 
-const signUp = (req, res, _next) => {
-  axios
-    .post(
+const signUp = async (req, res, _next) => {
+  try {
+    const response = await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.firebase_AUTH_API_KEY}`,
       {
         email: req.body.email,
@@ -37,27 +37,19 @@ const signUp = (req, res, _next) => {
         returnSecureToken: true
       }
     )
-    .then((response) => {
-      const newUser = new User({
-        firebaseId: response.data.localId,
-        email: response.data.email
-      })
-      newUser
-        .save()
-        .then((_result) => {
-          res.status(200).json(response.data)
-        })
-        .catch((_err) => {
-          throw new Error('Failed to sign up new user')
-        })
+    const newUser = new User({
+      firebaseId: response.data.localId,
+      email: response.data.email
     })
-    .catch((error) => {
-      if (error.response) {
-        res.sendStatus(error.response.status)
-      } else {
-        res.sendStatus(500)
-      }
-    })
+    await newUser.save()
+    res.status(201).send(response.data)
+  } catch (error) {
+    if (error.isAxiosError) {
+      res.status(400).send({ message: error.response.data.error.message })
+    } else {
+      res.status(400).send({ message: error.message })
+    }
+  }
 }
 
 export default {

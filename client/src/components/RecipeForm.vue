@@ -1,4 +1,11 @@
 <template>
+  <base-dialog-card
+    v-if="feedback.message"
+    :style="feedback.style"
+    :bulletPoints="feedback.bulletPoints"
+  >
+    <p>{{ feedback.message }}</p>
+  </base-dialog-card>
   <form class="ui form">
     <h3 class="ui dividing header">Recipe Name</h3>
     <div class="field">
@@ -198,9 +205,6 @@
         </base-button>
       </div>
     </div>
-    <div v-if="message">
-      <p>{{ message }}</p>
-    </div>
   </form>
 </template>
 
@@ -226,7 +230,11 @@ export default {
         }
       },
       ingredient: '',
-      message: null
+      feedback: {
+        message: null,
+        bulletPoints: ['Recipe must have title', 'test'],
+        style: 'error'
+      }
     }
   },
   props: {
@@ -277,7 +285,7 @@ export default {
       })
         .then(response => {
           if (response.ok) {
-            this.message = 'Recipe added!'
+            this.feedback.message = 'Recipe added!'
             this.recipe = {
               title: '',
               ingredients: [],
@@ -289,11 +297,11 @@ export default {
               }
             }
           } else {
-            this.message = 'Could not add recipe :('
+            this.feedback.message = 'Could not add recipe :('
           }
         })
         .catch(_err => {
-          this.message = 'Something went wrong :('
+          this.feedback.message = 'Something went wrong :('
         })
     },
     discardRecipe() {

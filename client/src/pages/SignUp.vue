@@ -1,6 +1,9 @@
 <template>
   <base-card>
     <h1>Sign Up</h1>
+    <base-dialog-card v-if="feedback.message" :style="feedback.style">
+      {{ feedback.message }}
+    </base-dialog-card>
     <form class="ui form" @submit.prevent="signUp">
       <div class="field">
         <label>Email</label>
@@ -45,17 +48,6 @@
           Sign Up
         </base-button>
       </div>
-      <div class="field">
-        <p v-if="error">
-          Something went wrong, could not sign up new user
-        </p>
-        <div v-if="successfullSignUp">
-          <h4>
-            Welcome new user!
-          </h4>
-          <p>Redirecting to log in page...</p>
-        </div>
-      </div>
     </form>
     <router-link to="/">Back to log in</router-link>
   </base-card>
@@ -69,8 +61,10 @@ export default {
       password: null,
       confirmedPassword: null,
       acceptsTermsOfUse: false,
-      error: false,
-      successfullSignUp: false
+      feedback: {
+        message: null,
+        style: null
+      }
     }
   },
   computed: {
@@ -91,12 +85,17 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(success => {
-          console.log(success)
-          this.$router.push('/home')
+        .then(() => {
+          this.feedback.style = 'informational'
+          this.feedback.message = 'Sign up successful! Redirecting...'
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 2000)
         })
-        .catch(error => {
-          console.log(error)
+        .catch(_error => {
+          this.feedback.style = 'error'
+          this.feedback.message =
+            'Something went wrong :( ... Could not sign up new user'
         })
     }
   }

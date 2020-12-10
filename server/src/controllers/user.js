@@ -50,7 +50,27 @@ const signUp = async (req, res, _next) => {
   }
 }
 
+const changeEmail = async (req, res, _next) => {
+  try {
+    const response = await axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${process.env.firebase_AUTH_API_KEY}`,
+      {
+        idToken: req.headers.authorization.split(' ')[1],
+        email: req.body.email,
+        returnSecureToken: true
+      }
+    )
+
+    res.status(200).send(response.data)
+  } catch (error) {
+    res
+      .status(400)
+      .send({ message: 'Something went wrong, could not change email' })
+  }
+}
+
 export default {
   signIn,
-  signUp
+  signUp,
+  changeEmail
 }

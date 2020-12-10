@@ -64,10 +64,10 @@
     <div class="field">
       <div class="two fields">
         <div class="field">
-          <base-button>Update Profile</base-button>
+          <base-button class="full-width">Update Profile</base-button>
         </div>
-        <div>
-          <base-button alert @click.prevent="deleteProfile"
+        <div class="field">
+          <base-button class="full-width" alert @click.prevent="deleteProfile"
             >Delete Profile</base-button
           >
         </div>
@@ -97,4 +97,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.full-width {
+  width: 100%;
+}
+</style>

@@ -1,6 +1,22 @@
 <template>
   <base-card>
     <div class="cnt">
+      <div v-if="showChangeProfilePicture" class="field" id="file-upload-cnt">
+        <input
+          type="file"
+          name="image"
+          ref="image"
+          id="file-uploader"
+          @change="handleFileUpload"
+        />
+        <button
+          class="ui icon circular button"
+          id="image-btn"
+          @click.prevent=""
+        >
+          <i class="pencil alternate icon"></i>
+        </button>
+      </div>
       <img
         class="ui middle aligned small circular bordered image"
         src="../assets/profilepicture.jpeg"
@@ -48,7 +64,11 @@ export default {
   data() {
     return {
       activeComponent: 'general-profile-info'
-      // activeComponent: 'change-email'
+    }
+  },
+  computed: {
+    showChangeProfilePicture() {
+      return this.activeComponent === 'general-profile-info'
     }
   }
 }
@@ -60,9 +80,7 @@ h1 {
   margin-left: 2rem;
   color: #30292f;
 }
-.full-width {
-  width: 100%;
-}
+
 .cnt {
   margin-bottom: 2rem;
 }
@@ -70,7 +88,7 @@ h1 {
   margin: 10px 0px;
 }
 .nav-btn {
-  padding: 5px 10px 5px 0px;
+  padding: 5px 15px 5px 0px;
   border: none;
   background: none;
   font-family: inherit;
@@ -90,5 +108,25 @@ h1 {
 .selected {
   color: var(--main-orange);
   border-bottom: 1px solid var(--main-orange);
+}
+
+/* Css for overriding the default file uploader, its just too damn ugly */
+#file-upload-cnt {
+  position: absolute;
+  z-index: 98;
+}
+#image-btn {
+  background-color: var(--main-orange);
+  color: var(--main-pine);
+}
+
+#file-uploader {
+  position: absolute;
+  z-index: 99;
+  opacity: 0;
+}
+
+.pencil.alternate.icon {
+  color: white;
 }
 </style>

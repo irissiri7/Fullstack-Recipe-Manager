@@ -13,4 +13,10 @@ router.post(
   userController.changeEmail
 )
 
+router.post(
+  '/user/change-password',
+  auth.authenticateUser,
+  userController.changePassword
+)
+
 export default router

@@ -88,6 +88,32 @@ const store = createStore({
         throw new Error('Could not change email')
       }
     },
+    async changePassword(context, payload) {
+      try {
+        console.log(payload.password)
+        const response = await axios.post(
+          `${process.env.VUE_APP_MY_URL}users/user/change-password`,
+          {
+            password: payload.password
+          },
+          {
+            headers: {
+              Authorization: `Basic ${context.getters.token}`
+            }
+          }
+        )
+
+        context.commit('setUser', {
+          firebaseId: response.data.localId,
+          token: response.data.idToken,
+          tokenExpiration: response.data.expiresIn,
+          email: response.data.email
+        })
+        return
+      } catch (error) {
+        throw new Error('Could not change password')
+      }
+    },
 
     signOut(context, _payload) {
       context.commit('setUser', {

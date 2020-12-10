@@ -16,7 +16,7 @@ export default {
     },
     style: {
       type: String,
-      required: true
+      default: 'informational'
     }
   }
 }

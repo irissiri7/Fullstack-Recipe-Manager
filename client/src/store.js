@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import router from './router.js'
 import dotenv from 'dotenv'
 import axios from 'axios'
 
@@ -18,7 +17,6 @@ const store = createStore({
       state.firebaseId = payload.firebaseId
       state.token = payload.token
       state.tokenExpiration = payload.tokenExpiration
-      router.push('/home')
     }
   },
   actions: {

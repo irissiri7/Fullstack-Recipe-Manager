@@ -1,11 +1,20 @@
 <template>
   <base-card>
-    <h1>Log In</h1>
-    <form class="ui form">
+    <base-dialog-card v-if="feedback.message" :style="feedback.style">
+      {{ feedback.message }}
+    </base-dialog-card>
+    <h1>Sign In</h1>
+    <form class="ui form" @submit.prevent="signIn">
       <div class="field">
         <label>Email</label>
         <div class="field">
-          <input type="text" name="email" placeholder="Email" v-model="email" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            v-model="email"
+            required
+          />
         </div>
         <label>Password</label>
         <div class="field">
@@ -14,13 +23,12 @@
             name="password"
             placeholder="Password"
             v-model="password"
+            required
           />
         </div>
       </div>
       <div class="field">
-        <base-button class="same-width" @click.prevent="signIn"
-          >Log In</base-button
-        >
+        <base-button class="same-width">Log In</base-button>
       </div>
       <div class="field">
         <p>Not a user?</p>
@@ -37,7 +45,11 @@ export default {
   data() {
     return {
       email: 'lydia@example.com',
-      password: '123123'
+      password: '123123',
+      feedback: {
+        message: null,
+        style: null
+      }
     }
   },
   methods: {
@@ -50,8 +62,9 @@ export default {
         .then(() => {
           this.$router.push('/home')
         })
-        .catch(error => {
-          console.log(error)
+        .catch(_error => {
+          this.feedback.message = 'Could not sign in. Check your credentials.'
+          this.feedback.style = 'error'
         })
     },
     signUp() {

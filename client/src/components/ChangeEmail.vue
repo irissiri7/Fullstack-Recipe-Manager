@@ -1,7 +1,10 @@
 <template>
-  <form class="ui form" @submit="changeEmail">
+  <base-dialog-card v-if="feedback.message" :style="feedback.style">
+    {{ feedback.message }}
+  </base-dialog-card>
+  <form class="ui form" @submit.prevent="changeEmail">
     <div class="field">
-      <p>Current email: {{ currentEmail }}</p>
+      <p><strong>Current email:</strong> {{ $store.getters.email }}</p>
     </div>
     <div class="field">
       <label>New Email</label>
@@ -10,6 +13,7 @@
         name="new-email"
         placeholder="New Email"
         v-model="newEmail"
+        required
       />
     </div>
     <div class="field">
@@ -19,26 +23,54 @@
         name="new-email-confirmed"
         placeholder="Confirmed Email"
         v-model="confirmedEmail"
+        required
       />
     </div>
     <div class="field">
-      <base-button>Change Email</base-button>
+      <base-button :class="{ disabled: !validForm }">Change Email</base-button>
     </div>
   </form>
 </template>
 
 <script>
+import BaseDialogCard from './ui/BaseDialogCard.vue'
 export default {
+  components: { BaseDialogCard },
   data() {
     return {
-      currentEmail: '',
       newEmail: '',
-      confirmedEmail: ''
+      confirmedEmail: '',
+      feedback: {
+        message: null,
+        style: null
+      }
+    }
+  },
+  computed: {
+    validForm() {
+      return (
+        this.newEmail &&
+        this.newEmail === this.confirmedEmail &&
+        this.newEmail != this.$store.getters.email
+      )
     }
   },
   methods: {
-    changePassword() {
-      console.log('Changing Email :D')
+    changeEmail() {
+      this.$store
+        .dispatch('changeEmail', {
+          email: this.newEmail
+        })
+        .then(() => {
+          this.feedback.style = 'informational'
+          this.feedback.message = 'Email successfully changed!'
+          this.newEmail = ''
+          this.confirmedEmail = ''
+        })
+        .catch(_error => {
+          this.feedback.style = 'error'
+          this.feedback.message = 'Something went wrong, could not change email'
+        })
     }
   }
 }

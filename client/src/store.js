@@ -9,7 +9,8 @@ const store = createStore({
     return {
       firebaseId: null,
       token: null,
-      tokenExpiration: null
+      tokenExpiration: null,
+      email: null
     }
   },
   mutations: {
@@ -17,6 +18,7 @@ const store = createStore({
       state.firebaseId = payload.firebaseId
       state.token = payload.token
       state.tokenExpiration = payload.tokenExpiration
+      state.email = payload.email
     }
   },
   actions: {
@@ -33,7 +35,8 @@ const store = createStore({
         context.commit('setUser', {
           firebaseId: response.data.localId,
           token: response.data.idToken,
-          tokenExpiration: response.data.tokenExpiration
+          tokenExpiration: response.data.tokenExpiration,
+          email: response.data.email
         })
         return
       } catch (error) {
@@ -60,11 +63,38 @@ const store = createStore({
         }
       }
     },
+    async changeEmail(context, payload) {
+      try {
+        const response = await axios.post(
+          `${process.env.VUE_APP_MY_URL}users/user/change-email`,
+          {
+            email: payload.email
+          },
+          {
+            headers: {
+              Authorization: `Basic ${context.getters.token}`
+            }
+          }
+        )
+
+        context.commit('setUser', {
+          firebaseId: response.data.localId,
+          token: response.data.idToken,
+          tokenExpiration: response.data.expiresIn,
+          email: response.data.email
+        })
+        return
+      } catch (error) {
+        throw new Error('Could not change email')
+      }
+    },
+
     signOut(context, _payload) {
       context.commit('setUser', {
         firebaseId: null,
         token: null,
-        tokenExpiration: null
+        tokenExpiration: null,
+        email: null
       })
     }
   },
@@ -77,6 +107,9 @@ const store = createStore({
     },
     token(state) {
       return state.token
+    },
+    email(state) {
+      return state.email
     }
   }
 })

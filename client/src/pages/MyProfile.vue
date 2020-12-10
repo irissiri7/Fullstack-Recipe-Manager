@@ -7,104 +7,48 @@
       />
       <h1>My Profile</h1>
     </div>
-    <form class="ui form">
-      <h4 class="ui dividing header">Personal Information</h4>
-      <div class="field">
-        <label>Name</label>
-        <div class="two fields">
-          <div class="field">
-            <input type="text" name="first-name" placeholder="First Name" />
-          </div>
-          <div class="field">
-            <input type="text" name="last-name" placeholder="Last Name" />
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="two fields">
-          <div class="field">
-            <label>Email</label>
-            <input type="text" name="email" placeholder="Email" />
-          </div>
-          <div class="field">
-            <label>Phone Number</label>
-            <input type="text" name="phone-number" placeholder="Phone Number" />
-          </div>
-        </div>
-      </div>
-      <h4 class="ui dividing header">Food Preferences</h4>
-      <div class="fields">
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" name="example" />
-            <label>Vegetarian</label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" name="example" />
-            <label>Vegan</label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" name="example" />
-            <label>Lactose Free</label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" name="example" />
-            <label>Gluten Free</label>
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <div class="two fields">
-          <div class="field">
-            <label style="visibility:hidden">Change Password</label>
-            <base-button
-              v-if="!changePassword"
-              @click.prevent="changePassword = !changePassword"
-              class="full-width"
-            >
-              Change Password
-            </base-button>
-          </div>
-        </div>
-      </div>
-      <div v-if="changePassword" class="field">
-        <div class="two fields">
-          <div class="field">
-            <label>New Password</label>
-            <input
-              type="password"
-              name="new-password"
-              placeholder="New Password"
-            />
-          </div>
-          <div class="field">
-            <label>Confirm New Password</label>
-            <input
-              type="password"
-              name="new-password-confirmed"
-              placeholder="Confirmed Password"
-            />
-          </div>
-        </div>
-      </div>
-      <div v-if="changePassword" class="field">
-        <base-button class="full-width">Change Password</base-button>
-      </div>
-    </form>
+    <div class="flex navigation-cnt">
+      <button
+        @click="activeComponent = 'general-profile-info'"
+        class="nav-btn"
+        :class="{ selected: activeComponent === 'general-profile-info' }"
+      >
+        General info
+      </button>
+      <button
+        @click="activeComponent = 'change-email'"
+        class="nav-btn"
+        :class="{ selected: activeComponent === 'change-email' }"
+      >
+        Change email
+      </button>
+      <button
+        @click="activeComponent = 'change-password'"
+        class="nav-btn"
+        :class="{ selected: activeComponent === 'change-password' }"
+      >
+        Change password
+      </button>
+    </div>
+    <component :is="activeComponent"></component>
   </base-card>
 </template>
 
 <script>
+import GeneralProfileInfo from '../components/GeneralProfileInfo.vue'
+import ChangeEmail from '../components/ChangeEmail.vue'
+import ChangePassword from '../components/ChangePassword.vue'
+
 export default {
+  components: {
+    GeneralProfileInfo,
+    ChangeEmail,
+    ChangePassword
+  },
   data() {
     return {
-      changePassword: false
+      activeComponent: 'general-profile-info'
+      // activeComponent: 'change-email'
     }
   }
 }
@@ -121,5 +65,30 @@ h1 {
 }
 .cnt {
   margin-bottom: 2rem;
+}
+.navigation-cnt {
+  margin: 10px 0px;
+}
+.nav-btn {
+  padding: 5px 10px 5px 0px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  border-bottom: 1px solid grey;
+}
+
+.nav-btn:focus,
+.nav-btn:active {
+  outline: none;
+}
+
+.nav-btn:hover {
+  color: var(--main-orange);
+  border-bottom: 1px solid var(--main-orange);
+}
+
+.selected {
+  color: var(--main-orange);
+  border-bottom: 1px solid var(--main-orange);
 }
 </style>

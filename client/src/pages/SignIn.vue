@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       email: 'lydia@example.com',
-      password: '123123',
+      password: '111111',
       feedback: {
         message: null,
         style: null

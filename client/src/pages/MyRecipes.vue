@@ -64,7 +64,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0px;
+  margin: 2rem 0px 0px;
 }
 
 .circular.ui.huge.icon.button {

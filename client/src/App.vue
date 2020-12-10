@@ -58,7 +58,7 @@ html {
 main {
   min-height: 100%;
   margin: 0 auto;
-  width: 40%;
+  width: 50%;
 }
 /* list styles */
 ul {

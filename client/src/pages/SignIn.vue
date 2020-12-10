@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="field">
-        <base-button class="same-width">Log In</base-button>
+        <base-button class="same-width">Sign In</base-button>
       </div>
       <div class="field">
         <p>Not a user?</p>

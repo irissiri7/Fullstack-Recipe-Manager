@@ -89,9 +89,23 @@ const changePassword = async (req, res, _next) => {
   }
 }
 
+const getUserDetails = async (req, res, _next) => {
+  try {
+    const response = await User.findOne({ firebaseId: req.query.firebaseId })
+    if (response) {
+      res.status(200).send(response)
+    } else {
+      throw new Error('Could not find user')
+    }
+  } catch (error) {
+    res.status(404).send({ message: error.message })
+  }
+}
+
 export default {
   signIn,
   signUp,
   changeEmail,
-  changePassword
+  changePassword,
+  getUserDetails
 }

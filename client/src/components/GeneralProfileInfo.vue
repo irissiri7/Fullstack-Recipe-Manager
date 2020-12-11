@@ -77,13 +77,15 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
-      firstName: 'Lydia',
-      lastName: 'Lind',
+      firstName: null,
+      lastName: null,
       numberOfRecipes: 50,
-      foodPreferences: ['vegan']
+      foodPreferences: null
     }
   },
   methods: {
@@ -92,7 +94,29 @@ export default {
     },
     deleteProfile() {
       console.log('Deleting profile :(')
+    },
+    async fetchData() {
+      console.log('fetching data')
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
+        )
+        const data = response.data
+        data.firstName && (this.firstName = data.firstName)
+        data.lastName && (this.lastName = data.lastName)
+        data.foodPreferences && (this.foodPreferences = data.foodPreferences)
+      } catch (error) {
+        console.log(error)
+      }
     }
+  },
+  created() {
+    this.fetchData()
   }
 }
 </script>

@@ -19,4 +19,10 @@ router.post(
   userController.changePassword
 )
 
+router.get(
+  '/user/get-user-details',
+  auth.authenticateUser,
+  userController.getUserDetails
+)
+
 export default router

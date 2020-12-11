@@ -2,6 +2,8 @@ import User from '../models/User.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
+import Middlewares from '../middleware/Middlewares.js'
+
 dotenv.config()
 
 const signIn = async (req, res, _next) => {
@@ -123,11 +125,24 @@ const updateUserDetails = async (req, res, _next) => {
   }
 }
 
+const addProfilePicture = async (req, res, _next) => {
+  Middlewares.upload(req, res, (error) => {
+    if (error) {
+      res.status(400).send({ message: error.message })
+    } else {
+      res
+        .status(200)
+        .send({ src: `${process.env.BASE_URL}${req.file.filename}` })
+    }
+  })
+}
+
 export default {
   signIn,
   signUp,
   changeEmail,
   changePassword,
   getUserDetails,
-  updateUserDetails
+  updateUserDetails,
+  addProfilePicture
 }

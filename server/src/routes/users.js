@@ -31,4 +31,10 @@ router.post(
   userController.updateUserDetails
 )
 
+router.post(
+  '/user/add-profile-picture',
+  auth.authenticateUser,
+  userController.addProfilePicture
+)
+
 export default router

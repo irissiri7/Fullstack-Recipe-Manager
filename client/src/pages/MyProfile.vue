@@ -19,7 +19,7 @@
       </div>
       <img
         class="ui middle aligned small circular bordered image"
-        src="../assets/profilepicture.jpeg"
+        :src="profilePictureSrc"
       />
       <h1>My Profile</h1>
     </div>
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import UserDetails from '../components/UserDetails.vue'
 import ChangeEmail from '../components/ChangeEmail.vue'
 import ChangePassword from '../components/ChangePassword.vue'
@@ -63,12 +65,41 @@ export default {
   },
   data() {
     return {
-      activeComponent: 'user-details'
+      activeComponent: 'user-details',
+      profilePictureURL: null
     }
   },
   computed: {
     showChangeProfilePicture() {
       return this.activeComponent === 'user-details'
+    },
+    profilePictureSrc() {
+      return this.profilePictureURL
+        ? this.profilePictureURL
+        : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+    }
+  },
+  methods: {
+    async handleFileUpload() {
+      const image = this.$refs.image.files[0]
+      const formData = new FormData()
+      formData.append('image', image)
+      try {
+        const response = await axios.post(
+          `${process.env.VUE_APP_MY_URL}users/user/add-profile-picture`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
+        )
+        this.profilePictureURL = response.data.src
+      } catch (error) {
+        this.feedback.message = error.response.data.message
+        this.feedback.style = 'error'
+      }
     }
   }
 }

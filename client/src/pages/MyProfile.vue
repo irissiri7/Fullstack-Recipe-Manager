@@ -25,9 +25,9 @@
     </div>
     <div class="flex navigation-cnt">
       <button
-        @click="activeComponent = 'general-profile-info'"
+        @click="activeComponent = 'user-details'"
         class="nav-btn"
-        :class="{ selected: activeComponent === 'general-profile-info' }"
+        :class="{ selected: activeComponent === 'user-details' }"
       >
         General info
       </button>
@@ -51,24 +51,24 @@
 </template>
 
 <script>
-import GeneralProfileInfo from '../components/GeneralProfileInfo.vue'
+import UserDetails from '../components/UserDetails.vue'
 import ChangeEmail from '../components/ChangeEmail.vue'
 import ChangePassword from '../components/ChangePassword.vue'
 
 export default {
   components: {
-    GeneralProfileInfo,
+    UserDetails,
     ChangeEmail,
     ChangePassword
   },
   data() {
     return {
-      activeComponent: 'general-profile-info'
+      activeComponent: 'user-details'
     }
   },
   computed: {
     showChangeProfilePicture() {
-      return this.activeComponent === 'general-profile-info'
+      return this.activeComponent === 'user-details'
     }
   }
 }

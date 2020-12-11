@@ -1,5 +1,4 @@
 import User from '../models/User.js'
-// import mongoose from 'mongoose'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
@@ -37,7 +36,8 @@ const signUp = async (req, res, _next) => {
     )
     const newUser = new User({
       firebaseId: response.data.localId,
-      email: response.data.email
+      firstName: '',
+      lastName: ''
     })
     await newUser.save()
     res.status(201).send(response.data)
@@ -102,10 +102,32 @@ const getUserDetails = async (req, res, _next) => {
   }
 }
 
+const updateUserDetails = async (req, res, _next) => {
+  try {
+    const user = await User.findOne({ firebaseId: req.body.firebaseId })
+    if (!user) throw new Error('Could not find a user to update')
+    const newInformation = {
+      foodPreferences: req.body.foodPreferences,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    }
+    const updatedUserDetails = await User.findByIdAndUpdate(
+      user._id,
+      newInformation,
+      { new: true }
+    )
+    res.status(200).send(updatedUserDetails)
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(error.message)
+  }
+}
+
 export default {
   signIn,
   signUp,
   changeEmail,
   changePassword,
-  getUserDetails
+  getUserDetails,
+  updateUserDetails
 }

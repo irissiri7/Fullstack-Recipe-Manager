@@ -25,4 +25,10 @@ router.get(
   userController.getUserDetails
 )
 
+router.post(
+  '/user/update-user-details',
+  auth.authenticateUser,
+  userController.updateUserDetails
+)
+
 export default router

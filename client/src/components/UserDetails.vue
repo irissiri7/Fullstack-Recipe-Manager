@@ -1,5 +1,8 @@
 <template>
-  <form class="ui form" @submit.prevent="updateProfile">
+  <base-dialog-card v-if="feedback.message" :style="feedback.style">
+    {{ feedback.message }}
+  </base-dialog-card>
+  <form class="ui form" @submit.prevent="updateUserDetails">
     <h4 class="ui dividing header">Summary</h4>
     <div class="field">
       <p>You currently have {{ numberOfRecipes }} recipes</p>
@@ -78,25 +81,24 @@
 
 <script>
 import axios from 'axios'
+import BaseDialogCard from './ui/BaseDialogCard.vue'
 
 export default {
+  components: { BaseDialogCard },
   data() {
     return {
-      firstName: null,
-      lastName: null,
+      firstName: '',
+      lastName: '',
       numberOfRecipes: 50,
-      foodPreferences: null
+      foodPreferences: [],
+      feedback: {
+        message: null,
+        style: null
+      }
     }
   },
   methods: {
-    updateProfile() {
-      console.log('Updating Profile!')
-    },
-    deleteProfile() {
-      console.log('Deleting profile :(')
-    },
     async fetchData() {
-      console.log('fetching data')
       try {
         const response = await axios.get(
           `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
@@ -106,14 +108,43 @@ export default {
             }
           }
         )
-        const data = response.data
-        data.firstName && (this.firstName = data.firstName)
-        data.lastName && (this.lastName = data.lastName)
-        data.foodPreferences && (this.foodPreferences = data.foodPreferences)
+        this.firstName = response.data.firstName
+        this.lastName = response.data.lastName
+        this.foodPreferences = response.data.foodPreferences
       } catch (error) {
+        this.feedback.style = 'error'
+        this.feedback.message = 'Could not fetch user information'
+        console.log(error)
+      }
+    },
+    async updateUserDetails() {
+      try {
+        const newData = {
+          firebaseId: this.$store.getters.firebaseId,
+          foodPreferences: this.foodPreferences,
+          firstName: this.firstName,
+          lastName: this.lastName
+        }
+        await axios.post(
+          `${process.env.VUE_APP_MY_URL}users/user/update-user-details/`,
+          newData,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
+        )
+        this.feedback.style = 'informational'
+        this.feedback.message = 'Update successful!'
+      } catch (error) {
+        this.feedback.style = 'error'
+        this.feedback.message = 'Could not update user information'
         console.log(error)
       }
     }
+  },
+  deleteProfile() {
+    console.log('Deleting profile :(')
   },
   created() {
     this.fetchData()

@@ -272,7 +272,7 @@ export default {
       }
       const data = {
         ...this.recipe,
-        ...{ firebaseId: this.$store.getters.user }
+        ...{ firebaseId: this.$store.getters.firebaseId }
       }
       try {
         await axios.post(

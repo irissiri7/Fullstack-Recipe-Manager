@@ -42,7 +42,7 @@ export default {
     fetchData() {
       axios
         .get(
-          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.user}`,
+          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.firebaseId}`,
           {
             headers: {
               Authorization: `Basic ${this.$store.getters.token}`

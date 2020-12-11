@@ -128,7 +128,7 @@ const store = createStore({
     isAuth(state) {
       return !!state.token
     },
-    user(state) {
+    firebaseId(state) {
       return state.firebaseId
     },
     token(state) {

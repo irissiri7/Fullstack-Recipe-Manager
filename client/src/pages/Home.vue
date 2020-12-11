@@ -13,11 +13,24 @@
         <em>always</em> available.</strong
       >
     </p>
+    <div class="img-cnt">
+      <img :src="src" alt="dish" />
+    </div>
+    <p class="side-note">
+      This recipe was provided by
+      <a href="https://spoonacular.com/food-api/" target="_blank"
+        >Spoonacular API</a
+      >
+      Check it out <a :href="spoonacularSource" target="_blank">here</a>
+    </p>
   </base-card>
 </template>
 
 <script>
 import axios from 'axios'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 import BaseCard from '../components/ui/BaseCard.vue'
 
@@ -25,7 +38,20 @@ export default {
   components: { BaseCard },
   data() {
     return {
-      firstName: null
+      firstName: null,
+      recipe: null
+    }
+  },
+  computed: {
+    src() {
+      return this.recipe
+        ? this.recipe.image
+        : 'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg'
+    },
+    spoonacularSource() {
+      return this.recipe
+        ? this.recipe.spoonacularSourceUrl
+        : 'https://spoonacular.com/'
     }
   },
   methods: {
@@ -43,10 +69,22 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    async fetchImage() {
+      try {
+        const response = await axios.get(
+          `https://api.spoonacular.com/recipes/random?number=1&apiKey=${process.env.VUE_APP_SPOONACULAR_API_KEY}`
+        )
+        console.log(response)
+        this.recipe = response.data.recipes[0]
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   created() {
     this.fetchData()
+    this.fetchImage()
   }
 }
 </script>
@@ -60,5 +98,11 @@ h1 {
 }
 p {
   font-size: 20px;
+}
+.img-cnt {
+  height: 20rem;
+}
+.side-note {
+  font-size: 12px;
 }
 </style>

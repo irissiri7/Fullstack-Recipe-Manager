@@ -79,10 +79,12 @@ img {
 /* link-styles */
 a {
   color: var(--main-coffee);
+  border-bottom: 1px solid var(--main-coffee);
 }
 a:hover {
   color: var(--main-pine);
   font-weight: 600;
+  border-bottom: 1px solid var(--main-pine);
 }
 a:visited {
   color: none;

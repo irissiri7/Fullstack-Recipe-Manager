@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome {{ username }}!</h1>
+  <h1>Welcome {{ firstName }}!</h1>
   <base-card>
     <p>Recipe Manager is your own personal recipe book, put online.</p>
     <p>
@@ -17,9 +17,37 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import BaseCard from '../components/ui/BaseCard.vue'
+
 export default {
-  components: { BaseCard }
+  components: { BaseCard },
+  data() {
+    return {
+      firstName: null
+    }
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
+        )
+        this.firstName = response.data.firstName
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
+  created() {
+    this.fetchData()
+  }
 }
 </script>
 

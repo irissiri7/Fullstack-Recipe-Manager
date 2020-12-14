@@ -87,43 +87,36 @@ export default {
   components: { BaseDialogCard },
   data() {
     return {
-      firstName: '',
-      lastName: '',
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
       numberOfRecipes: 50,
-      foodPreferences: [],
+      foodPreferences: this.user.foodPreferences,
       feedback: {
         message: null,
         style: null
       }
     }
   },
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    profilePictureURL() {
+      return this.user.profilePictureURL
+    }
+  },
   methods: {
-    async fetchData() {
-      try {
-        const response = await axios.get(
-          `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.firstName = response.data.firstName
-        this.lastName = response.data.lastName
-        this.foodPreferences = response.data.foodPreferences
-      } catch (error) {
-        this.feedback.style = 'error'
-        this.feedback.message = 'Could not fetch user information'
-        console.log(error)
-      }
-    },
     async updateUserDetails() {
       try {
         const newData = {
           firebaseId: this.$store.getters.firebaseId,
           foodPreferences: this.foodPreferences,
           firstName: this.firstName,
-          lastName: this.lastName
+          lastName: this.lastName,
+          profilePictureURL: this.profilePictureURL
         }
         await axios.post(
           `${process.env.VUE_APP_MY_URL}users/user/update-user-details/`,
@@ -136,6 +129,7 @@ export default {
         )
         this.feedback.style = 'informational'
         this.feedback.message = 'Update successful!'
+        this.$emit('updated-user')
       } catch (error) {
         this.feedback.style = 'error'
         this.feedback.message = 'Could not update user information'
@@ -145,10 +139,10 @@ export default {
   },
   deleteProfile() {
     console.log('Deleting profile :(')
-  },
-  created() {
-    this.fetchData()
   }
+  // created() {
+  //   this.fetchData()
+  // }
 }
 </script>
 

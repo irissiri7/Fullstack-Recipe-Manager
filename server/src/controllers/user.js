@@ -39,7 +39,8 @@ const signUp = async (req, res, _next) => {
     const newUser = new User({
       firebaseId: response.data.localId,
       firstName: '',
-      lastName: ''
+      lastName: '',
+      profilePictureURL: ''
     })
     await newUser.save()
     res.status(201).send(response.data)
@@ -111,8 +112,10 @@ const updateUserDetails = async (req, res, _next) => {
     const newInformation = {
       foodPreferences: req.body.foodPreferences,
       firstName: req.body.firstName,
-      lastName: req.body.lastName
+      lastName: req.body.lastName,
+      profilePictureURL: req.body.profilePictureURL
     }
+    console.log(newInformation)
     const updatedUserDetails = await User.findByIdAndUpdate(
       user._id,
       newInformation,

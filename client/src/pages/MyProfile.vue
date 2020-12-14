@@ -46,7 +46,12 @@
         Change password
       </button>
     </div>
-    <component :is="activeComponent"></component>
+    <component
+      v-if="user"
+      :is="activeComponent"
+      :user="user"
+      @updated-user="fetchData"
+    ></component>
   </base-card>
 </template>
 
@@ -66,7 +71,7 @@ export default {
   data() {
     return {
       activeComponent: 'user-details',
-      profilePictureURL: null
+      user: null
     }
   },
   computed: {
@@ -74,8 +79,8 @@ export default {
       return this.activeComponent === 'user-details'
     },
     profilePictureSrc() {
-      return this.profilePictureURL
-        ? this.profilePictureURL
+      return this.user && this.user.profilePictureURL
+        ? this.user.profilePictureURL
         : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
     }
   },
@@ -95,12 +100,32 @@ export default {
             }
           }
         )
-        this.profilePictureURL = response.data.src
+        this.user.profilePictureURL = response.data.src
       } catch (error) {
         this.feedback.message = error.response.data.message
         this.feedback.style = 'error'
       }
+    },
+    async fetchData() {
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
+        )
+        this.user = response.data
+      } catch (error) {
+        this.feedback.style = 'error'
+        this.feedback.message = 'Could not fetch user information'
+        console.log(error)
+      }
     }
+  },
+  created() {
+    this.fetchData()
   }
 }
 </script>

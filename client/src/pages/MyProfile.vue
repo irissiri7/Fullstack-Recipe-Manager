@@ -5,7 +5,7 @@
         <input
           type="file"
           name="image"
-          ref="image"
+          ref="file"
           id="file-uploader"
           @change="handleFileUpload"
         />
@@ -20,6 +20,7 @@
       <img
         class="ui middle aligned small circular bordered image"
         :src="profilePictureSrc"
+        ref="image"
       />
       <h1>My Profile</h1>
     </div>
@@ -81,25 +82,9 @@ export default {
   },
   methods: {
     async handleFileUpload() {
-      const image = this.$refs.image.files[0]
-      const formData = new FormData()
-      formData.append('image', image)
-      try {
-        const response = await axios.post(
-          `${process.env.VUE_APP_MY_URL}users/user/add-profile-picture`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.user.profilePictureURL = response.data.src
-      } catch (error) {
-        this.feedback.message = error.response.data.message
-        this.feedback.style = 'error'
-      }
+      const file = this.$refs.file.files[0]
+      const image = this.$refs.image
+      image.src = URL.createObjectURL(file)
     },
     async fetchData() {
       try {

@@ -19,14 +19,14 @@
     <h3 class="ui dividing header">Image</h3>
     <div class="field">
       <div class="img-cnt">
-        <img :src="src" />
+        <img :src="src" ref="image" />
       </div>
     </div>
     <div class="field" id="file-upload-cnt">
       <input
         type="file"
         name="image"
-        ref="image"
+        ref="file"
         id="file-uploader"
         @change="handleFileUpload"
       />
@@ -270,29 +270,45 @@ export default {
         window.scrollTo(0, 0)
         return
       }
+      const formData = new FormData()
+      const file = this.$refs.file.files[0]
+      formData.append('image', file)
       const data = {
         ...this.recipe,
         ...{ firebaseId: this.$store.getters.firebaseId }
       }
+      formData.append('recipe', JSON.stringify(data))
       try {
         await axios.post(
           `${process.env.VUE_APP_MY_URL}recipes/recipe/add-recipe`,
-          data,
-          { headers: { Authorization: `Basic ${this.$store.getters.token}` } }
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
         )
         this.feedback.style = 'informational'
         this.feedback.message = 'Recipe added!'
         this.discardRecipe()
         window.scrollTo(0, 0)
-      } catch (_error) {
-        this.feedback.message = 'Could not add recipe :( ...'
+      } catch (error) {
+        error.response.data
+        this.feedback.style = 'error'
+        if (error.response) {
+          this.feedback.message = error.response.data.message
+        } else {
+          this.feedback.message = `Could not add recipe :(`
+        }
+        window.scrollTo(0, 0)
       }
     },
     discardRecipe() {
       this.ingredient = ''
       this.recipe = {
         title: '',
-        imageURL: null,
+        imageURL: '',
         ingredients: [],
         description: '',
         details: {
@@ -303,12 +319,28 @@ export default {
       }
     },
     async handleFileUpload() {
-      const image = this.$refs.image.files[0]
-      const formData = new FormData()
-      formData.append('image', image)
+      const file = this.$refs.file.files[0]
+      const image = this.$refs.image
+      image.src = URL.createObjectURL(file)
+    },
+    async updateRecipe() {
+      if (!this.formIsValid) {
+        this.feedback.message = 'Recipes must have a name!'
+        this.feedback.style = 'error'
+        window.scrollTo(0, 0)
+        return
+      }
       try {
-        const response = await axios.post(
-          `${process.env.VUE_APP_MY_URL}recipes/recipe/add-image`,
+        const formData = new FormData()
+        const file = this.$refs.file.files[0]
+        formData.append('image', file)
+        const data = {
+          ...this.recipe,
+          ...{ firebaseId: this.$store.getters.firebaseId }
+        }
+        formData.append('recipe', JSON.stringify(data))
+        await axios.put(
+          `${process.env.VUE_APP_MY_URL}recipes/recipe/update-recipe`,
           formData,
           {
             headers: {
@@ -317,29 +349,11 @@ export default {
             }
           }
         )
-        this.recipe.imageURL = response.data.src
-      } catch (error) {
-        this.feedback.message = error.response.data.message
-        this.feedback.style = 'error'
-      }
-    },
-    async updateRecipe() {
-      try {
-        await axios.put(
-          `${process.env.VUE_APP_MY_URL}recipes/recipe/update-recipe`,
-          JSON.stringify(this.recipe),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
         this.feedback.message = 'Recipe updated!'
         this.feedback.style = 'informational'
         window.scrollTo(0, 0)
       } catch (error) {
-        this.feedback.message = 'Could not update recipe :( ...'
+        this.feedback.message = `Could not update recipe :( Server responded with: ${error.message}`
         this.feedback.style = 'error'
         window.scrollTo(0, 0)
       }

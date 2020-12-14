@@ -1,42 +1,31 @@
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
-import Middlewares from '../middleware/Middlewares.js'
 import dotenv from 'dotenv'
 
 dotenv.config()
 
 const addRecipe = async (req, res, _next) => {
   try {
-    const user = await User.findOne({ firebaseId: req.body.firebaseId })
+    const recipeData = JSON.parse(req.body.recipe)
+    const user = await User.findOne({
+      firebaseId: recipeData.firebaseId
+    })
     const newRecipe = new Recipe({
       userId: user._id,
-      title: req.body.title,
-      imageURL: req.body.imageURL,
-      ingredients: req.body.ingredients,
-      description: req.body.description,
-      details: {
-        categories: req.body.details.categories,
-        qualities: req.body.details.qualities,
-        timeToCook: req.body.details.timeToCook
-      }
+      title: recipeData.title,
+      ingredients: recipeData.ingredients,
+      description: recipeData.description,
+      details: recipeData.details
     })
+    if (req.file) {
+      newRecipe.imageURL = `${process.env.BASE_URL}${req.file.filename}`
+    }
     await newRecipe.save()
     res.status(201).send(newRecipe)
   } catch (error) {
+    console.log(error)
     res.status(400).send({ message: error.message })
   }
-}
-
-const addRecipeImage = async (req, res, _next) => {
-  Middlewares.upload(req, res, (error) => {
-    if (error) {
-      res.status(400).send({ message: error.message })
-    } else {
-      res
-        .status(200)
-        .send({ src: `${process.env.BASE_URL}${req.file.filename}` })
-    }
-  })
 }
 
 const getRecipes = async (req, res, _next) => {
@@ -78,21 +67,20 @@ const deleteRecipe = async (req, res, _next) => {
   }
 }
 const updateRecipe = async (req, res, _next) => {
-  const newInformation = {
-    title: req.body.title,
-    imageURL: req.body.imageURL,
-    ingredients: req.body.ingredients,
-    description: req.body.description,
-    details: {
-      categories: req.body.details.categories,
-      qualities: req.body.details.qualities,
-      timeToCook: req.body.details.timeToCook
-    }
+  const data = JSON.parse(req.body.recipe)
+  const updatedInformation = {
+    title: data.title,
+    ingredients: data.ingredients,
+    description: data.description,
+    details: data.details
+  }
+  if (req.file) {
+    updatedInformation.imageURL = `${process.env.BASE_URL}${req.file.filename}`
   }
   try {
     const updatedRecipe = await Recipe.findByIdAndUpdate(
-      req.body._id,
-      newInformation,
+      data._id,
+      updatedInformation,
       {
         new: true
       }
@@ -103,13 +91,14 @@ const updateRecipe = async (req, res, _next) => {
       throw new Error('Could not update recipe')
     }
   } catch (error) {
+    console.log(error)
     res.status(400).send({ message: error.message })
   }
 }
 
 export default {
   addRecipe,
-  addRecipeImage,
+  // addRecipeImage,
   getRecipes,
   getRecipe,
   deleteRecipe,

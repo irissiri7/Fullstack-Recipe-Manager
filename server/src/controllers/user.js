@@ -107,15 +107,17 @@ const getUserDetails = async (req, res, _next) => {
 
 const updateUserDetails = async (req, res, _next) => {
   try {
-    const user = await User.findOne({ firebaseId: req.body.firebaseId })
+    const data = JSON.parse(req.body['user-details'])
+    const user = await User.findOne({ firebaseId: data.firebaseId })
     if (!user) throw new Error('Could not find a user to update')
     const newInformation = {
-      foodPreferences: req.body.foodPreferences,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      profilePictureURL: req.body.profilePictureURL
+      foodPreferences: data.foodPreferences,
+      firstName: data.firstName,
+      lastName: data.lastName
     }
-    console.log(newInformation)
+    if (req.file) {
+      newInformation.profilePictureURL = `${process.env.BASE_URL}${req.file.filename}`
+    }
     const updatedUserDetails = await User.findByIdAndUpdate(
       user._id,
       newInformation,

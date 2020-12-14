@@ -7,6 +7,7 @@ dotenv.config()
 const connectToDatabase = async () => {
   try {
     const DB_URL = process.env.DB_URL
+    mongoose.set('useFindAndModify', false)
     await mongoose.connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true

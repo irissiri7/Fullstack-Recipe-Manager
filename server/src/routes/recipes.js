@@ -2,16 +2,12 @@ import express from 'express'
 const router = express.Router()
 import recipeController from '../controllers/recipe.js'
 import auth from '../firebase/authenticator.js'
+import middlewares from '../middleware/Middlewares.js'
 
-//single recipe routes
-router.post(
-  '/recipe/add-image',
-  auth.authenticateUser,
-  recipeController.addRecipeImage
-)
 router.post(
   '/recipe/add-recipe',
   auth.authenticateUser,
+  middlewares.upload,
   recipeController.addRecipe
 )
 router.get(
@@ -27,10 +23,10 @@ router.delete(
 router.put(
   '/recipe/update-recipe/',
   auth.authenticateUser,
+  middlewares.upload,
   recipeController.updateRecipe
 )
 
-//multiple recipe routes
 router.get('/get-recipes', auth.authenticateUser, recipeController.getRecipes)
 
 export default router

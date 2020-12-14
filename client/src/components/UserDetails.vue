@@ -116,25 +116,31 @@ export default {
   methods: {
     async updateUserDetails() {
       try {
+        const formData = new FormData()
         const newData = {
           firebaseId: this.$store.getters.firebaseId,
           foodPreferences: this.foodPreferences,
           firstName: this.firstName,
-          lastName: this.lastName,
-          profilePictureURL: this.profilePictureURL
+          lastName: this.lastName
         }
+        formData.append(
+          'image',
+          document.getElementById('file-uploader').files[0]
+        )
+        formData.append('user-details', JSON.stringify(newData))
         await axios.post(
           `${process.env.VUE_APP_MY_URL}users/user/update-user-details/`,
-          newData,
+          formData,
           {
             headers: {
+              'Content-Type': 'multipart/form-data',
               Authorization: `Basic ${this.$store.getters.token}`
             }
           }
         )
         this.feedback.style = 'informational'
         this.feedback.message = 'Update successful!'
-        this.$emit('updated-user')
+        // this.$emit('updated-user')
       } catch (error) {
         this.feedback.style = 'error'
         this.feedback.message = 'Could not update user information'

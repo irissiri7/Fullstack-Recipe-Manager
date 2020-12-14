@@ -1,5 +1,5 @@
 //Firebase auth object (from the firebase-admin SDK)
-import auth from './adminSetUp.js'
+import { auth } from './adminSetUp.js'
 
 const authenticateUser = async (req, res, next) => {
   try {

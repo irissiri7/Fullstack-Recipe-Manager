@@ -7,9 +7,12 @@ import serviceKey from './service-account-key.js'
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceKey),
+  storageBucket: 'recipe-manager-ed948.appspot.com',
+
   databaseURL: process.env.firestore_URL
 })
 
 const auth = admin.auth()
+const bucket = admin.storage().bucket()
 
-export default auth
+export { auth, bucket }

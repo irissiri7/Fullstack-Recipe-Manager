@@ -46,12 +46,7 @@
         Change password
       </button>
     </div>
-    <component
-      v-if="user"
-      :is="activeComponent"
-      :user="user"
-      @updated-user="fetchData"
-    ></component>
+    <component v-if="user" :is="activeComponent" :user="user"></component>
   </base-card>
 </template>
 

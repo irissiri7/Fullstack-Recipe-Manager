@@ -5,7 +5,12 @@
   <form class="ui form" @submit.prevent="updateUserDetails">
     <h4 class="ui dividing header">Summary</h4>
     <div class="field">
-      <p>You currently have {{ numberOfRecipes }} recipes</p>
+      <p v-if="numberOfRecipes">
+        You currently have {{ numberOfRecipes }} recipe(s) in your recipe bank
+      </p>
+      <p v-else>
+        Could not get recipe statistics
+      </p>
     </div>
     <h4 class="ui dividing header">Personal Information</h4>
     <div class="field">
@@ -89,8 +94,8 @@ export default {
     return {
       firstName: this.user.firstName,
       lastName: this.user.lastName,
-      numberOfRecipes: 50,
       foodPreferences: this.user.foodPreferences,
+      numberOfRecipes: null,
       feedback: {
         message: null,
         style: null
@@ -135,14 +140,29 @@ export default {
         this.feedback.message = 'Could not update user information'
         console.log(error)
       }
+    },
+    async getNumberOfRecipes() {
+      try {
+        const response = await axios.get(
+          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.firebaseId}`,
+          {
+            headers: {
+              Authorization: `Basic ${this.$store.getters.token}`
+            }
+          }
+        )
+        this.numberOfRecipes = response.data.length
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    deleteProfile() {
+      console.log('Deleting profile :(')
     }
   },
-  deleteProfile() {
-    console.log('Deleting profile :(')
+  created() {
+    this.getNumberOfRecipes()
   }
-  // created() {
-  //   this.fetchData()
-  // }
 }
 </script>
 

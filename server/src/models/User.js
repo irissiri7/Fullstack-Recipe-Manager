@@ -7,7 +7,8 @@ const userSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
   foodPreferences: [String],
-  profilePictureURL: { type: String }
+  profilePictureURL: { type: String },
+  profilePictureName: { type: String }
 })
 
 export default mongoose.model('User', userSchema)

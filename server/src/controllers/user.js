@@ -3,6 +3,7 @@ import axios from 'axios'
 import dotenv from 'dotenv'
 
 import Middlewares from '../middleware/Middlewares.js'
+import services from '../util/services.js'
 
 dotenv.config()
 
@@ -108,19 +109,24 @@ const getUserDetails = async (req, res, _next) => {
 const updateUserDetails = async (req, res, _next) => {
   try {
     const data = JSON.parse(req.body['user-details'])
+    const file = req.file
     const user = await User.findOne({ firebaseId: data.firebaseId })
     if (!user) throw new Error('Could not find a user to update')
-    const newInformation = {
+    const updatedInformation = {
       foodPreferences: data.foodPreferences,
       firstName: data.firstName,
       lastName: data.lastName
     }
-    if (req.file) {
-      newInformation.profilePictureURL = `${process.env.BASE_URL}${req.file.filename}`
+    if (file) {
+      const result = await services.uploadImageToStorage(user._id, file)
+      if (result) {
+        updatedInformation.profilePictureURL = result[0]
+        updatedInformation.profilePictureName = result[1]
+      }
     }
     const updatedUserDetails = await User.findByIdAndUpdate(
       user._id,
-      newInformation,
+      updatedInformation,
       { new: true }
     )
     res.status(200).send(updatedUserDetails)

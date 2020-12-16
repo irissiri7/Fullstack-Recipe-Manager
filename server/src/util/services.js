@@ -10,13 +10,13 @@ const emptyTempImageFolder = async () => {
   }
 }
 
-const generateImageName = (recipeId, mimetype) => {
-  return recipeId + '.' + mimetype.split('/')[1]
+const generateImageName = (id, mimetype) => {
+  return id + '.' + mimetype.split('/')[1]
 }
 
-const uploadImageToStorage = async (recipeId, file) => {
+const uploadImageToStorage = async (id, file) => {
   try {
-    const imageName = generateImageName(recipeId, file.mimetype)
+    const imageName = generateImageName(id, file.mimetype)
     const [upload] = await bucket.upload(file.path, {
       public: true,
       destination: imageName

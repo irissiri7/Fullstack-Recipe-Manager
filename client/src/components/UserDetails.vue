@@ -106,11 +106,10 @@ export default {
     user: {
       type: Object,
       required: true
-    }
-  },
-  computed: {
-    profilePictureURL() {
-      return this.user.profilePictureURL
+    },
+    profilePictureFile: {
+      type: Object,
+      required: true
     }
   },
   methods: {
@@ -123,11 +122,10 @@ export default {
           firstName: this.firstName,
           lastName: this.lastName
         }
-        formData.append(
-          'image',
-          document.getElementById('file-uploader').files[0]
-        )
         formData.append('user-details', JSON.stringify(newData))
+        if (this.profilePictureFile) {
+          formData.append('image', this.profilePictureFile)
+        }
         await axios.post(
           `${process.env.VUE_APP_MY_URL}users/user/update-user-details/`,
           formData,
@@ -140,7 +138,6 @@ export default {
         )
         this.feedback.style = 'informational'
         this.feedback.message = 'Update successful!'
-        // this.$emit('updated-user')
       } catch (error) {
         this.feedback.style = 'error'
         this.feedback.message = 'Could not update user information'
@@ -168,6 +165,7 @@ export default {
   },
   created() {
     this.getNumberOfRecipes()
+    console.log(this.profilePictureFile)
   }
 }
 </script>

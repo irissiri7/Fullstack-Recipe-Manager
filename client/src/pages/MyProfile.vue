@@ -47,7 +47,12 @@
         Change password
       </button>
     </div>
-    <component v-if="user" :is="activeComponent" :user="user"></component>
+    <component
+      v-if="user"
+      :is="activeComponent"
+      :user="user"
+      :profilePictureFile="profilePictureFile"
+    ></component>
   </base-card>
 </template>
 
@@ -67,7 +72,8 @@ export default {
   data() {
     return {
       activeComponent: 'user-details',
-      user: null
+      user: null,
+      profilePictureFile: null
     }
   },
   computed: {
@@ -85,6 +91,7 @@ export default {
       const file = this.$refs.file.files[0]
       const image = this.$refs.image
       image.src = URL.createObjectURL(file)
+      this.profilePictureFile = file
     },
     async fetchData() {
       try {

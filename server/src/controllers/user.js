@@ -2,8 +2,9 @@ import User from '../models/User.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
-import Middlewares from '../middleware/Middlewares.js'
+// import Middlewares from '../middleware/Middlewares.js'
 import services from '../util/services.js'
+// import { bucket } from '../firebase/adminSetUp.js'
 
 dotenv.config()
 
@@ -118,7 +119,7 @@ const updateUserDetails = async (req, res, _next) => {
       lastName: data.lastName
     }
     if (file) {
-      const result = await services.uploadImageToStorage(user._id, file)
+      const result = await services.uploadImageToStorage(data.firebaseId, file)
       if (result) {
         updatedInformation.profilePictureURL = result[0]
         updatedInformation.profilePictureName = result[1]
@@ -136,17 +137,21 @@ const updateUserDetails = async (req, res, _next) => {
   }
 }
 
-const addProfilePicture = async (req, res, _next) => {
-  Middlewares.upload(req, res, (error) => {
-    if (error) {
-      res.status(400).send({ message: error.message })
-    } else {
-      res
-        .status(200)
-        .send({ src: `${process.env.BASE_URL}${req.file.filename}` })
-    }
-  })
-}
+// const deleteUser = async (req, res, next) => {
+//   bucket.getFiles({prefix})
+// }
+
+// const addProfilePicture = async (req, res, _next) => {
+//   Middlewares.upload(req, res, (error) => {
+//     if (error) {
+//       res.status(400).send({ message: error.message })
+//     } else {
+//       res
+//         .status(200)
+//         .send({ src: `${process.env.BASE_URL}${req.file.filename}` })
+//     }
+//   })
+// }
 
 export default {
   signIn,
@@ -154,6 +159,6 @@ export default {
   changeEmail,
   changePassword,
   getUserDetails,
-  updateUserDetails,
-  addProfilePicture
+  updateUserDetails
+  // addProfilePicture
 }

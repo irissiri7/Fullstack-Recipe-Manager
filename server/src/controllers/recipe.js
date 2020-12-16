@@ -24,9 +24,11 @@ const addRecipe = async (req, res, _next) => {
     })
     //If user also uploaded recipe file (aka an image)
     if (file) {
+      const recipePrefix = data.firebaseId + '/'
       const result = await services.uploadImageToStorage(
         recipeId.toHexString(),
-        file
+        file,
+        recipePrefix
       )
       if (result) {
         newRecipe.imageURL = result[0]
@@ -52,7 +54,12 @@ const updateRecipe = async (req, res, _next) => {
       details: data.details
     }
     if (file) {
-      const result = await services.uploadImageToStorage(data._id, file)
+      const recipePrefix = data.firebaseId + '/'
+      const result = await services.uploadImageToStorage(
+        data._id,
+        file,
+        recipePrefix
+      )
       if (result) {
         updatedInformation.imageURL = result[0]
         updatedInformation.imageName = result[1]

@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
-import { bucket } from '../firebase/adminSetUp.js'
 import services from '../util/services.js'
 
 dotenv.config()
@@ -25,7 +24,10 @@ const addRecipe = async (req, res, _next) => {
     })
     //If user also uploaded recipe file (aka an image)
     if (file) {
-      const result = await services.uploadImage(recipeId.toHexString(), file)
+      const result = await services.uploadImageToStorage(
+        recipeId.toHexString(),
+        file
+      )
       if (result) {
         newRecipe.imageURL = result[0]
         newRecipe.imageName = result[1]
@@ -50,7 +52,7 @@ const updateRecipe = async (req, res, _next) => {
       details: data.details
     }
     if (file) {
-      const result = await services.uploadImage(data._id, file)
+      const result = await services.uploadImageToStorage(data._id, file)
       if (result) {
         updatedInformation.imageURL = result[0]
         updatedInformation.imageName = result[1]
@@ -104,8 +106,7 @@ const deleteRecipe = async (req, res, _next) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.recipeId)
     if (deletedRecipe.imageName) {
-      console.log('trying to delete from storage')
-      await services.deleteFileFromStorage(deletedRecipe.imageName)
+      await services.deleteImageFromStorage(deletedRecipe.imageName)
     }
     if (deletedRecipe) {
       res.sendStatus(204)

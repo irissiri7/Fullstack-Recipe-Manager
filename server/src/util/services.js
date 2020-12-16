@@ -1,10 +1,20 @@
 import { bucket } from '../firebase/adminSetUp.js'
+import fs from 'fs-extra'
+
+const emptyTempImageFolder = async () => {
+  try {
+    await fs.emptyDir('./images')
+    console.log('successfully emptied image folder!')
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 const generateImageName = (recipeId, mimetype) => {
   return recipeId + '.' + mimetype.split('/')[1]
 }
 
-const uploadImage = async (recipeId, file) => {
+const uploadImageToStorage = async (recipeId, file) => {
   try {
     const imageName = generateImageName(recipeId, file.mimetype)
     const [upload] = await bucket.upload(file.path, {
@@ -12,6 +22,7 @@ const uploadImage = async (recipeId, file) => {
       destination: imageName
     })
     const url = upload.metadata.mediaLink
+    emptyTempImageFolder()
     return [url, imageName]
   } catch (error) {
     console.log(error.message)
@@ -19,7 +30,7 @@ const uploadImage = async (recipeId, file) => {
   }
 }
 
-const deleteFileFromStorage = async (fileName) => {
+const deleteImageFromStorage = async (fileName) => {
   try {
     const file = bucket.file(fileName)
     await file.delete({ ignoreNotFound: true })
@@ -31,6 +42,6 @@ const deleteFileFromStorage = async (fileName) => {
 }
 
 export default {
-  uploadImage,
-  deleteFileFromStorage
+  uploadImageToStorage,
+  deleteImageFromStorage
 }

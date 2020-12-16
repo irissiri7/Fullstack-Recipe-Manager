@@ -1,6 +1,7 @@
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
 import dotenv from 'dotenv'
+import { bucket } from '../firebase/adminSetUp.js'
 
 dotenv.config()
 
@@ -17,8 +18,11 @@ const addRecipe = async (req, res, _next) => {
       description: recipeData.description,
       details: recipeData.details
     })
+    //If user also uploaded recipe image there will be a req.file
     if (req.file) {
-      newRecipe.imageURL = `${process.env.BASE_URL}${req.file.filename}`
+      const file = await bucket.upload(req.file.path, { public: true })
+      const url = file[0].metadata.mediaLink
+      newRecipe.imageURL = url
     }
     await newRecipe.save()
     res.status(201).send(newRecipe)
@@ -67,17 +71,19 @@ const deleteRecipe = async (req, res, _next) => {
   }
 }
 const updateRecipe = async (req, res, _next) => {
-  const data = JSON.parse(req.body.recipe)
-  const updatedInformation = {
-    title: data.title,
-    ingredients: data.ingredients,
-    description: data.description,
-    details: data.details
-  }
-  if (req.file) {
-    updatedInformation.imageURL = `${process.env.BASE_URL}${req.file.filename}`
-  }
   try {
+    const data = JSON.parse(req.body.recipe)
+    const updatedInformation = {
+      title: data.title,
+      ingredients: data.ingredients,
+      description: data.description,
+      details: data.details
+    }
+    if (req.file) {
+      const file = await bucket.upload(req.file.path, { public: true })
+      const url = file[0].metadata.mediaLink
+      updatedInformation.imageURL = url
+    }
     const updatedRecipe = await Recipe.findByIdAndUpdate(
       data._id,
       updatedInformation,
@@ -98,7 +104,6 @@ const updateRecipe = async (req, res, _next) => {
 
 export default {
   addRecipe,
-  // addRecipeImage,
   getRecipes,
   getRecipe,
   deleteRecipe,

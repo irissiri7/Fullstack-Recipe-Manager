@@ -1,31 +1,73 @@
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 import Recipe from '../models/Recipe.js'
 import User from '../models/User.js'
-import dotenv from 'dotenv'
 import { bucket } from '../firebase/adminSetUp.js'
+import services from '../util/services.js'
 
 dotenv.config()
 
 const addRecipe = async (req, res, _next) => {
   try {
-    const recipeData = JSON.parse(req.body.recipe)
+    const data = JSON.parse(req.body.recipe)
+    const file = req.file
     const user = await User.findOne({
-      firebaseId: recipeData.firebaseId
+      firebaseId: data.firebaseId
     })
+    const recipeId = mongoose.Types.ObjectId()
     const newRecipe = new Recipe({
+      _id: recipeId,
       userId: user._id,
-      title: recipeData.title,
-      ingredients: recipeData.ingredients,
-      description: recipeData.description,
-      details: recipeData.details
+      title: data.title,
+      ingredients: data.ingredients,
+      description: data.description,
+      details: data.details
     })
-    //If user also uploaded recipe image there will be a req.file
-    if (req.file) {
-      const file = await bucket.upload(req.file.path, { public: true })
-      const url = file[0].metadata.mediaLink
-      newRecipe.imageURL = url
+    //If user also uploaded recipe file (aka an image)
+    if (file) {
+      const result = await services.uploadImage(recipeId.toHexString(), file)
+      if (result) {
+        newRecipe.imageURL = result[0]
+        newRecipe.imageName = result[1]
+      }
     }
     await newRecipe.save()
     res.status(201).send(newRecipe)
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({ message: error.message })
+  }
+}
+
+const updateRecipe = async (req, res, _next) => {
+  try {
+    const data = JSON.parse(req.body.recipe)
+    const file = req.file
+    const updatedInformation = {
+      title: data.title,
+      ingredients: data.ingredients,
+      description: data.description,
+      details: data.details
+    }
+    if (file) {
+      const result = await services.uploadImage(data._id, file)
+      if (result) {
+        updatedInformation.imageURL = result[0]
+        updatedInformation.imageName = result[1]
+      }
+    }
+    const updatedRecipe = await Recipe.findByIdAndUpdate(
+      data._id,
+      updatedInformation,
+      {
+        new: true
+      }
+    )
+    if (updatedRecipe) {
+      res.status(200).send(updatedRecipe)
+    } else {
+      throw new Error('Could not update recipe')
+    }
   } catch (error) {
     console.log(error)
     res.status(400).send({ message: error.message })
@@ -61,6 +103,10 @@ const getRecipe = async (req, res, _next) => {
 const deleteRecipe = async (req, res, _next) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.recipeId)
+    if (deletedRecipe.imageName) {
+      console.log('trying to delete from storage')
+      await services.deleteFileFromStorage(deletedRecipe.imageName)
+    }
     if (deletedRecipe) {
       res.sendStatus(204)
     } else {
@@ -70,38 +116,6 @@ const deleteRecipe = async (req, res, _next) => {
     res.status(400).send({ message: error.message })
   }
 }
-const updateRecipe = async (req, res, _next) => {
-  try {
-    const data = JSON.parse(req.body.recipe)
-    const updatedInformation = {
-      title: data.title,
-      ingredients: data.ingredients,
-      description: data.description,
-      details: data.details
-    }
-    if (req.file) {
-      const file = await bucket.upload(req.file.path, { public: true })
-      const url = file[0].metadata.mediaLink
-      updatedInformation.imageURL = url
-    }
-    const updatedRecipe = await Recipe.findByIdAndUpdate(
-      data._id,
-      updatedInformation,
-      {
-        new: true
-      }
-    )
-    if (updatedRecipe) {
-      res.status(200).send(updatedRecipe)
-    } else {
-      throw new Error('Could not update recipe')
-    }
-  } catch (error) {
-    console.log(error)
-    res.status(400).send({ message: error.message })
-  }
-}
-
 export default {
   addRecipe,
   getRecipes,

@@ -1,10 +1,11 @@
 import User from '../models/User.js'
+import Recipe from '../models/Recipe.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
 // import Middlewares from '../middleware/Middlewares.js'
 import services from '../util/services.js'
-// import { bucket } from '../firebase/adminSetUp.js'
+import { bucket } from '../firebase/adminSetUp.js'
 
 dotenv.config()
 
@@ -141,9 +142,36 @@ const updateUserDetails = async (req, res, _next) => {
   }
 }
 
-// const deleteUser = async (req, res, next) => {
-//   bucket.getFiles({prefix})
-// }
+const deleteUser = async (req, res, _next) => {
+  try {
+    const user = await User.findOne({ firebaseId: req.query.firebaseId })
+    if (!user) throw new Error('Could not find user to delete')
+    //Remove from Firebase
+    await axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${process.env.firebase_AUTH_API_KEY}`,
+      { idToken: req.token }
+    )
+    //Remove user from Db
+    await User.deleteOne({ _id: user._id })
+    //Remove users Recipes from Db
+    await Recipe.deleteMany({ userId: user._id })
+
+    //Remove any stored files from Firebase Storage
+    await bucket.deleteFiles({
+      force: true,
+      prefix: `Recipes/${req.query.firebaseId}`
+    })
+    await bucket.deleteFiles({
+      force: true,
+      prefix: `ProfilePictures/${req.query.firebaseId}`
+    })
+
+    res.sendStatus(204)
+  } catch (error) {
+    console.log(error.response)
+    res.status(400).send({ message: error.message })
+  }
+}
 
 // const addProfilePicture = async (req, res, _next) => {
 //   Middlewares.upload(req, res, (error) => {
@@ -163,6 +191,7 @@ export default {
   changeEmail,
   changePassword,
   getUserDetails,
-  updateUserDetails
+  updateUserDetails,
+  deleteUser
   // addProfilePicture
 }

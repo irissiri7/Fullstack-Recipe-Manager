@@ -11,7 +11,8 @@ const authenticateUser = async (req, res, next) => {
 
     //Verify the token with Firebase (verifyIdToken() throws an error if token is invalid)
     const decodedToken = await auth.verifyIdToken(token)
-
+    //If token is valid we attach it to the request for easier acces in other middlewares
+    req.token = token
     //attatch the decoded token to request for use in other middlewares
     req.decodedToken = decodedToken
 

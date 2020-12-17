@@ -159,8 +159,27 @@ export default {
         console.log(error)
       }
     },
-    deleteProfile() {
-      console.log('Deleting profile :(')
+    async deleteProfile() {
+      if (
+        confirm(
+          'Are you absolutely sure you want to delete your account? This action can not be reversed. All data is lost forever'
+        )
+      ) {
+        try {
+          await axios.delete(
+            `${process.env.VUE_APP_MY_URL}users/user/delete-user/?firebaseId=${this.$store.getters.firebaseId}`,
+            {
+              headers: {
+                Authorization: `Basic ${this.$store.getters.token}`
+              }
+            }
+          )
+          this.$store.dispatch('signOut')
+          this.$router.push('/')
+        } catch (error) {
+          console.log(error.response.data)
+        }
+      }
     }
   },
   created() {

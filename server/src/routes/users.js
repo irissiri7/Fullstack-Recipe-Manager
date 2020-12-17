@@ -33,10 +33,10 @@ router.post(
   userController.updateUserDetails
 )
 
-// router.post(
-//   '/user/add-profile-picture',
-//   auth.authenticateUser,
-//   userController.addProfilePicture
-// )
+router.delete(
+  '/user/delete-user',
+  auth.authenticateUser,
+  userController.deleteUser
+)
 
 export default router

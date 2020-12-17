@@ -25,7 +25,7 @@
     </div>
     <h3>Description</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
-      <p>{{ recipe.description }}</p>
+      <p id="description">{{ recipe.description }}</p>
       <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
     <h3 v-if="!showCompact">Details</h3>
@@ -135,5 +135,8 @@ i:hover {
 .float-right {
   justify-content: flex-end;
   margin-top: 15px;
+}
+#description {
+  white-space: pre-wrap;
 }
 </style>

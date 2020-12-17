@@ -89,7 +89,7 @@ const getRecipes = async (req, res, _next) => {
     const recipes = await Recipe.find(
       { userId: user._id },
       'details ingredients title description imageURL'
-    )
+    ).sort([['createdAt', 'descending']])
     res.status(200).send(recipes)
   } catch (error) {
     res.status(404).send({ message: 'Could not get recipes' })

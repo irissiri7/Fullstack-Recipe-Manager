@@ -24,11 +24,11 @@ const addRecipe = async (req, res, _next) => {
     })
     //If user also uploaded recipe file (aka an image)
     if (file) {
-      const recipePrefix = data.firebaseId + '/'
+      const folder = `Recipes/${data.firebaseId}/`
       const result = await services.uploadImageToStorage(
         recipeId.toHexString(),
         file,
-        recipePrefix
+        folder
       )
       if (result) {
         newRecipe.imageURL = result[0]

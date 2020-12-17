@@ -119,7 +119,11 @@ const updateUserDetails = async (req, res, _next) => {
       lastName: data.lastName
     }
     if (file) {
-      const result = await services.uploadImageToStorage(data.firebaseId, file)
+      const result = await services.uploadImageToStorage(
+        data.firebaseId,
+        file,
+        'ProfilePictures/'
+      )
       if (result) {
         updatedInformation.profilePictureURL = result[0]
         updatedInformation.profilePictureName = result[1]

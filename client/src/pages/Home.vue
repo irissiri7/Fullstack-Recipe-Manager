@@ -75,7 +75,6 @@ export default {
         const response = await axios.get(
           `https://api.spoonacular.com/recipes/random?number=1&apiKey=${process.env.VUE_APP_SPOONACULAR_API_KEY}`
         )
-        console.log(response)
         this.recipe = response.data.recipes[0]
       } catch (error) {
         console.log(error)

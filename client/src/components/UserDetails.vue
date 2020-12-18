@@ -75,7 +75,10 @@
           <base-button class="full-width">Update Profile</base-button>
         </div>
         <div class="field">
-          <base-button class="full-width" alert @click.prevent="deleteProfile"
+          <base-button
+            class="full-width"
+            mode="alert"
+            @click.prevent="deleteProfile"
             >Delete Profile</base-button
           >
         </div>

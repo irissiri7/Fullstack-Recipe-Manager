@@ -48,13 +48,17 @@
           Sign Up
         </base-button>
       </div>
+      <div class="field">
+        <base-button to="/" link>Back to log in</base-button>
+      </div>
     </form>
-    <router-link to="/">Back to log in</router-link>
   </base-card>
 </template>
 
 <script>
+import BaseButton from '../components/ui/BaseButton.vue'
 export default {
+  components: { BaseButton },
   data() {
     return {
       email: null,

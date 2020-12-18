@@ -31,12 +31,16 @@
         <base-button class="same-width">Sign In</base-button>
       </div>
       <div class="field">
-        <p>Not a user?</p>
-        <base-button class="same-width" @click.prevent="signUp"
-          >Sign Up</base-button
-        >
+        <div class="flex corner">
+          <base-button @click="resetPassword" mode="link"
+            >Forgot password?</base-button
+          >
+          <div class="flex">
+            <p>Not a user?</p>
+            <base-button link to="/sign-up">Sign Up</base-button>
+          </div>
+        </div>
       </div>
-      <button @click="resetPassword">Forgot password?</button>
     </form>
   </base-card>
 </template>
@@ -73,9 +77,6 @@ export default {
           this.feedback.style = 'error'
         })
     },
-    signUp() {
-      this.$router.push('/sign-up')
-    },
     async resetPassword() {
       try {
         await axios.post(
@@ -100,7 +101,7 @@ h1 {
   color: var(--main-coffee);
 }
 p {
-  margin: 0px;
+  margin: 0px 5px 0px 0px;
 }
 .same-width {
   width: 7rem;

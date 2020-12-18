@@ -3,10 +3,10 @@
     <div v-if="showCompact" class="flex-cnt">
       <h2>{{ recipe.title }}</h2>
       <div>
-        <base-button class="ui icon button" @click.prevent="editRecipe">
+        <base-button class="icon" @click.prevent="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </base-button>
-        <base-button class="ui icon button" alert @click.prevent="deleteRecipe">
+        <base-button class="icon" mode="alert" @click.prevent="deleteRecipe">
           <i class="trash icon inverted"></i>
         </base-button>
       </div>
@@ -55,7 +55,7 @@
       </base-button>
     </div>
     <div v-if="!showCompact" class="flex float-right">
-      <base-button class="ui icon button" alert @click.prevent="deleteRecipe">
+      <base-button mode="alert" @click.prevent="deleteRecipe">
         Delete
       </base-button>
     </div>

@@ -58,7 +58,7 @@ html {
 main {
   min-height: 100%;
   margin: 0 auto;
-  width: 50%;
+  width: 40%;
 }
 /* list styles */
 ul {
@@ -76,14 +76,13 @@ img {
   object-fit: cover;
   border-radius: 10px;
 }
-/* link-styles */
+/* Link styles */
 a {
   color: var(--main-coffee);
   border-bottom: 1px solid var(--main-coffee);
 }
 a:hover {
   color: var(--main-pine);
-  font-weight: 600;
   border-bottom: 1px solid var(--main-pine);
 }
 a:visited {
@@ -93,6 +92,11 @@ a:visited {
 /* utility classes */
 .flex {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.corner {
+  justify-content: space-between;
 }
 
 .center {

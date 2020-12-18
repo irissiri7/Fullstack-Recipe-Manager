@@ -36,11 +36,17 @@
           >Sign Up</base-button
         >
       </div>
+      <button @click="resetPassword">Forgot password?</button>
     </form>
   </base-card>
 </template>
 
 <script>
+import axios from 'axios'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 export default {
   data() {
     return {
@@ -69,6 +75,21 @@ export default {
     },
     signUp() {
       this.$router.push('/sign-up')
+    },
+    async resetPassword() {
+      try {
+        await axios.post(
+          `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
+          { email: 'lydia.lind@hey.com', requestType: 'PASSWORD_RESET' }
+        )
+        this.feedback.style = 'informatonal'
+        this.feedback.message =
+          'A password reset mail has been sent, check your inbox'
+      } catch (error) {
+        this.feedback.style = 'error'
+        this.feedback.message =
+          'Something went wrong, could not send password reset mail'
+      }
     }
   }
 }

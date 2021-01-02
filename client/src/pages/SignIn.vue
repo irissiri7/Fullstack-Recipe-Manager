@@ -98,8 +98,8 @@ export default {
   data() {
     return {
       mode: 'sign in',
-      email: '',
-      password: '',
+      email: 'dwight@example.com',
+      password: '111111',
       confirmedPassword: null,
       acceptsTermsOfUse: false,
       feedback: {

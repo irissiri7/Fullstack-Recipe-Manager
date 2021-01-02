@@ -1,21 +1,24 @@
 <template>
   <header>
-    <div class="flex center">
-      <h2 class="ui header" @click.prevent="backToHome">
-        <i class="lemon outline icon"></i>
-        <div class="content">
-          Recipe Manager
-        </div>
-      </h2>
-      <nav v-if="$store.getters.isAuth">
-        <ul>
-          <li><router-link to="/home">Home</router-link></li>
-          <li><router-link to="/my-recipes">My Recipes</router-link></li>
-          <li><router-link to="/my-profile">My Profile</router-link></li>
-        </ul>
-      </nav>
+    <div>
+      <div class="flex center">
+        <h2 class="ui header" @click.prevent="backToHome">
+          <i class="lemon outline icon"></i>
+          <div class="content">
+            Recipe Manager
+          </div>
+        </h2>
+        <nav v-if="$store.getters.isAuth">
+          <div id="full-menu">
+            <full-menu></full-menu>
+          </div>
+          <div id="compact-menu">
+            <compact-menu></compact-menu>
+          </div>
+        </nav>
+      </div>
     </div>
-    <div v-if="$store.getters.isAuth">
+    <div v-if="$store.getters.isAuth" id="sign-out-icon">
       <button class="ui icon button" @click="signOut">
         <i class="sign out alternate icon large"></i>
       </button>
@@ -24,7 +27,14 @@
 </template>
 
 <script>
+import CompactMenu from './CompactMenu.vue'
+import FullMenu from './FullMenu.vue'
+
 export default {
+  components: {
+    CompactMenu,
+    FullMenu
+  },
   methods: {
     backToHome() {
       if (this.$store.getters.isAuth) this.$router.push('/home')
@@ -38,17 +48,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: var(--main-orange);
+  padding: 1.5rem;
 }
 .ui.header {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem;
-  margin: 0px;
   color: var(--main-coffee);
   cursor: pointer;
 }
@@ -56,26 +65,20 @@ header {
   font-family: Rochester, sans-serif;
   font-size: 50px;
 }
-header {
-  width: 100%;
-  background-color: var(--main-orange);
-}
 
 nav {
+  margin-left: 1em;
   height: 100%;
 }
 
-ul {
+.nav-list ul {
   list-style: none;
   margin: 0;
   padding: 0;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 
-a {
+.nav-list a {
   text-decoration: none;
   background: transparent;
   border: 1px solid transparent;
@@ -85,26 +88,45 @@ a {
   display: inline-block;
 }
 
-a:hover,
-a:active,
-a.active {
+.nav-list a:hover,
+.nav-list a:active,
+.nav-list a.active {
   color: #30292f;
   border-color: #30292f;
   background-color: #eeb63d;
   border-radius: 10px;
 }
 
-.ui.icon.button {
-  background-color: var(--main-orange);
-
-  border-radius: 10px;
-  margin-right: 10px;
+@media screen and (max-width: 768px) {
+  #full-menu {
+    display: none;
+  }
+  #compact-menu {
+    display: block;
+  }
+  #sign-out-icon {
+    display: none;
+  }
+  .flex.center {
+    display: block;
+  }
+  .nav-list a {
+    padding-left: 0px;
+    border: none;
+  }
+  .nav-list a:hover,
+  .nav-list a:active,
+  .nav-list a.active {
+    border: none;
+    border-radius: 0px;
+  }
 }
-.ui.icon.button:hover {
-  background-color: #eeb63d;
-  border: 1px solid #30292f;
-}
-.sign.out.alternate.icon {
-  color: var(--main-coffee);
+@media screen and (min-width: 768px) {
+  #full-menu {
+    display: block;
+  }
+  #compact-menu {
+    display: none;
+  }
 }
 </style>

@@ -135,7 +135,6 @@ export default {
       else return
     },
     signIn() {
-      console.log('sign in')
       this.$store
         .dispatch('signIn', {
           email: this.email,
@@ -146,8 +145,8 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.feedback.message = 'Could not sign in. Check your credentials.'
           this.feedback.style = 'error'
+          this.feedback.message = 'Could not sign in. Check your credentials.'
         })
     },
     signUp() {
@@ -158,14 +157,7 @@ export default {
           password: this.password
         })
         .then(() => {
-          this.feedback.style = 'informational'
-          this.feedback.message =
-            'Sign up successful! You are now welcome to sign in'
-          ;(this.email = ''),
-            (this.password = ''),
-            (this.confirmedPassword = ''),
-            (this.acceptsTermsOfUse = false),
-            (this.mode = 'sign in')
+          this.$router.push('/home')
         })
         .catch(_error => {
           this.feedback.style = 'error'

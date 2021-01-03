@@ -26,6 +26,41 @@ const deleteRecipe = recipeId => {
   })
 }
 
+const setUserInLocalStorage = user => {
+  localStorage.setItem('firebaseId', user.firebaseId)
+  localStorage.setItem('token', user.token)
+  localStorage.setItem('email', user.email)
+  localStorage.setItem('tokenExpirationDate', user.tokenExpirationDate)
+}
+
+const getUserFromLocalStorage = () => {
+  const firebaseId = localStorage.getItem('firebaseId')
+  const token = localStorage.getItem('token')
+  const email = localStorage.getItem('email')
+  const tokenExpirationDate = localStorage.getItem('tokenExpirationDate')
+
+  const userExists = firebaseId && token && email && tokenExpirationDate
+
+  if (userExists) {
+    return {
+      firebaseId: firebaseId,
+      token: token,
+      email: email,
+      tokenExpirationDate: tokenExpirationDate
+    }
+  }
+}
+
+const removeUserFromLocalStorage = () => {
+  localStorage.removeItem('firebaseId')
+  localStorage.removeItem('token')
+  localStorage.removeItem('email')
+  localStorage.removeItem('tokenExpirationDate')
+}
+
 export default {
-  deleteRecipe
+  deleteRecipe,
+  setUserInLocalStorage,
+  getUserFromLocalStorage,
+  removeUserFromLocalStorage
 }

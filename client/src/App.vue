@@ -12,6 +12,9 @@ export default {
   name: 'App',
   components: {
     TheNavigation
+  },
+  created() {
+    this.$store.dispatch('autoSignIn')
   }
 }
 </script>

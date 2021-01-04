@@ -15,16 +15,18 @@
       </h2>
     </div>
   </div>
-  <nav>
-    <ul class="nav-list" v-if="showMenu">
-      <li><router-link to="/home">Home</router-link></li>
-      <li><router-link to="/my-recipes">My Recipes</router-link></li>
-      <li><router-link to="/my-profile">My Profile</router-link></li>
-      <li>
-        <a @click="signOut">Sign Out</a>
-      </li>
-    </ul>
-  </nav>
+  <transition name="fade">
+    <nav v-if="showMenu">
+      <ul>
+        <li><router-link to="/home">Home</router-link></li>
+        <li><router-link to="/my-recipes">My Recipes</router-link></li>
+        <li><router-link to="/my-profile">My Profile</router-link></li>
+        <li>
+          <a @click="signOut">Sign Out</a>
+        </li>
+      </ul>
+    </nav>
+  </transition>
 </template>
 
 <script>
@@ -84,6 +86,29 @@ a.active {
   background-color: #e9a40f;
   color: var(--main-coffee);
   border-bottom: none;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.fade-enter-active {
+  transition: all 0.5s ease;
+}
+.fade-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 @media screen and (max-width: 400px) {

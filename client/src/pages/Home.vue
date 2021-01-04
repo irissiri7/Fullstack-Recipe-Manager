@@ -17,11 +17,11 @@
       <img :src="src" alt="dish" />
     </div>
     <p class="side-note">
-      This recipe was provided by
+      This image was provided by
       <a href="https://spoonacular.com/food-api/" target="_blank"
         >Spoonacular API</a
       >
-      Check it out <a :href="spoonacularSource" target="_blank">here</a>
+      Check out the recipe <a :href="spoonacularSource" target="_blank">here</a>
     </p>
   </base-card>
 </template>

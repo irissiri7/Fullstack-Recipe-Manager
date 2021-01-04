@@ -36,6 +36,7 @@ export default {
       showMenu: false
     }
   },
+  emits: ['backToHome', 'signOut'],
   methods: {
     toggleMenu() {
       this.showMenu = !this.showMenu

@@ -22,7 +22,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  emits: ['backToHome', 'signOut']
+}
 </script>
 
 <style scoped>

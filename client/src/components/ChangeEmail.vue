@@ -1,7 +1,7 @@
 <template>
-  <base-dialog-card v-if="feedback.message" :style="feedback.style">
+  <base-feedback-card v-if="feedback.message" :style="feedback.style">
     {{ feedback.message }}
-  </base-dialog-card>
+  </base-feedback-card>
   <form class="ui form" @submit.prevent="changeEmail">
     <div class="field">
       <p><strong>Current email:</strong> {{ $store.getters.email }}</p>
@@ -33,9 +33,7 @@
 </template>
 
 <script>
-import BaseDialogCard from './ui/BaseDialogCard.vue'
 export default {
-  components: { BaseDialogCard },
   data() {
     return {
       newEmail: '',

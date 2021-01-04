@@ -1,7 +1,7 @@
 <template>
-  <base-dialog-card v-if="feedback.message" :style="feedback.style">
+  <base-feedback-card v-if="feedback.message" :style="feedback.style">
     {{ feedback.message }}
-  </base-dialog-card>
+  </base-feedback-card>
   <form class="ui form" @submit.prevent="updateUserDetails">
     <h4 class="ui dividing header">Summary</h4>
     <div class="field">
@@ -89,10 +89,8 @@
 
 <script>
 import axios from 'axios'
-import BaseDialogCard from './ui/BaseDialogCard.vue'
 
 export default {
-  components: { BaseDialogCard },
   data() {
     return {
       firstName: this.user.firstName,

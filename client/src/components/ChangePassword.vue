@@ -1,7 +1,7 @@
 <template>
-  <base-dialog-card v-if="feedback.message" :style="feedback.style">
+  <base-feedback-card v-if="feedback.message" :style="feedback.style">
     {{ feedback.message }}
-  </base-dialog-card>
+  </base-feedback-card>
   <form class="ui form" @submit.prevent="changePassword">
     <div class="field">
       <label>New Password</label>
@@ -34,10 +34,7 @@
 </template>
 
 <script>
-import BaseDialogCard from './ui/BaseDialogCard.vue'
-
 export default {
-  components: { BaseDialogCard },
   data() {
     return {
       newPassword: '',

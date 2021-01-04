@@ -1,11 +1,11 @@
 <template>
-  <base-dialog-card
+  <base-feedback-card
     v-if="feedback.message"
     :style="feedback.style"
     :bulletPoints="feedback.bulletPoints"
   >
     <p>{{ feedback.message }}</p>
-  </base-dialog-card>
+  </base-feedback-card>
   <form class="ui form">
     <h3 class="ui dividing header">Recipe Name</h3>
     <div class="field">

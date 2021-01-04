@@ -1,8 +1,8 @@
 <template>
   <base-card>
-    <base-dialog-card v-if="feedback.message" :style="feedback.style">
+    <base-feedback-card v-if="feedback.message" :style="feedback.style">
       {{ feedback.message }}
-    </base-dialog-card>
+    </base-feedback-card>
     <h1 v-if="mode == 'sign in'">Sign In</h1>
     <h1 v-if="mode == 'sign up'">Sign Up</h1>
     <h1 v-if="mode == 'reset password'">Reset Password</h1>

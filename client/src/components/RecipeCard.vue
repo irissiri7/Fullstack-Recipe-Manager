@@ -1,12 +1,22 @@
 <template>
   <base-card>
+    <transition name="modal">
+      <base-modal v-if="showModal" @user-selection="deleteRecipe">
+        <template v-slot:title>
+          <h3>Are you sure you want to delete the recipe?</h3>
+        </template>
+        <template v-slot:content>
+          <p>This action can not be undone</p>
+        </template>
+      </base-modal>
+    </transition>
     <div v-if="showCompact" class="flex-cnt">
       <h2>{{ recipe.title }}</h2>
       <div>
         <base-button class="icon" @click.prevent="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </base-button>
-        <base-button class="icon" mode="alert" @click.prevent="deleteRecipe">
+        <base-button class="icon" mode="alert" @click="showModal = true">
           <i class="trash icon inverted"></i>
         </base-button>
       </div>
@@ -55,7 +65,7 @@
       </base-button>
     </div>
     <div v-if="!showCompact" class="flex float-right">
-      <base-button mode="alert" @click.prevent="deleteRecipe">
+      <base-button mode="alert" @click="showModal = true">
         Delete
       </base-button>
     </div>
@@ -65,6 +75,11 @@
 <script>
 import service from '../util/services.js'
 export default {
+  data() {
+    return {
+      showModal: false
+    }
+  },
   props: {
     showCompact: {
       type: Boolean,
@@ -74,6 +89,7 @@ export default {
       type: Object
     }
   },
+  emits: ['deleted-recipe'],
   computed: {
     src() {
       return this.recipe.imageURL
@@ -88,7 +104,9 @@ export default {
     editRecipe() {
       this.$router.push(`/my-recipes/edit-recipe/${this.recipe._id}`)
     },
-    async deleteRecipe() {
+    async deleteRecipe(confirmed) {
+      this.showModal = false
+      if (!confirmed) return
       const success = await service.deleteRecipe(this.recipe._id)
       if (success) {
         this.$emit('deleted-recipe')
@@ -138,5 +156,24 @@ i:hover {
 }
 #description {
   white-space: pre-wrap;
+}
+/* .modal-enter-from {
+} */
+.modal-enter-active {
+  animation: modal 0.3s ease;
+}
+.modal-leave-active {
+  animation: modal 0.3s ease reverse;
+}
+/* .modal-enter-to {
+} */
+
+@keyframes modal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

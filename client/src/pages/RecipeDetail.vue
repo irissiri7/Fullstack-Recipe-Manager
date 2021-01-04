@@ -1,6 +1,10 @@
 <template>
   <cursive-header v-if="recipe" :title="recipe.title" />
-  <recipe-card v-if="recipe" :recipe="recipe"></recipe-card>
+  <recipe-card
+    v-if="recipe"
+    :recipe="recipe"
+    @deleted-recipe="handleRecipeDeletion"
+  ></recipe-card>
 </template>
 
 <script>
@@ -37,6 +41,9 @@ export default {
           console.log(this.recipe)
         })
         .catch(error => console.log(error))
+    },
+    handleRecipeDeletion() {
+      this.$router.push('/my-recipes')
     }
   },
   created() {

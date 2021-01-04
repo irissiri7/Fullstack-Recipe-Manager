@@ -1,11 +1,30 @@
 <template>
-  <i class="align justify icon large" @click="toggleMenu"></i>
-  <ul class="nav-list" v-if="showMenu">
-    <li><router-link to="/home">Home</router-link></li>
-    <li><router-link to="/my-recipes">My Recipes</router-link></li>
-    <li><router-link to="/my-profile">My Profile</router-link></li>
-    <li id="sign-out-li"><a @click="signOut">Sign Out</a></li>
-  </ul>
+  <div class="flex outer">
+    <div id="icon">
+      <i
+        v-if="$store.getters.isAuth"
+        class="align justify icon large"
+        @click="toggleMenu"
+      ></i>
+    </div>
+    <div>
+      <h2 class="ui header" @click="$emit('back-to-home')">
+        <div class="content">
+          Recipe Manager
+        </div>
+      </h2>
+    </div>
+  </div>
+  <nav>
+    <ul class="nav-list" v-if="showMenu">
+      <li><router-link to="/home">Home</router-link></li>
+      <li><router-link to="/my-recipes">My Recipes</router-link></li>
+      <li><router-link to="/my-profile">My Profile</router-link></li>
+      <li>
+        <a @click="signOut">Sign Out</a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -20,11 +39,56 @@ export default {
       this.showMenu = !this.showMenu
     },
     signOut() {
-      this.$store.dispatch('signOut')
-      this.$router.push('/')
+      this.showMenu = false
+      this.$emit('sign-out')
     }
   }
 }
 </script>
 
-<style></style>
+<style scoped>
+nav {
+  margin-top: 1em;
+}
+.outer {
+  align-items: center;
+  flex-wrap: wrap-reverse;
+}
+#icon {
+  margin-right: 1em;
+}
+.ui.header {
+  color: var(--main-coffee);
+  cursor: pointer;
+}
+
+.content {
+  font-family: Rochester, sans-serif;
+  font-size: 50px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+a {
+  text-decoration: none;
+  background: transparent;
+  color: var(--main-coffee);
+  padding: 5px;
+  border-bottom: none;
+}
+
+a:hover,
+a:active,
+a.active {
+  background-color: #e9a40f;
+  color: var(--main-coffee);
+  border-bottom: none;
+}
+
+@media screen and (max-width: 400px) {
+  .content {
+    font-size: 35px;
+  }
+}
+</style>

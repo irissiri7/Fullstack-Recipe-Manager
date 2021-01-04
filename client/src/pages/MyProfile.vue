@@ -156,7 +156,7 @@ h1 {
 /* Css for overriding the default file uploader, its just too damn ugly */
 #file-upload-cnt {
   position: absolute;
-  z-index: 98;
+  z-index: 2;
 }
 #image-btn {
   background-color: var(--main-orange);
@@ -165,7 +165,7 @@ h1 {
 
 #file-uploader {
   position: absolute;
-  z-index: 99;
+  z-index: 3;
   opacity: 0;
 }
 

@@ -90,7 +90,7 @@ export default {
 
 <style scoped>
 h1 {
-  font-size: 100px;
+  font-size: 70px;
   font-family: Rochester, sans-serif;
   color: white;
   text-align: center;

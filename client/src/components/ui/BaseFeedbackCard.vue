@@ -1,19 +1,12 @@
 <template>
   <div class="box" :class="style">
     <slot></slot>
-    <ul>
-      <li v-for="(item, index) in bulletPoints" :key="index">- {{ item }}</li>
-    </ul>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    bulletPoints: {
-      type: Array,
-      default: () => []
-    },
     style: {
       type: String,
       default: 'informational'

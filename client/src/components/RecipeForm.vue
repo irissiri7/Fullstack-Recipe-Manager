@@ -1,11 +1,9 @@
 <template>
-  <base-feedback-card
-    v-if="feedback.message"
-    :style="feedback.style"
-    :bulletPoints="feedback.bulletPoints"
-  >
-    <p>{{ feedback.message }}</p>
-  </base-feedback-card>
+  <transition name="feedback">
+    <base-feedback-card v-if="feedback.message" :style="feedback.style">
+      <p>{{ feedback.message }}</p>
+    </base-feedback-card>
+  </transition>
   <form class="ui form">
     <h3 class="ui dividing header">Recipe Name</h3>
     <div class="field">
@@ -57,8 +55,8 @@
         </div>
       </div>
     </div>
-    <ul>
-      <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+    <transition-group tag="ul" name="ingredient-item">
+      <li v-for="(ingredient, index) in recipe.ingredients" :key="ingredient">
         <span>{{ ingredient }}</span>
         <button
           @click.prevent="removeIngredient(index)"
@@ -67,7 +65,7 @@
           <i class="icon trash alternate outline red"></i>
         </button>
       </li>
-    </ul>
+    </transition-group>
     <h3 class="ui dividing header">Description</h3>
     <div class="field">
       <textarea v-model="recipe.description"></textarea>
@@ -231,9 +229,8 @@ export default {
       },
       ingredient: '',
       feedback: {
-        message: null,
-        bulletPoints: [],
-        style: 'informational'
+        message: undefined,
+        style: undefined
       }
     }
   },
@@ -255,19 +252,30 @@ export default {
   },
   methods: {
     addIngredient() {
+      if (this.recipe.ingredients.includes(this.ingredient)) {
+        this.displayError('You have already added this ingredient')
+        this.ingredient = ''
+      }
       if (this.ingredient != '') {
-        this.recipe.ingredients.push(this.ingredient)
+        this.recipe.ingredients.unshift(this.ingredient)
         this.ingredient = ''
       }
     },
     removeIngredient(index) {
       this.recipe.ingredients.splice(index, 1)
     },
+    displayError(message) {
+      window.scrollTo(0, 0)
+      this.feedback.style = 'error'
+      this.feedback.message = message
+      setTimeout(() => {
+        this.feedback.message = undefined
+        this.feedback.style = undefined
+      }, 3000)
+    },
     async addRecipe() {
       if (!this.formIsValid) {
-        this.feedback.message = 'Recipes must have a name!'
-        this.feedback.style = 'error'
-        window.scrollTo(0, 0)
+        this.displayError('The recipe must have a title')
         return
       }
       const formData = new FormData()
@@ -289,17 +297,14 @@ export default {
             }
           }
         )
-        this.feedback.style = 'informational'
         this.feedback.message = 'Recipe added!'
-        this.discardRecipe()
         window.scrollTo(0, 0)
+        this.discardRecipe()
       } catch (error) {
-        error.response.data
-        this.feedback.style = 'error'
         if (error.response) {
-          this.feedback.message = error.response.data.message
+          this.displayError(error.response.data.message)
         } else {
-          this.feedback.message = `Could not add recipe :(`
+          this.displayError(`Could not add recipe :(`)
         }
         window.scrollTo(0, 0)
       }
@@ -350,12 +355,11 @@ export default {
           }
         )
         this.feedback.message = 'Recipe updated!'
-        this.feedback.style = 'informational'
         window.scrollTo(0, 0)
       } catch (error) {
-        this.feedback.message = `Could not update recipe :( Server responded with: ${error.message}`
-        this.feedback.style = 'error'
-        window.scrollTo(0, 0)
+        this.displayError(
+          `Could not update recipe :( Server responded with: ${error.message}`
+        )
       }
     },
     async deleteRecipe() {
@@ -405,5 +409,45 @@ div.ui.checkbox {
   position: absolute;
   z-index: 99;
   opacity: 0;
+}
+
+/* Animations/Transitions */
+
+.ingredient-item-enter-from,
+.ingredient-item-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.ingredient-item-enter-active {
+  transition: all 1s ease-in;
+}
+.ingredient-item-leave-active {
+  transition: all 1s ease-out;
+  position: absolute;
+}
+.ingredient-item-enter-to,
+.ingredient-item-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ingredient-item-move {
+  transition: transform 0.3s ease;
+}
+
+.feedback-enter-active {
+  animation: fade 0.3s ease;
+}
+.feedback-leave-active {
+  animation: fade 0.3s ease reverse;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

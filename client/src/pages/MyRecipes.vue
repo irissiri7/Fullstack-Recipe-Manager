@@ -1,17 +1,19 @@
 <template>
-  <div class="flex-corners">
-    <cursive-header title="My Recipes!"></cursive-header>
-    <button class="circular ui huge icon button" @click="addRecipe">
-      <i id="add-icon" class="icon inverted plus"></i>
-    </button>
+  <div>
+    <div class="flex-corners">
+      <cursive-header title="My Recipes!"></cursive-header>
+      <button class="circular ui huge icon button" @click="addRecipe">
+        <i id="add-icon" class="icon inverted plus"></i>
+      </button>
+    </div>
+    <recipe-card
+      v-for="recipe in recipes"
+      :key="recipe.title"
+      :recipe="recipe"
+      show-compact
+      @deletedRecipe="refreshData"
+    ></recipe-card>
   </div>
-  <recipe-card
-    v-for="recipe in recipes"
-    :key="recipe.title"
-    :recipe="recipe"
-    show-compact
-    @deletedRecipe="refreshData"
-  ></recipe-card>
 </template>
 
 <script>

@@ -1,7 +1,11 @@
 <template>
   <the-navigation></the-navigation>
   <main>
-    <router-view></router-view>
+    <router-view v-slot="slotProps">
+      <transition name="route" mode="out-in">
+        <component :is="slotProps.Component"></component>
+      </transition>
+    </router-view>
   </main>
 </template>
 
@@ -105,6 +109,22 @@ a:visited {
 .center {
   justify-content: center;
   align-items: center;
+}
+
+.route-enter-active {
+  animation: fade 0.4s ease;
+}
+.route-leave-active {
+  animation: fade 0.4s ease reverse;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Media queries */

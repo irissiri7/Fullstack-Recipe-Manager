@@ -1,29 +1,32 @@
 <template>
-  <h1>Welcome {{ firstName }}!</h1>
-  <base-card>
-    <p>Recipe Manager is your own personal recipe book, put online.</p>
-    <p>
-      We make it super easy for you to add, edit and delete your favourit
-      recipes, all in one place.
-    </p>
-    <p>
-      No more sticky and greasy note books in the kitchen.
-      <strong
-        >Recipe Manager keeps it clean, managable and
-        <em>always</em> available.</strong
-      >
-    </p>
-    <div class="img-cnt">
-      <img :src="src" alt="dish" />
-    </div>
-    <p class="side-note">
-      This image was provided by
-      <a href="https://spoonacular.com/food-api/" target="_blank"
-        >Spoonacular API</a
-      >
-      Check out the recipe <a :href="spoonacularSource" target="_blank">here</a>
-    </p>
-  </base-card>
+  <div>
+    <h1>Welcome {{ firstName }}!</h1>
+    <base-card>
+      <p>Recipe Manager is your own personal recipe book, put online.</p>
+      <p>
+        We make it super easy for you to add, edit and delete your favourit
+        recipes, all in one place.
+      </p>
+      <p>
+        No more sticky and greasy note books in the kitchen.
+        <strong
+          >Recipe Manager keeps it clean, managable and
+          <em>always</em> available.</strong
+        >
+      </p>
+      <div class="img-cnt">
+        <img :src="src" alt="dish" />
+      </div>
+      <p class="side-note">
+        This image was provided by
+        <a href="https://spoonacular.com/food-api/" target="_blank"
+          >Spoonacular API</a
+        >
+        Check out the recipe
+        <a :href="spoonacularSource" target="_blank">here</a>
+      </p>
+    </base-card>
+  </div>
 </template>
 
 <script>

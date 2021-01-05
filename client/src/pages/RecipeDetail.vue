@@ -1,10 +1,12 @@
 <template>
-  <cursive-header v-if="recipe" :title="recipe.title" />
-  <recipe-card
-    v-if="recipe"
-    :recipe="recipe"
-    @deleted-recipe="handleRecipeDeletion"
-  ></recipe-card>
+  <div>
+    <cursive-header v-if="recipe" :title="recipe.title" />
+    <recipe-card
+      v-if="recipe"
+      :recipe="recipe"
+      @deleted-recipe="handleRecipeDeletion"
+    ></recipe-card>
+  </div>
 </template>
 
 <script>

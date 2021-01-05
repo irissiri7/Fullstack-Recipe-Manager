@@ -1,6 +1,6 @@
 <template>
   <base-card>
-    <transition name="modal">
+    <transition name="fade">
       <base-modal v-if="showModal" @user-selection="deleteRecipe">
         <template v-slot:title>
           <h3>Are you sure you want to delete the recipe?</h3>
@@ -157,16 +157,13 @@ i:hover {
 #description {
   white-space: pre-wrap;
 }
-/* .modal-enter-from {
-} */
-.modal-enter-active {
+
+.fade-enter-active {
   animation: modal 0.3s ease;
 }
-.modal-leave-active {
+.fade-leave-active {
   animation: modal 0.3s ease reverse;
 }
-/* .modal-enter-to {
-} */
 
 @keyframes modal {
   from {

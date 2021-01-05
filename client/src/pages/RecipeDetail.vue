@@ -1,6 +1,8 @@
 <template>
   <div>
-    <cursive-header v-if="recipe" :title="recipe.title" />
+    <cursive-header v-if="recipe">
+      {{ recipe.title }}
+    </cursive-header>
     <recipe-card
       v-if="recipe"
       :recipe="recipe"

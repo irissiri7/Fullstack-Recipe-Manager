@@ -1,18 +1,22 @@
 <template>
   <div>
     <div class="flex-corners">
-      <cursive-header title="My Recipes!"></cursive-header>
+      <cursive-header>
+        My Recipes!
+      </cursive-header>
       <button class="circular ui huge icon button" @click="addRecipe">
         <i id="add-icon" class="icon inverted plus"></i>
       </button>
     </div>
-    <recipe-card
-      v-for="recipe in recipes"
-      :key="recipe.title"
-      :recipe="recipe"
-      show-compact
-      @deletedRecipe="refreshData"
-    ></recipe-card>
+    <transition-group tag="ul" name="recipe-card" class="positioned">
+      <li v-for="recipe in recipes" :key="recipe._id">
+        <recipe-card
+          :recipe="recipe"
+          show-compact
+          @deletedRecipe="refreshData"
+        ></recipe-card>
+      </li>
+    </transition-group>
   </div>
 </template>
 
@@ -62,11 +66,13 @@ export default {
 </script>
 
 <style scoped>
+.positioned {
+  position: relative;
+}
 .flex-corners {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 2rem 0px 0px;
 }
 
 .circular.ui.huge.icon.button {
@@ -78,5 +84,27 @@ export default {
 }
 #add-icon:hover {
   color: var(--main-pine);
+}
+
+.recipe-card-enter-from,
+.recipe-card-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.recipe-card-enter-active {
+  transition: all 1s ease-in;
+}
+.recipe-card-leave-active {
+  transition: all 1s ease-out;
+  position: absolute;
+}
+.recipe-card-enter-to,
+.recipe-card-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.recipe-card-move {
+  transition: transform 1s ease;
 }
 </style>

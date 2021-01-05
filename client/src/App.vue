@@ -64,7 +64,7 @@ html {
 
 main {
   min-height: 100%;
-  margin: 0 auto;
+  margin: 20px auto;
   width: 40%;
 }
 /* list styles */

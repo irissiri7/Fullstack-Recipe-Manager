@@ -1,5 +1,7 @@
 <template>
-  <cursive-header title="Sorry, page not found... :(" />
+  <cursive-header centered>
+    Sorry, page not found... :(
+  </cursive-header>
 </template>
 
 <script>

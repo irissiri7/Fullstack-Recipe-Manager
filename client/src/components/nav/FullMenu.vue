@@ -6,13 +6,15 @@
         Recipe Manager
       </div>
     </h2>
-    <nav v-if="$store.getters.isAuth">
-      <ul class="nav-list">
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/my-recipes">My Recipes</router-link></li>
-        <li><router-link to="/my-profile">My Profile</router-link></li>
-      </ul>
-    </nav>
+    <transition name="fade">
+      <nav v-if="$store.getters.isAuth">
+        <ul class="nav-list">
+          <li><router-link to="/home">Home</router-link></li>
+          <li><router-link to="/my-recipes">My Recipes</router-link></li>
+          <li><router-link to="/my-profile">My Profile</router-link></li>
+        </ul>
+      </nav>
+    </transition>
   </div>
   <div v-if="$store.getters.isAuth" id="sign-out-icon">
     <button class="ui icon button" @click="$emit('sign-out')">
@@ -74,5 +76,21 @@ a.active {
 }
 .sign.out.alternate.icon.large {
   background-color: var(--main-orange);
+}
+
+.fade-enter-active {
+  animation: modal 0.3s ease;
+}
+.fade-leave-active {
+  animation: modal 0.3s ease reverse;
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>

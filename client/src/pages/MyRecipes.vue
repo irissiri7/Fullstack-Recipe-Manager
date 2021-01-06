@@ -92,10 +92,10 @@ export default {
   transform: translateY(-10px);
 }
 .recipe-card-enter-active {
-  transition: all 1s ease-in;
+  transition: all 0.5s ease-in;
 }
 .recipe-card-leave-active {
-  transition: all 1s ease-out;
+  transition: all 0.5s ease-out;
   position: absolute;
 }
 .recipe-card-enter-to,
@@ -105,6 +105,6 @@ export default {
 }
 
 .recipe-card-move {
-  transition: transform 1s ease;
+  transition: transform 0.5s ease;
 }
 </style>

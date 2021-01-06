@@ -213,7 +213,7 @@ export default {
     return {
       recipe: {
         title: '',
-        imageURL: null,
+        imageURL: '',
         ingredients: [],
         description: '',
         details: {
@@ -320,8 +320,7 @@ export default {
     },
     async handleFileUpload() {
       const file = this.$refs.file.files[0]
-      const image = this.$refs.image.getImageElement()
-      image.src = URL.createObjectURL(file)
+      this.recipe.imageURL = URL.createObjectURL(file)
     },
     async updateRecipe() {
       if (!this.formIsValid) {

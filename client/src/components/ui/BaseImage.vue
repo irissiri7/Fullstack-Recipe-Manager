@@ -1,6 +1,6 @@
 <template>
   <div class="container" :style="{ height: `${this.height}rem` }">
-    <img :src="src" alt="dish" ref="image" />
+    <img :src="src" alt="dish" />
   </div>
 </template>
 
@@ -19,11 +19,6 @@ export default {
       type: Number,
       required: false,
       default: 10
-    }
-  },
-  methods: {
-    getImageElement() {
-      return this.$refs.image
     }
   }
 }

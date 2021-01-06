@@ -52,6 +52,7 @@
       :is="activeComponent"
       :user="user"
       :profilePictureFile="profilePictureFile"
+      :changedProfilePicture="changedProfilePicture"
     ></component>
   </base-card>
 </template>
@@ -84,6 +85,9 @@ export default {
       return this.user && this.user.profilePictureURL
         ? this.user.profilePictureURL
         : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+    },
+    changedProfilePicture() {
+      return !!this.profilePictureFile
     }
   },
   methods: {

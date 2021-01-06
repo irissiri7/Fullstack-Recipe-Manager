@@ -34,7 +34,7 @@
       <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
     <h3>Description</h3>
-    <div v-bind:class="{ 'fade-box': showCompact }">
+    <div :class="['description', { 'fade-box': showCompact }]">
       <p id="description">{{ recipe.description }}</p>
       <div v-if="showCompact" class="fade-box read-more"></div>
     </div>
@@ -122,6 +122,9 @@ export default {
 </script>
 
 <style scoped>
+.description {
+  word-break: break-word;
+}
 .fade-box {
   max-height: 100px;
   position: relative;

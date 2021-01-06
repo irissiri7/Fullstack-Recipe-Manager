@@ -82,8 +82,11 @@
     <div class="field">
       <div class="two fields">
         <div class="field">
-          <base-button class="full-width" @click="updateUserDetails"
-            >Update Profile</base-button
+          <base-button
+            class="full-width"
+            @click.prevent="updateUserDetails"
+            :class="{ disabled: !hasChanges }"
+            >Save Changes</base-button
           >
         </div>
         <div class="field">
@@ -124,6 +127,24 @@ export default {
     profilePictureFile: {
       type: Object,
       required: true
+    },
+    changedProfilePicture: {
+      type: Boolean,
+      required: true
+    }
+  },
+  computed: {
+    hasChanges() {
+      if (this.firstName !== this.user.firstName) return true
+      if (this.lastName !== this.user.lastName) return true
+
+      let arr1 = this.foodPreferences.slice()
+      let arr2 = this.user.foodPreferences.slice()
+      if (arr1.sort().join(',') !== arr2.sort().join(',')) return true
+
+      if (this.changedProfilePicture) return true
+
+      return false
     }
   },
   methods: {
@@ -151,7 +172,7 @@ export default {
           }
         )
         this.feedback.style = 'informational'
-        this.feedback.message = 'Update successful!'
+        this.feedback.message = 'Changes saved!'
       } catch (error) {
         this.feedback.style = 'error'
         this.feedback.message = 'Could not update user information'

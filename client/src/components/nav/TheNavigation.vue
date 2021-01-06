@@ -38,6 +38,7 @@ export default {
 header {
   background-color: var(--main-orange);
   padding: 1rem;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

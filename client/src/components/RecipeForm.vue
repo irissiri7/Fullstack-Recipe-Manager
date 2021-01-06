@@ -185,7 +185,7 @@
         <base-button @click.prevent="updateRecipe">
           Update
         </base-button>
-        <base-button alert @click.prevent="deleteRecipe">
+        <base-button mode="alert" @click.prevent="deleteRecipe">
           Delete
         </base-button>
       </div>

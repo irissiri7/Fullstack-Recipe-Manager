@@ -21,7 +21,9 @@
         </base-button>
       </div>
     </div>
-    <base-image :src="src" alt="dish" />
+    <base-image v-if="showCompact" :src="src" alt="dish" />
+    <base-image v-else :src="src" alt="dish" :height="20" />
+
     <h3>Ingredients</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
       <ul>

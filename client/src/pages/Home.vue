@@ -14,7 +14,7 @@
           <em>always</em> available.</strong
         >
       </p>
-      <base-image :src="src" alt="dish" />
+      <base-image :src="src" alt="dish" :height="25" />
       <p class="side-note">
         This image was provided by
         <a href="https://spoonacular.com/food-api/" target="_blank"

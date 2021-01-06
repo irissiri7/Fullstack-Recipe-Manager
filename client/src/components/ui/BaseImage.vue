@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :style="{ height: `${this.height}rem` }">
     <img :src="src" alt="dish" ref="image" />
   </div>
 </template>
@@ -14,6 +14,11 @@ export default {
     alt: {
       type: String,
       required: true
+    },
+    height: {
+      type: Number,
+      required: false,
+      default: 10
     }
   },
   methods: {
@@ -32,7 +37,6 @@ img {
   width: 100%;
 }
 .container {
-  height: 10rem;
   width: 100%;
 }
 </style>

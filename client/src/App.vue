@@ -101,10 +101,10 @@ a:visited {
 }
 
 .route-enter-active {
-  animation: fade 0.4s ease;
+  animation: fade 0.5s ease;
 }
 .route-leave-active {
-  animation: fade 0.4s ease reverse;
+  animation: fade 0.5s ease reverse;
 }
 
 @keyframes fade {

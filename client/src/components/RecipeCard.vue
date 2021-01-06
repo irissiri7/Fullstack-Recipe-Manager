@@ -65,6 +65,9 @@
       </base-button>
     </div>
     <div v-if="!showCompact" class="flex float-right">
+      <base-button @click="editRecipe">
+        Edit
+      </base-button>
       <base-button mode="alert" @click="showModal = true">
         Delete
       </base-button>

@@ -26,7 +26,7 @@
         id="file-uploader"
         @change="handleFileUpload"
       />
-      <base-button class="ui icon button" id="image-btn" @click.prevent="">
+      <base-button class="icon" id="image-btn" @click.prevent="">
         Upload image
         <i class="upload icon"></i>
       </base-button>
@@ -44,10 +44,7 @@
           />
         </div>
         <div class="four wide field">
-          <base-button
-            class="ui button full-width"
-            @click.prevent="addIngredient"
-          >
+          <base-button class="full-width" @click.prevent="addIngredient">
             Add
           </base-button>
         </div>
@@ -185,18 +182,18 @@
     </div>
     <div class="field">
       <div v-if="initialRecipeData">
-        <base-button class="ui button" @click.prevent="updateRecipe">
+        <base-button @click.prevent="updateRecipe">
           Update
         </base-button>
-        <base-button class="ui button" alert @click.prevent="deleteRecipe">
+        <base-button alert @click.prevent="deleteRecipe">
           Delete
         </base-button>
       </div>
       <div v-else>
-        <base-button class="ui button" @click.prevent="addRecipe">
+        <base-button @click.prevent="addRecipe">
           Add
         </base-button>
-        <base-button class="ui button" alert @click.prevent="discardRecipe">
+        <base-button mode="alert" @click.prevent="discardRecipe">
           Discard
         </base-button>
       </div>

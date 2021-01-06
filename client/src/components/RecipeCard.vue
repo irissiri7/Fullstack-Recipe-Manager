@@ -13,7 +13,7 @@
     <div v-if="showCompact" class="flex-cnt">
       <h2>{{ recipe.title }}</h2>
       <div>
-        <base-button class="icon" @click.prevent="editRecipe">
+        <base-button class="icon" @click="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </base-button>
         <base-button class="icon" mode="alert" @click="showModal = true">
@@ -60,7 +60,7 @@
       <p>{{ recipe.details.timeToCook }}</p>
     </div>
     <div v-if="showCompact" class="flex center">
-      <base-button @click.prevent="showDetails">
+      <base-button @click="showDetails">
         Show Recipe
       </base-button>
     </div>

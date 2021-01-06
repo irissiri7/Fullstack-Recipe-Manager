@@ -8,6 +8,7 @@
       :recipe="recipe"
       @deleted-recipe="handleRecipeDeletion"
     ></recipe-card>
+    <base-button light mode="link" @click="goBack">Go back</base-button>
   </div>
 </template>
 
@@ -30,6 +31,9 @@ export default {
     }
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },
     fetchRecipe() {
       axios
         .get(

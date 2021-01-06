@@ -65,7 +65,7 @@
       </div>
       <div class="field" v-if="mode == 'sign up' || mode == 'reset password'">
         <base-button type="button" mode="link" @click="mode = 'sign in'"
-          >Back to log in</base-button
+          >Back to sign in</base-button
         >
       </div>
       <div class="field" v-if="mode == 'sign in'">

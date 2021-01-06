@@ -34,7 +34,18 @@ const router = createRouter({
     },
     { path: '/my-profile', component: MyProfile, meta: { requiresAuth: true } },
     { path: '/:notFound(.*)', component: NotFound }
-  ]
+  ],
+  scrollBehavior(_to, _from, savedPosition) {
+    return new Promise((resolve, _reject) => {
+      setTimeout(() => {
+        if (savedPosition) {
+          resolve({ ...savedPosition, behavior: 'smooth' })
+        } else {
+          resolve({ left: 0, top: 0, behavior: 'smooth' })
+        }
+      }, 1000)
+    })
+  }
 })
 
 router.beforeEach((to, from, next) => {

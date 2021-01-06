@@ -1,38 +1,28 @@
 <template>
-  <button v-if="!link" class="ui button" :class="mode">
+  <button class="ui button" :class="[mode, { light: light }]">
     <slot></slot>
   </button>
-  <router-link v-else :to="to">
-    <slot></slot>
-  </router-link>
 </template>
 
 <script>
 export default {
   props: {
-    link: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    to: {
-      type: String,
-      required: false,
-      default: '/'
-    },
     mode: {
       type: String,
       required: false,
       default: null
+    },
+    light: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   }
 }
 </script>
 
 <style scoped>
-a {
-  font-weight: 700;
-}
+/* Default button styles */
 .ui.button {
   background-color: var(--main-pine);
   border: 1px solid var(--main-pine);
@@ -44,6 +34,7 @@ a {
   color: var(--main-pine);
 }
 
+/* Alert button styles */
 .ui.button.alert {
   background-color: var(--main-alert);
   border: 1px solid var(--main-alert);
@@ -52,6 +43,8 @@ a {
   background-color: white;
   color: var(--main-alert);
 }
+
+/* Link looking button styles */
 .ui.button.link {
   background-color: transparent;
   border: none;
@@ -61,6 +54,16 @@ a {
   padding: 0px 0px 3px 0px;
 }
 .ui.button.link:hover {
+  color: var(--main-pine);
+  border-bottom: 1px solid var(--main-pine);
+}
+
+/* Light link looking button styles */
+.ui.button.link.light {
+  color: white;
+  border-bottom: 1px solid white;
+}
+.ui.button.link.light:hover {
   color: var(--main-pine);
   border-bottom: 1px solid var(--main-pine);
 }

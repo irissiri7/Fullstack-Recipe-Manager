@@ -72,19 +72,6 @@ ul {
   list-style: none;
 }
 
-/* Link styles */
-a {
-  color: var(--main-coffee);
-  border-bottom: 1px solid var(--main-coffee);
-}
-a:hover {
-  color: var(--main-pine);
-  border-bottom: 1px solid var(--main-pine);
-}
-a:visited {
-  color: none;
-}
-
 .stick {
   position: fixed;
   top: 0;
@@ -124,9 +111,9 @@ a:visited {
 }
 
 /* Media queries */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   main {
-    width: 90%;
+    width: 80%;
   }
 }
 </style>

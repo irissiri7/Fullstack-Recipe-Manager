@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome {{ firstName }}!</h1>
+    <cursive-header centered> Welcome {{ firstName }}! </cursive-header>
     <base-card>
       <p>Recipe Manager is your own personal recipe book, put online.</p>
       <p>
@@ -31,9 +31,12 @@
 import axios from 'axios'
 import dotenv from 'dotenv'
 
+import CursiveHeader from '../components/CursiveHeader.vue'
+
 dotenv.config()
 
 export default {
+  components: { CursiveHeader },
   data() {
     return {
       firstName: null,
@@ -87,18 +90,10 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 70px;
-  font-family: Rochester, sans-serif;
-  color: white;
-  text-align: center;
-}
 p {
-  font-size: 20px;
+  font-size: 14px;
 }
-.img-cnt {
-  height: 20rem;
-}
+
 .side-note {
   font-size: 12px;
 }

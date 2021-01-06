@@ -14,9 +14,7 @@
           <em>always</em> available.</strong
         >
       </p>
-      <div class="img-cnt">
-        <img :src="src" alt="dish" />
-      </div>
+      <base-image :src="src" alt="dish" />
       <p class="side-note">
         This image was provided by
         <a href="https://spoonacular.com/food-api/" target="_blank"
@@ -35,10 +33,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-import BaseCard from '../components/ui/BaseCard.vue'
-
 export default {
-  components: { BaseCard },
   data() {
     return {
       firstName: null,

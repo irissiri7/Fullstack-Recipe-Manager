@@ -16,9 +16,7 @@
     </div>
     <h3 class="ui dividing header">Image</h3>
     <div class="field">
-      <div class="img-cnt">
-        <img :src="src" ref="image" />
-      </div>
+      <base-image :src="src" alt="dish" ref="image" />
     </div>
     <div class="field" id="file-upload-cnt">
       <input
@@ -325,7 +323,7 @@ export default {
     },
     async handleFileUpload() {
       const file = this.$refs.file.files[0]
-      const image = this.$refs.image
+      const image = this.$refs.image.getImageElement()
       image.src = URL.createObjectURL(file)
     },
     async updateRecipe() {

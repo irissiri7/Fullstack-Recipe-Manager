@@ -8,6 +8,7 @@ import BaseCard from './components/ui/BaseCard.vue'
 import BaseButton from './components/ui/BaseButton.vue'
 import BaseFeedbackCard from './components/ui/BaseFeedbackCard.vue'
 import BaseModal from './components/ui/BaseModal.vue'
+import BaseImage from './components/ui/BaseImage.vue'
 
 const app = createApp(App)
 
@@ -18,5 +19,6 @@ app.component('base-card', BaseCard)
 app.component('base-button', BaseButton)
 app.component('base-feedback-card', BaseFeedbackCard)
 app.component('base-modal', BaseModal)
+app.component('base-image', BaseImage)
 
 app.mount('#app')

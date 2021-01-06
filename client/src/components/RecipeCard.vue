@@ -21,9 +21,7 @@
         </base-button>
       </div>
     </div>
-    <div class="img-cnt">
-      <img :src="src" alt="dish" />
-    </div>
+    <base-image :src="src" alt="dish" />
     <h3>Ingredients</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
       <ul>

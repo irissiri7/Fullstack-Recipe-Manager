@@ -67,22 +67,11 @@ main {
   margin: 20px auto;
   width: 40%;
 }
-/* list styles */
+/* List styles */
 ul {
   list-style: none;
 }
-/* image styles */
-.img-cnt {
-  width: 100%;
-  height: 10rem;
-}
 
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-}
 /* Link styles */
 a {
   color: var(--main-coffee);

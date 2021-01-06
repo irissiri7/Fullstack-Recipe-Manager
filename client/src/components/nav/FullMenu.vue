@@ -1,11 +1,6 @@
 <template>
   <div class="flex center">
-    <h2 class="ui header" @click="$emit('back-to-home')">
-      <i class="lemon outline icon"></i>
-      <div class="content">
-        Recipe Manager
-      </div>
-    </h2>
+    <base-logo @click="$emit('back-to-home')"></base-logo>
     <transition name="fade">
       <nav v-if="$store.getters.isAuth">
         <ul class="nav-list">
@@ -24,7 +19,11 @@
 </template>
 
 <script>
+import BaseLogo from '../ui/BaseLogo.vue'
 export default {
+  components: {
+    BaseLogo
+  },
   emits: ['backToHome', 'signOut']
 }
 </script>

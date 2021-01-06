@@ -8,11 +8,7 @@
       ></i>
     </div>
     <div>
-      <h2 class="ui header" @click="$emit('back-to-home')">
-        <div class="content">
-          Recipe Manager
-        </div>
-      </h2>
+      <base-logo no-lemon @click="$emit('back-to-home')"></base-logo>
     </div>
   </div>
   <transition name="fade">
@@ -30,7 +26,11 @@
 </template>
 
 <script>
+import BaseLogo from '../ui/BaseLogo.vue'
 export default {
+  components: {
+    BaseLogo
+  },
   data() {
     return {
       showMenu: false

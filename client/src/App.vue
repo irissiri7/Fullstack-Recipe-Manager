@@ -1,5 +1,5 @@
 <template>
-  <the-navigation></the-navigation>
+  <the-navigation class="stick"></the-navigation>
   <main>
     <router-view v-slot="slotProps">
       <transition name="route" mode="out-in">
@@ -64,7 +64,7 @@ html {
 
 main {
   min-height: 100%;
-  margin: 20px auto;
+  margin: 100px auto 20px;
   width: 40%;
 }
 /* List styles */
@@ -83,6 +83,13 @@ a:hover {
 }
 a:visited {
   color: none;
+}
+
+.stick {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5;
 }
 
 /* utility classes */

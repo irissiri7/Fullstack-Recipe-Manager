@@ -95,10 +95,10 @@ ul {
 }
 
 .route-enter-active {
-  animation: fade 0.2s ease;
+  animation: fade 0.5s ease;
 }
 .route-leave-active {
-  animation: fade 0.2s ease reverse;
+  animation: fade 0.5s ease reverse;
 }
 
 @keyframes fade {

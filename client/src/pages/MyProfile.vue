@@ -1,60 +1,65 @@
 <template>
-  <base-card>
-    <div class="cnt">
-      <div v-if="showChangeProfilePicture" class="field" id="file-upload-cnt">
-        <input
-          type="file"
-          name="image"
-          ref="file"
-          id="file-uploader"
-          @change="handleFileUpload"
-        />
+  <div>
+    <cursive-header>My Profile</cursive-header>
+    <base-card>
+      <div class="cnt">
+        <div v-if="showChangeProfilePicture" class="field" id="file-upload-cnt">
+          <input
+            type="file"
+            name="image"
+            ref="file"
+            id="file-uploader"
+            @change="handleFileUpload"
+          />
+          <button
+            class="ui icon circular button"
+            id="image-btn"
+            @click.prevent=""
+          >
+            <i class="pencil alternate icon"></i>
+          </button>
+        </div>
+        <div class="img-cnt">
+          <img class="profile-pic" :src="profilePictureSrc" ref="image" />
+          <!-- <img
+            class="profile-pic"
+            src="../assets/profileAvatar.png"
+            ref="image"
+          /> -->
+        </div>
+      </div>
+      <div class="flex navigation-cnt">
         <button
-          class="ui icon circular button"
-          id="image-btn"
-          @click.prevent=""
+          @click="activeComponent = 'user-details'"
+          class="nav-btn"
+          :class="{ selected: activeComponent === 'user-details' }"
         >
-          <i class="pencil alternate icon"></i>
+          General info
+        </button>
+        <button
+          @click="activeComponent = 'change-email'"
+          class="nav-btn"
+          :class="{ selected: activeComponent === 'change-email' }"
+        >
+          Change email
+        </button>
+        <button
+          @click="activeComponent = 'change-password'"
+          class="nav-btn"
+          :class="{ selected: activeComponent === 'change-password' }"
+        >
+          Change password
         </button>
       </div>
-      <img
-        class="ui middle aligned small circular bordered image"
-        :src="profilePictureSrc"
-        ref="image"
-      />
-      <h1>My Profile</h1>
-    </div>
-    <div class="flex navigation-cnt">
-      <button
-        @click="activeComponent = 'user-details'"
-        class="nav-btn"
-        :class="{ selected: activeComponent === 'user-details' }"
-      >
-        General info
-      </button>
-      <button
-        @click="activeComponent = 'change-email'"
-        class="nav-btn"
-        :class="{ selected: activeComponent === 'change-email' }"
-      >
-        Change email
-      </button>
-      <button
-        @click="activeComponent = 'change-password'"
-        class="nav-btn"
-        :class="{ selected: activeComponent === 'change-password' }"
-      >
-        Change password
-      </button>
-    </div>
-    <component
-      v-if="user"
-      :is="activeComponent"
-      :user="user"
-      :profilePictureFile="profilePictureFile"
-      :changedProfilePicture="changedProfilePicture"
-    ></component>
-  </base-card>
+      <component
+        v-if="user"
+        :is="activeComponent"
+        :user="user"
+        :profilePictureFile="profilePictureFile"
+        :changedProfilePicture="changedProfilePicture"
+      ></component>
+    </base-card>
+  </div>
 </template>
 
 <script>
@@ -63,12 +68,14 @@ import axios from 'axios'
 import UserDetails from '../components/UserDetails.vue'
 import ChangeEmail from '../components/ChangeEmail.vue'
 import ChangePassword from '../components/ChangePassword.vue'
+import CursiveHeader from '../components/CursiveHeader.vue'
 
 export default {
   components: {
     UserDetails,
     ChangeEmail,
-    ChangePassword
+    ChangePassword,
+    CursiveHeader
   },
   data() {
     return {
@@ -122,12 +129,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  display: inline;
-  margin-left: 2rem;
-  color: #30292f;
-}
-
 .cnt {
   margin-bottom: 2rem;
 }
@@ -171,9 +172,27 @@ h1 {
   position: absolute;
   z-index: 3;
   opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
 }
 
 .pencil.alternate.icon {
   color: white;
+}
+
+.img-cnt {
+  width: 130px;
+  height: 130px;
+  display: inline-block;
+}
+
+.profile-pic {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid white;
 }
 </style>

@@ -74,4 +74,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.ui.form {
+  margin-top: 1.5rem;
+}
+</style>

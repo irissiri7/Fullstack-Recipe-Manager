@@ -47,40 +47,47 @@
       </div>
     </div>
     <h4 class="ui dividing header">Food Preferences</h4>
-    <div class="fields">
-      <div class="field">
-        <div class="ui checkbox">
-          <input type="checkbox" value="vegetarian" v-model="foodPreferences" />
-          <label>Vegetarian</label>
+    <div class="field">
+      <div class="fields">
+        <div class="field">
+          <div class="ui checkbox">
+            <input
+              type="checkbox"
+              value="vegetarian"
+              v-model="foodPreferences"
+            />
+            <label>Vegetarian</label>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          <input type="checkbox" value="vegan" v-model="foodPreferences" />
-          <label>Vegan</label>
+        <div class="field">
+          <div class="ui checkbox">
+            <input type="checkbox" value="vegan" v-model="foodPreferences" />
+            <label>Vegan</label>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          <input
-            type="checkbox"
-            value="lactose free"
-            v-model="foodPreferences"
-          />
-          <label>Lactose Free</label>
+        <div class="field">
+          <div class="ui checkbox">
+            <input
+              type="checkbox"
+              value="lactose free"
+              v-model="foodPreferences"
+            />
+            <label>Lactose Free</label>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          <input
-            type="checkbox"
-            value="gluten free"
-            v-model="foodPreferences"
-          />
-          <label>Gluten Free</label>
+        <div class="field">
+          <div class="ui checkbox">
+            <input
+              type="checkbox"
+              value="gluten free"
+              v-model="foodPreferences"
+            />
+            <label>Gluten Free</label>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="field">
       <div class="two fields">
         <div class="field">
@@ -226,7 +233,12 @@ export default {
 
 <style scoped>
 @import '../assets/keyframes.css';
-
+.ui.form {
+  margin-top: 1.5rem;
+}
+.fields {
+  flex-wrap: wrap;
+}
 .full-width {
   width: 100%;
 }

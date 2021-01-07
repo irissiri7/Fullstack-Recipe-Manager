@@ -173,17 +173,23 @@ const deleteUser = async (req, res, _next) => {
   }
 }
 
-// const addProfilePicture = async (req, res, _next) => {
-//   Middlewares.upload(req, res, (error) => {
-//     if (error) {
-//       res.status(400).send({ message: error.message })
-//     } else {
-//       res
-//         .status(200)
-//         .send({ src: `${process.env.BASE_URL}${req.file.filename}` })
-//     }
-//   })
-// }
+const refreshToken = async (req, res, _next) => {
+  try {
+    const response = await axios.post(
+      `https://securetoken.googleapis.com/v1/token?key=${process.env.firebase_AUTH_API_KEY}`,
+      { grant_type: 'refresh_token', refresh_token: req.body.refreshToken }
+    )
+    console.log(response)
+    res.status(200).send({
+      token: response.id_token,
+      refreshToken: response.refresh_token,
+      expiresIn: response.expires_in
+    })
+  } catch (error) {
+    console.log(error.response)
+    res.status(400).send({ message: error.message })
+  }
+}
 
 export default {
   signIn,
@@ -192,6 +198,6 @@ export default {
   changePassword,
   getUserDetails,
   updateUserDetails,
-  deleteUser
-  // addProfilePicture
+  deleteUser,
+  refreshToken
 }

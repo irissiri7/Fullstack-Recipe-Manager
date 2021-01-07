@@ -39,4 +39,6 @@ router.delete(
   userController.deleteUser
 )
 
+router.post('/user/refresh-token', userController.refreshToken)
+
 export default router

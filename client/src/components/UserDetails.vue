@@ -135,7 +135,7 @@ export default {
     },
     profilePictureFile: {
       type: Object,
-      required: true
+      required: false
     },
     changedProfilePicture: {
       type: Boolean,

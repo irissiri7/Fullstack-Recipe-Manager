@@ -27,7 +27,7 @@
     <h3>Ingredients</h3>
     <div v-bind:class="{ 'fade-box': showCompact }">
       <ul>
-        <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+        <li v-for="ingredient in recipe.ingredients" :key="ingredient">
           {{ ingredient }}
         </li>
       </ul>
@@ -120,8 +120,9 @@ export default {
   }
 }
 </script>
-
 <style scoped>
+@import '../assets/keyframes.css';
+
 .description {
   word-break: break-word;
 }
@@ -165,18 +166,9 @@ i:hover {
 }
 
 .fade-enter-active {
-  animation: modal 0.3s ease;
+  animation: fade 0.5s ease;
 }
 .fade-leave-active {
-  animation: modal 0.3s ease reverse;
-}
-
-@keyframes modal {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  animation: fade 0.5s ease reverse;
 }
 </style>

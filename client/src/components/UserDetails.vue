@@ -9,9 +9,11 @@
       </template>
     </base-modal>
   </transition>
-  <base-feedback-card v-if="feedback.message" :style="feedback.style">
-    {{ feedback.message }}
-  </base-feedback-card>
+  <transition name="feedback">
+    <base-feedback-card v-if="feedback.message" :style="feedback.style">
+      {{ feedback.message }}
+    </base-feedback-card>
+  </transition>
   <form class="ui form">
     <h4 class="ui dividing header">Summary</h4>
     <div class="field">
@@ -223,23 +225,23 @@ export default {
 </script>
 
 <style scoped>
+@import '../assets/keyframes.css';
+
 .full-width {
   width: 100%;
 }
 
 .modal-enter-active {
-  animation: modal 0.3s ease;
+  animation: fade 0.5s ease;
 }
 .modal-leave-active {
-  animation: modal 0.3s ease reverse;
+  animation: fade 0.5s ease reverse;
 }
 
-@keyframes modal {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.feedback-enter-active {
+  animation: fade 0.5s ease;
+}
+.feedback-leave-active {
+  animation: fade 0.5s ease reverse;
 }
 </style>

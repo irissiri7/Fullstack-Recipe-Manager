@@ -374,6 +374,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../assets/keyframes.css';
+
 ul {
   list-style: none;
 }
@@ -434,14 +436,5 @@ div.ui.checkbox {
 }
 .feedback-leave-active {
   animation: fade 0.3s ease reverse;
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 </style>

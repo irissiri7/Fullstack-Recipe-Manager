@@ -25,6 +25,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Rochester&display=swap');
+@import './assets/keyframes.css';
 
 :root {
   --main-orange: #f1a80a;
@@ -95,21 +96,10 @@ ul {
 }
 
 .route-enter-active {
-  animation: fade 0.5s ease;
+  animation: fade-slide-top 0.5s ease;
 }
 .route-leave-active {
-  animation: fade 0.5s ease reverse;
-}
-
-@keyframes fade {
-  from {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0px);
-    opacity: 1;
-  }
+  animation: fade-slide-top 0.5s ease reverse;
 }
 
 /* Media queries */

@@ -29,6 +29,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../assets/keyframes.css';
+
 nav {
   margin-left: 1em;
   height: 100%;
@@ -78,18 +80,9 @@ a.active {
 }
 
 .fade-enter-active {
-  animation: modal 0.3s ease;
+  animation: fade 0.3s ease;
 }
 .fade-leave-active {
-  animation: modal 0.3s ease reverse;
-}
-
-@keyframes modal {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  animation: fade 0.3s ease reverse;
 }
 </style>

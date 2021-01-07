@@ -14,9 +14,15 @@
   <transition name="fade">
     <nav v-if="showMenu">
       <ul>
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/my-recipes">My Recipes</router-link></li>
-        <li><router-link to="/my-profile">My Profile</router-link></li>
+        <li @click.prevent="showMenu = false">
+          <router-link to="/home">Home</router-link>
+        </li>
+        <li @click.prevent="showMenu = false">
+          <router-link to="/my-recipes">My Recipes</router-link>
+        </li>
+        <li @click.prevent="showMenu = false">
+          <router-link to="/my-profile">My Profile</router-link>
+        </li>
         <li>
           <a @click="signOut">Sign Out</a>
         </li>

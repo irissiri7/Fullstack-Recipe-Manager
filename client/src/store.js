@@ -6,7 +6,7 @@ import services from '../src/util/services.js'
 
 dotenv.config()
 
-//Global timer responsible for auto sign out functionality
+//Global timer responsible for refreshing token alt. auto sign out functionality
 let timer
 
 const store = createStore({
@@ -14,6 +14,7 @@ const store = createStore({
     return {
       firebaseId: null,
       token: null,
+      refreshToken: null,
       email: null
     }
   },
@@ -21,7 +22,12 @@ const store = createStore({
     setUser(state, payload) {
       state.firebaseId = payload.firebaseId
       state.token = payload.token
+      state.refreshToken = payload.refreshToken
       state.email = payload.email
+    },
+    updateTokens(state, payload) {
+      state.token = payload.token
+      state.refreshToken = payload.refreshToken
     }
   },
   actions: {
@@ -44,10 +50,12 @@ const store = createStore({
         const user = {
           firebaseId: response.data.localId,
           token: response.data.idToken,
+          refreshToken: response.data.refreshToken,
           email: response.data.email
         }
 
         const expiresIn = +response.data.expiresIn * 1000
+
         const tokenExpirationDate = new Date().getTime() + expiresIn
 
         services.setUserInLocalStorage({
@@ -56,7 +64,7 @@ const store = createStore({
         })
 
         timer = setTimeout(() => {
-          context.dispatch('signOut')
+          context.dispatch('refreshToken')
         }, expiresIn)
 
         context.commit('setUser', user)
@@ -129,18 +137,18 @@ const store = createStore({
       if (user) {
         //Number of milliseconds until token expires
         const expiresIn = +user.tokenExpirationDate - new Date().getTime()
-
         //If there is less than 1 min left on token validity, don't even bother logging in
         if (expiresIn < 60000) return
 
         //Set up auto log out
         timer = setTimeout(() => {
-          context.dispatch('signOut', expiresIn)
+          context.dispatch('refreshToken')
         }, expiresIn)
 
         context.commit('setUser', {
           firebaseId: user.firebaseId,
           token: user.token,
+          refreshToken: user.refreshToken,
           email: user.email
         })
       }
@@ -153,10 +161,36 @@ const store = createStore({
       context.commit('setUser', {
         firebaseId: null,
         token: null,
+        refreshToken: null,
         email: null
       })
 
       router.push('/')
+    },
+    async refreshToken(context, _payload) {
+      try {
+        const response = await axios.post(
+          `${process.env.VUE_APP_MY_URL}users/user/refresh-token`,
+          {
+            refreshToken: context.getters.refreshToken
+          }
+        )
+        const expiresIn = +response.data.expiresIn * 1000
+
+        const tokenExpirationDate = new Date().getTime() + expiresIn
+        localStorage.setItem('tokenExpirationDate', tokenExpirationDate)
+        clearInterval(timer)
+        timer = setInterval(() => {
+          context.dispatch('refreshToken')
+        }, expiresIn)
+        context.commit('updateTokens', {
+          token: response.data.token,
+          refreshToken: response.data.refreshToken
+        })
+      } catch (error) {
+        console.log(error)
+        context.dispatch('signOut')
+      }
     }
   },
   getters: {
@@ -168,6 +202,9 @@ const store = createStore({
     },
     token(state) {
       return state.token
+    },
+    refreshToken(state) {
+      return state.refreshToken
     },
     email(state) {
       return state.email

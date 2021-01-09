@@ -179,14 +179,15 @@ const refreshToken = async (req, res, _next) => {
       `https://securetoken.googleapis.com/v1/token?key=${process.env.firebase_AUTH_API_KEY}`,
       { grant_type: 'refresh_token', refresh_token: req.body.refreshToken }
     )
-    console.log(response)
     res.status(200).send({
-      token: response.id_token,
-      refreshToken: response.refresh_token,
-      expiresIn: response.expires_in
+      token: response.data.id_token,
+      refreshToken: response.data.refresh_token,
+      expiresIn: response.data.expires_in
     })
   } catch (error) {
-    console.log(error.response)
+    if (error.response) {
+      console.log(error.response.data)
+    }
     res.status(400).send({ message: error.message })
   }
 }

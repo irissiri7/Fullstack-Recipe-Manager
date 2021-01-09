@@ -203,8 +203,9 @@
 
 <script>
 import dotenv from 'dotenv'
-import axios from 'axios'
 import service from '../util/services.js'
+
+import client from '../util/Client'
 
 dotenv.config()
 
@@ -259,49 +260,41 @@ export default {
     removeIngredient(index) {
       this.recipe.ingredients.splice(index, 1)
     },
-    displayError(message) {
+    displayFeedback(message, style) {
       window.scrollTo(0, 0)
-      this.feedback.style = 'error'
       this.feedback.message = message
+      this.feedback.style = style
       setTimeout(() => {
         this.feedback.message = undefined
         this.feedback.style = undefined
       }, 3000)
+    },
+    constructFormData() {
+      const formData = new FormData()
+      //Add recipe image
+      const file = this.$refs.file.files[0]
+      formData.append('image', file)
+      //Add recipe information
+      const data = {
+        ...this.recipe,
+        ...{ firebaseId: this.$store.getters.firebaseId }
+      }
+      formData.append('recipe', JSON.stringify(data))
+      return formData
     },
     async addRecipe() {
       if (!this.formIsValid) {
         this.displayError('The recipe must have a title')
         return
       }
-      const formData = new FormData()
-      const file = this.$refs.file.files[0]
-      formData.append('image', file)
-      const data = {
-        ...this.recipe,
-        ...{ firebaseId: this.$store.getters.firebaseId }
-      }
-      formData.append('recipe', JSON.stringify(data))
       try {
-        await axios.post(
-          `${process.env.VUE_APP_MY_URL}recipes/recipe/add-recipe`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.feedback.message = 'Recipe added!'
-        window.scrollTo(0, 0)
+        const formData = this.constructFormData()
+        await client.addRecipe(formData)
+        this.displayFeedback('Recipe added!')
         this.discardRecipe()
       } catch (error) {
-        if (error.response) {
-          this.displayError(error.response.data.message)
-        } else {
-          this.displayError(`Could not add recipe :(`)
-        }
-        window.scrollTo(0, 0)
+        console.log(error)
+        this.displayFeedback(`Could not add recipe :(`, 'error')
       }
     },
     discardRecipe() {
@@ -324,36 +317,17 @@ export default {
     },
     async updateRecipe() {
       if (!this.formIsValid) {
-        this.feedback.message = 'Recipes must have a name!'
-        this.feedback.style = 'error'
-        window.scrollTo(0, 0)
+        this.displayFeedback('Recipes must have a name!', 'error')
         return
       }
       try {
-        const formData = new FormData()
-        const file = this.$refs.file.files[0]
-        formData.append('image', file)
-        const data = {
-          ...this.recipe,
-          ...{ firebaseId: this.$store.getters.firebaseId }
-        }
-        formData.append('recipe', JSON.stringify(data))
-        await axios.put(
-          `${process.env.VUE_APP_MY_URL}recipes/recipe/update-recipe`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.feedback.message = 'Recipe updated!'
-        window.scrollTo(0, 0)
+        const formData = this.constructFormData()
+        await client.updateRecipe(formData)
+        this.displayFeedback('Recipe updated!')
+        this.discardRecipe()
       } catch (error) {
-        this.displayError(
-          `Could not update recipe :( Server responded with: ${error.message}`
-        )
+        console.log(error)
+        this.displayFeedback(`Could not update recipe :(`, 'error')
       }
     },
     async deleteRecipe() {

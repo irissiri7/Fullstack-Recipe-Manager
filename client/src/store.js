@@ -55,7 +55,6 @@ const store = createStore({
         }
 
         const expiresIn = +response.data.expiresIn * 1000
-
         const tokenExpirationDate = new Date().getTime() + expiresIn
 
         services.setUserInLocalStorage({

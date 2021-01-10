@@ -249,7 +249,7 @@ export default {
   methods: {
     addIngredient() {
       if (this.recipe.ingredients.includes(this.ingredient)) {
-        this.displayError('You have already added this ingredient')
+        this.displayFeedback('You have already added this ingredient')
         this.ingredient = ''
       }
       if (this.ingredient != '') {
@@ -284,7 +284,7 @@ export default {
     },
     async addRecipe() {
       if (!this.formIsValid) {
-        this.displayError('The recipe must have a title')
+        this.displayFeedback('The recipe must have a title', 'error')
         return
       }
       try {

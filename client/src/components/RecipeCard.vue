@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import service from '../util/services.js'
+import client from '../util/Client.js'
 export default {
   data() {
     return {
@@ -110,11 +110,11 @@ export default {
     async deleteRecipe(confirmed) {
       this.showModal = false
       if (!confirmed) return
-      const success = await service.deleteRecipe(this.recipe._id)
-      if (success) {
+      try {
+        await client.deleteRecipe(this.recipe._id)
         this.$emit('deleted-recipe')
-      } else {
-        console.log('could not delete recipe')
+      } catch (error) {
+        console.log(error)
       }
     }
   }

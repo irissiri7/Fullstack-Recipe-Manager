@@ -25,6 +25,16 @@ class Client {
       }
     })
   }
+  async deleteRecipe(recipeId) {
+    await axios.delete(
+      `${process.env.VUE_APP_MY_URL}recipes/recipe/delete-recipe/${recipeId}`,
+      {
+        headers: {
+          Authorization: `Basic ${store.getters.token}`
+        }
+      }
+    )
+  }
 }
 
 const client = new Client(`${process.env.VUE_APP_MY_URL}`)

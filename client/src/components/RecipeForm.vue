@@ -1,4 +1,14 @@
 <template>
+  <transition name="modal">
+    <base-modal v-if="showModal" @user-selection="deleteRecipe">
+      <template v-slot:title>
+        <h3>Are you sure you want to delete the recipe?</h3>
+      </template>
+      <template v-slot:content>
+        <p>This action can not be undone</p>
+      </template>
+    </base-modal>
+  </transition>
   <transition name="feedback">
     <base-feedback-card v-if="feedback.message" :style="feedback.style">
       <p>{{ feedback.message }}</p>
@@ -185,7 +195,7 @@
         <base-button @click.prevent="updateRecipe">
           Update
         </base-button>
-        <base-button mode="alert" @click.prevent="deleteRecipe">
+        <base-button mode="alert" @click.prevent="showModal = true">
           Delete
         </base-button>
       </div>
@@ -203,8 +213,6 @@
 
 <script>
 import dotenv from 'dotenv'
-import service from '../util/services.js'
-
 import client from '../util/Client'
 
 dotenv.config()
@@ -227,7 +235,8 @@ export default {
       feedback: {
         message: undefined,
         style: undefined
-      }
+      },
+      showModal: false
     }
   },
   props: {
@@ -330,12 +339,15 @@ export default {
         this.displayFeedback(`Could not update recipe :(`, 'error')
       }
     },
-    async deleteRecipe() {
-      const success = await service.deleteRecipe(this.recipe._id)
-      if (success) {
+    async deleteRecipe(confirmed) {
+      this.showModal = false
+      if (!confirmed) return
+      try {
+        await client.deleteRecipe(this.recipe._id)
         this.$router.push('/my-recipes')
-      } else {
-        console.log('could not delete recipe')
+      } catch (error) {
+        console.log(error)
+        this.displayFeedback('Could not delete recipe', 'error')
       }
     }
   },

@@ -55,7 +55,7 @@ export default {
     async changePassword() {
       try {
         const data = await client.changePassword(this.newPassword)
-        await this.$store.dispatch('updateUser', {
+        await this.$store.dispatch('setUser', {
           firebaseId: data.localId,
           token: data.idToken,
           refreshToken: data.refreshToken,

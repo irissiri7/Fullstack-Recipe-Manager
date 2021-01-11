@@ -63,12 +63,11 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 import UserDetails from '../components/UserDetails.vue'
 import ChangeEmail from '../components/ChangeEmail.vue'
 import ChangePassword from '../components/ChangePassword.vue'
 import CursiveHeader from '../components/CursiveHeader.vue'
+import client from '../util/Client'
 
 export default {
   components: {
@@ -106,15 +105,8 @@ export default {
     },
     async fetchData() {
       try {
-        const response = await axios.get(
-          `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.user = response.data
+        const user = await client.getUserDetails()
+        this.user = user
       } catch (error) {
         this.feedback.style = 'error'
         this.feedback.message = 'Could not fetch user information'

@@ -10,7 +10,7 @@
 
 <script>
 import RecipeForm from '../components/RecipeForm.vue'
-import axios from 'axios'
+import client from '../util/Client.js'
 
 export default {
   components: {
@@ -21,20 +21,13 @@ export default {
       initialRecipeData: null
     }
   },
-  created() {
-    axios
-      .get(
-        `${process.env.VUE_APP_MY_URL}recipes/recipe/get-recipe/?recipeId=${this.$route.params.id}`,
-        {
-          headers: {
-            Authorization: `Basic ${this.$store.getters.token}`
-          }
-        }
-      )
-      .then(response => {
-        this.initialRecipeData = response.data
-      })
-      .catch(error => console.log(error))
+  async created() {
+    try {
+      const recipe = await client.getRecipeById(this.$route.params.id)
+      this.initialRecipeData = recipe
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 </script>

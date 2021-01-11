@@ -6,6 +6,7 @@
         <component :is="slotProps.Component"></component>
       </transition>
     </router-view>
+    <button @click="corruptToken">Corrupt token</button>
   </main>
 </template>
 
@@ -17,7 +18,13 @@ export default {
   components: {
     TheNavigation
   },
+  methods: {
+    corruptToken() {
+      this.$store.state.token = '9034uitjekfdsm'
+    }
+  },
   created() {
+    console.log('corrupting tokens')
     this.$store.dispatch('autoSignIn')
   }
 }

@@ -16,7 +16,7 @@
 import RecipeCard from '../components/RecipeCard'
 import CursiveHeader from '../components/CursiveHeader'
 import dotenv from 'dotenv'
-import axios from 'axios'
+import client from '../util/Client'
 
 dotenv.config()
 
@@ -34,21 +34,13 @@ export default {
     goBack() {
       this.$router.go(-1)
     },
-    fetchRecipe() {
-      axios
-        .get(
-          `${process.env.VUE_APP_MY_URL}recipes/recipe/get-recipe/?recipeId=${this.$route.params.id}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        .then(response => {
-          this.recipe = response.data
-          console.log(this.recipe)
-        })
-        .catch(error => console.log(error))
+    async fetchRecipe() {
+      try {
+        const recipe = await client.getRecipeById(this.$route.params.id)
+        this.recipe = recipe
+      } catch (error) {
+        console.log(error)
+      }
     },
     handleRecipeDeletion() {
       this.$router.push('/my-recipes')

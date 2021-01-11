@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import client from '../util/Client.js'
 
 export default {
   data() {
@@ -157,29 +157,25 @@ export default {
     }
   },
   methods: {
+    constructFormData() {
+      const formData = new FormData()
+      const newData = {
+        firebaseId: this.$store.getters.firebaseId,
+        foodPreferences: this.foodPreferences,
+        firstName: this.firstName,
+        lastName: this.lastName
+      }
+      //must be stringified?!
+      formData.append('user-details', JSON.stringify(newData))
+      if (this.profilePictureFile) {
+        formData.append('image', this.profilePictureFile)
+      }
+      return formData
+    },
     async updateUserDetails() {
       try {
-        const formData = new FormData()
-        const newData = {
-          firebaseId: this.$store.getters.firebaseId,
-          foodPreferences: this.foodPreferences,
-          firstName: this.firstName,
-          lastName: this.lastName
-        }
-        formData.append('user-details', JSON.stringify(newData))
-        if (this.profilePictureFile) {
-          formData.append('image', this.profilePictureFile)
-        }
-        await axios.post(
-          `${process.env.VUE_APP_MY_URL}users/user/update-user-details/`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
+        const userData = this.constructFormData()
+        await client.updateUserDetails(userData)
         this.feedback.style = 'informational'
         this.feedback.message = 'Changes saved!'
       } catch (error) {
@@ -190,15 +186,8 @@ export default {
     },
     async getNumberOfRecipes() {
       try {
-        const response = await axios.get(
-          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.firebaseId}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.numberOfRecipes = response.data.length
+        const data = await client.getRecipes()
+        this.numberOfRecipes = data.length
       } catch (error) {
         console.log(error)
       }
@@ -209,24 +198,15 @@ export default {
     },
     async deleteProfile() {
       try {
-        await axios.delete(
-          `${process.env.VUE_APP_MY_URL}users/user/delete-user/?firebaseId=${this.$store.getters.firebaseId}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
+        await client.deleteProfile()
         this.$store.dispatch('signOut', { route: '/' })
-        this.$router.push('/')
       } catch (error) {
-        console.log(error.response.data)
+        console.log(error.message)
       }
     }
   },
   created() {
     this.getNumberOfRecipes()
-    console.log(this.profilePictureFile)
   }
 }
 </script>

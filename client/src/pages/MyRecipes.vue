@@ -24,7 +24,7 @@
 import RecipeCard from '../components/RecipeCard.vue'
 import CursiveHeader from '../components/CursiveHeader.vue'
 import dotenv from 'dotenv'
-import axios from 'axios'
+import client from '../util/Client.js'
 
 dotenv.config()
 
@@ -45,18 +45,13 @@ export default {
     addRecipe() {
       this.$router.push('/my-recipes/add-recipe')
     },
-    fetchData() {
-      axios
-        .get(
-          `${process.env.VUE_APP_MY_URL}recipes/get-recipes/?firebaseId=${this.$store.getters.firebaseId}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        .then(response => (this.recipes = response.data))
-        .catch(error => console.log(error))
+    async fetchData() {
+      try {
+        const recipes = await client.getRecipes()
+        this.recipes = recipes
+      } catch (error) {
+        console.log(error)
+      }
     },
     refreshData() {
       this.fetchData()

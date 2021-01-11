@@ -62,8 +62,88 @@ class Client {
     })
     return response
   }
+  async updateUserDetails(userData) {
+    await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}users/user/update-user-details/`,
+      data: userData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+  }
+  async deleteProfile() {
+    await this.attemptRequest({
+      method: 'DELETE',
+      url: `${this.baseUrl}users/user/delete-user/?firebaseId=${store.getters.firebaseId}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+  }
+  async getRecipes() {
+    const response = await this.attemptRequest({
+      method: 'GET',
+      url: `${this.baseUrl}recipes/get-recipes/?firebaseId=${store.getters.firebaseId}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return response
+  }
+
+  async getRecipeById(id) {
+    const data = await this.attemptRequest({
+      method: 'GET',
+      url: `${this.baseUrl}recipes/recipe/get-recipe/?recipeId=${id}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return data
+  }
+
+  async getUserDetails() {
+    const data = await this.attemptRequest({
+      method: 'GET',
+      url: `${this.baseUrl}users/user/get-user-details/?firebaseId=${store.getters.firebaseId}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return data
+  }
+
+  //These methods are not using attemptRequest() since we are not authenticated in the first place
+  // hence no tokens that we can attempt to refresh
+  async authenticate(email, password, mode) {
+    //Default url is for 'signIn'
+    let url = `${this.baseUrl}users/user/sign-in`
+    //Changing url if mode is 'signUp'
+    if (mode == 'sign up') url = `${this.baseUrl}users/user/sign-up`
+    const response = await axios({
+      method: 'POST',
+      url: url,
+      data: { email: email, password: password },
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return response.data
+  }
+
+  async resetPassword(email) {
+    await axios({
+      method: 'POST',
+      url: `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
+      data: { email: email, requestType: 'PASSWORD_RESET' }
+    })
+  }
 
   //PRIVATE METHODS
+  // If first response is 401/unauth, this method will
+  // try to refresh the tokens and run request again
   async attemptRequest(callObject) {
     const unauthorized = 401
     let response = null

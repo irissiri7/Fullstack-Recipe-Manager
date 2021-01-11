@@ -58,7 +58,7 @@ export default {
     async changeEmail() {
       try {
         const data = await client.changeEmail(this.newEmail)
-        await this.$store.dispatch('updateUser', {
+        await this.$store.dispatch('setUser', {
           firebaseId: data.localId,
           token: data.idToken,
           refreshToken: data.refreshToken,

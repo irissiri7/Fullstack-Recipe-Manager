@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import client from '../util/Client.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 
@@ -58,19 +59,13 @@ export default {
   methods: {
     async fetchData() {
       try {
-        const response = await axios.get(
-          `${process.env.VUE_APP_MY_URL}users/user/get-user-details/?firebaseId=${this.$store.getters.firebaseId}`,
-          {
-            headers: {
-              Authorization: `Basic ${this.$store.getters.token}`
-            }
-          }
-        )
-        this.firstName = response.data.firstName
+        const user = await client.getUserDetails()
+        this.firstName = user.firstName
       } catch (error) {
         console.log(error)
       }
     },
+    //Refactor to new client class, new client class or let be??
     async fetchImage() {
       try {
         const response = await axios.get(

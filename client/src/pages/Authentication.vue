@@ -89,8 +89,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import dotenv from 'dotenv'
+import client from '../util/Client.js'
+import services from '../util/services.js'
 
 dotenv.config()
 
@@ -129,48 +130,32 @@ export default {
   },
   methods: {
     submitForm() {
-      if (this.mode == 'sign in') this.signIn()
-      else if (this.mode == 'sign up') this.signUp()
+      if (this.mode == 'sign in') this.authenticate('sign in')
+      else if (this.mode == 'sign up') this.authenticate('sign up')
       else if (this.mode == 'reset password') this.resetPassword()
       else return
     },
-    signIn() {
-      this.$store
-        .dispatch('signIn', {
-          email: this.email,
-          password: this.password
-        })
-        .then(() => {
-          this.$router.push('/home')
-        })
-        .catch(error => {
-          console.log(error)
-          this.feedback.style = 'error'
-          this.feedback.message = 'Could not sign in. Check your credentials.'
-        })
-    },
-    signUp() {
-      console.log('sign up')
-      this.$store
-        .dispatch('signUp', {
-          email: this.email,
-          password: this.password
-        })
-        .then(() => {
-          this.$router.push('/home')
-        })
-        .catch(_error => {
-          this.feedback.style = 'error'
-          this.feedback.message =
-            'Something went wrong :( ... Could not sign up new user'
-        })
+    async authenticate(mode) {
+      try {
+        const data = await client.authenticate(this.email, this.password, mode)
+        const user = {
+          firebaseId: data.localId,
+          token: data.idToken,
+          refreshToken: data.refreshToken,
+          email: data.email
+        }
+        services.setUserInLocalStorage(user)
+        await this.$store.dispatch('setUser', user)
+        this.$router.push('/home')
+      } catch (error) {
+        console.log(error)
+        this.feedback.style = 'error'
+        this.feedback.message = `Could not ${mode}. Check your credentials.`
+      }
     },
     async resetPassword() {
       try {
-        await axios.post(
-          `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
-          { email: this.email, requestType: 'PASSWORD_RESET' }
-        )
+        client.resetPassword(this.email)
         this.feedback.style = 'informational'
         this.feedback.message =
           'A password reset mail has been sent, check your inbox'

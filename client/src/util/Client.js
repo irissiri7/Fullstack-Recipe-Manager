@@ -8,54 +8,18 @@ class Client {
   constructor(baseUrl) {
     this.baseUrl = baseUrl
   }
-  get formHeader() {
-    return {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Basic ${store.getters.token}`
-    }
-  }
-  get authHeader() {
-    return {
-      Authorization: `Basic ${store.getters.token}`
-    }
-  }
-  getHeader(method) {
-    if (method === 'POST' || method === 'PUT') {
-      return this.formHeader
-    } else if (method === 'DELETE') {
-      return this.authHeader
-    } else {
-      return null
-    }
-  }
-  async makeCall(method, endpoint, data) {
-    let axiosCall = {
-      method: method,
-      url: `${this.baseUrl}${endpoint}`
-    }
-    if (data) {
-      axiosCall.data = data
-    }
-    const header = this.getHeader(method)
-    if (header) {
-      axiosCall.headers = header
-    }
-    await axios(axiosCall)
-  }
-  //This method makes sure we always try the request again if the FIRST response was unauth/401,
-  // the method then tries to refresh the tokens and send the request again
-  async attemptRequest(method, endpoint, data) {
+  async attemptRequest(callObject) {
     const unauthorized = 401
     try {
       console.log('first attempt')
-      await this.makeCall(method, endpoint, data)
+      await axios(callObject)
     } catch (error) {
       if (error.response && error.response.status === unauthorized) {
-        const tokensRefreshed = await this.refreshTokens()
-        if (tokensRefreshed) {
+        const refreshedToken = await this.refreshTokens()
+        if (refreshedToken) {
           console.log('second attempt')
-
-          await this.makeCall(method, endpoint, data)
+          callObject.headers.Authorization = `Basic ${refreshedToken}`
+          await axios(callObject)
         }
       } else {
         throw error
@@ -64,16 +28,35 @@ class Client {
   }
 
   async addRecipe(recipeData) {
-    await this.attemptRequest('POST', 'recipes/recipe/add-recipe', recipeData)
+    await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}recipes/recipe/add-recipe`,
+      data: recipeData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
   }
   async updateRecipe(recipeData) {
-    await this.attemptRequest('PUT', 'recipes/recipe/update-recipe', recipeData)
+    await this.attemptRequest({
+      method: 'PUT',
+      url: `${this.baseUrl}recipes/recipe/update-recipe`,
+      data: recipeData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
   }
   async deleteRecipe(recipeId) {
-    await this.attemptRequest(
-      'DELETE',
-      `recipes/recipe/delete-recipe/${recipeId}`
-    )
+    await this.attemptRequest({
+      method: 'DELETE',
+      url: `${this.baseUrl}recipes/recipe/delete-recipe/${recipeId}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
   }
   async refreshTokens() {
     console.log('refreshing tokens')
@@ -89,7 +72,7 @@ class Client {
         token: response.data.token,
         refreshToken: response.data.refreshToken
       })
-      return true
+      return response.data.token
     } catch (error) {
       console.log(error)
       store.dispatch('signOut', { route: '/auto-signed-out' })

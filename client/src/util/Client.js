@@ -8,25 +8,7 @@ class Client {
   constructor(baseUrl) {
     this.baseUrl = baseUrl
   }
-  async attemptRequest(callObject) {
-    const unauthorized = 401
-    try {
-      console.log('first attempt')
-      await axios(callObject)
-    } catch (error) {
-      if (error.response && error.response.status === unauthorized) {
-        const refreshedToken = await this.refreshTokens()
-        if (refreshedToken) {
-          console.log('second attempt')
-          callObject.headers.Authorization = `Basic ${refreshedToken}`
-          await axios(callObject)
-        }
-      } else {
-        throw error
-      }
-    }
-  }
-
+  //PUBLIC METHODS
   async addRecipe(recipeData) {
     await this.attemptRequest({
       method: 'POST',
@@ -58,6 +40,52 @@ class Client {
       }
     })
   }
+  async changeEmail(newEmail) {
+    const response = await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}users/user/change-email`,
+      data: { email: newEmail },
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return response
+  }
+  async changePassword(newPassword) {
+    const response = await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}users/user/change-password`,
+      data: { password: newPassword },
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return response
+  }
+
+  //PRIVATE METHODS
+  async attemptRequest(callObject) {
+    const unauthorized = 401
+    let response = null
+    try {
+      console.log('first attempt')
+      response = await axios(callObject)
+      return response.data
+    } catch (error) {
+      if (error.response && error.response.status === unauthorized) {
+        const refreshedToken = await this.refreshTokens()
+        if (refreshedToken) {
+          console.log('second attempt')
+          callObject.headers.Authorization = `Basic ${refreshedToken}`
+          response = await axios(callObject)
+          return response.data
+        }
+      } else {
+        throw error
+      }
+    }
+  }
+
   async refreshTokens() {
     console.log('refreshing tokens')
     try {

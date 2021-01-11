@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import client from '../util/Client.js'
 export default {
   data() {
     return {
@@ -51,22 +52,25 @@ export default {
     }
   },
   methods: {
-    changePassword() {
-      this.$store
-        .dispatch('changePassword', {
-          password: this.newPassword
+    async changePassword() {
+      try {
+        const data = await client.changePassword(this.newPassword)
+        await this.$store.dispatch('updateUser', {
+          firebaseId: data.localId,
+          token: data.idToken,
+          refreshToken: data.refreshToken,
+          email: data.email
         })
-        .then(() => {
-          this.feedback.style = 'informational'
-          this.feedback.message = 'Password successfully changed!'
-          this.newPassword = ''
-          this.confirmedPassword = ''
-        })
-        .catch(_error => {
-          this.feedback.style = 'error'
-          this.feedback.message =
-            'Something went wrong, could not change password'
-        })
+
+        this.feedback.style = 'informational'
+        this.feedback.message = 'Password successfully changed!'
+        this.newPassword = ''
+        this.confirmedPassword = ''
+      } catch (error) {
+        this.feedback.style = 'error'
+        this.feedback.message =
+          'Something went wrong, could not change Password'
+      }
     }
   }
 }

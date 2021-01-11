@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import client from '../util/Client'
 export default {
   data() {
     return {
@@ -54,21 +55,24 @@ export default {
     }
   },
   methods: {
-    changeEmail() {
-      this.$store
-        .dispatch('changeEmail', {
-          email: this.newEmail
+    async changeEmail() {
+      try {
+        const data = await client.changeEmail(this.newEmail)
+        await this.$store.dispatch('updateUser', {
+          firebaseId: data.localId,
+          token: data.idToken,
+          refreshToken: data.refreshToken,
+          email: data.email
         })
-        .then(() => {
-          this.feedback.style = 'informational'
-          this.feedback.message = 'Email successfully changed!'
-          this.newEmail = ''
-          this.confirmedEmail = ''
-        })
-        .catch(_error => {
-          this.feedback.style = 'error'
-          this.feedback.message = 'Something went wrong, could not change email'
-        })
+
+        this.feedback.style = 'informational'
+        this.feedback.message = 'Email successfully changed!'
+        this.newEmail = ''
+        this.confirmedEmail = ''
+      } catch (error) {
+        this.feedback.style = 'error'
+        this.feedback.message = 'Something went wrong, could not change email'
+      }
     }
   }
 }

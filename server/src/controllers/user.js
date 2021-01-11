@@ -69,9 +69,8 @@ const changeEmail = async (req, res, _next) => {
 
     res.status(200).send(response.data)
   } catch (error) {
-    res
-      .status(400)
-      .send({ message: 'Something went wrong, could not change email' })
+    if (error.response) console.log(error.response)
+    res.status(400).send({ message: error.message })
   }
 }
 

@@ -70,55 +70,15 @@ const store = createStore({
       return context.dispatch('authenticate', { ...payload, mode: 'signUp' })
     },
     //Refactor to use client
-    async changeEmail(context, payload) {
-      try {
-        const response = await axios.post(
-          `${process.env.VUE_APP_MY_URL}users/user/change-email`,
-          {
-            email: payload.email
-          },
-          {
-            headers: {
-              Authorization: `Basic ${context.getters.token}`
-            }
-          }
-        )
-
-        context.commit('setUser', {
-          firebaseId: response.data.localId,
-          token: response.data.idToken,
-          email: response.data.email
-        })
-        return
-      } catch (error) {
-        throw new Error('Could not change email')
-      }
-    },
-    //Refactor to use client
-    async changePassword(context, payload) {
-      try {
-        console.log(payload.password)
-        const response = await axios.post(
-          `${process.env.VUE_APP_MY_URL}users/user/change-password`,
-          {
-            password: payload.password
-          },
-          {
-            headers: {
-              Authorization: `Basic ${context.getters.token}`
-            }
-          }
-        )
-
-        context.commit('setUser', {
-          firebaseId: response.data.localId,
-          token: response.data.idToken,
-          email: response.data.email
-        })
-        return
-      } catch (error) {
-        throw new Error('Could not change password')
-      }
+    async updateUser(context, payload) {
+      console.log('updateUser')
+      console.log(payload)
+      context.commit('setUser', {
+        firebaseId: payload.firebaseId,
+        token: payload.token,
+        refreshToken: payload.refreshToken,
+        email: payload.email
+      })
     },
     autoSignIn(context, _payload) {
       const user = services.getUserFromLocalStorage()

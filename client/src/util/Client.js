@@ -20,6 +20,7 @@ class Client {
       }
     })
   }
+
   async updateRecipe(recipeData) {
     await this.attemptRequest({
       method: 'PUT',
@@ -31,57 +32,7 @@ class Client {
       }
     })
   }
-  async deleteRecipe(recipeId) {
-    await this.attemptRequest({
-      method: 'DELETE',
-      url: `${this.baseUrl}recipes/recipe/delete-recipe/${recipeId}`,
-      headers: {
-        Authorization: `Basic ${store.getters.token}`
-      }
-    })
-  }
-  async changeEmail(newEmail) {
-    const response = await this.attemptRequest({
-      method: 'POST',
-      url: `${this.baseUrl}users/user/change-email`,
-      data: { email: newEmail },
-      headers: {
-        Authorization: `Basic ${store.getters.token}`
-      }
-    })
-    return response
-  }
-  async changePassword(newPassword) {
-    const response = await this.attemptRequest({
-      method: 'POST',
-      url: `${this.baseUrl}users/user/change-password`,
-      data: { password: newPassword },
-      headers: {
-        Authorization: `Basic ${store.getters.token}`
-      }
-    })
-    return response
-  }
-  async updateUserDetails(userData) {
-    await this.attemptRequest({
-      method: 'POST',
-      url: `${this.baseUrl}users/user/update-user-details/`,
-      data: userData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Basic ${store.getters.token}`
-      }
-    })
-  }
-  async deleteProfile() {
-    await this.attemptRequest({
-      method: 'DELETE',
-      url: `${this.baseUrl}users/user/delete-user/?firebaseId=${store.getters.firebaseId}`,
-      headers: {
-        Authorization: `Basic ${store.getters.token}`
-      }
-    })
-  }
+
   async getRecipes() {
     const response = await this.attemptRequest({
       method: 'GET',
@@ -102,6 +53,61 @@ class Client {
       }
     })
     return data
+  }
+
+  async deleteRecipe(recipeId) {
+    await this.attemptRequest({
+      method: 'DELETE',
+      url: `${this.baseUrl}recipes/recipe/delete-recipe/${recipeId}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+  }
+  async changeEmail(newEmail) {
+    const response = await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}users/user/change-email`,
+      data: { email: newEmail },
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return response
+  }
+
+  async changePassword(newPassword) {
+    const response = await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}users/user/change-password`,
+      data: { password: newPassword },
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+    return response
+  }
+
+  async updateUserDetails(userData) {
+    await this.attemptRequest({
+      method: 'POST',
+      url: `${this.baseUrl}users/user/update-user-details/`,
+      data: userData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
+  }
+
+  async deleteProfile() {
+    await this.attemptRequest({
+      method: 'DELETE',
+      url: `${this.baseUrl}users/user/delete-user/?firebaseId=${store.getters.firebaseId}`,
+      headers: {
+        Authorization: `Basic ${store.getters.token}`
+      }
+    })
   }
 
   async getUserDetails() {

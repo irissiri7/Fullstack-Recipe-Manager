@@ -1,8 +1,8 @@
 <template>
   <base-card>
-    <h1>
+    <p>
       You have been signed out. Please sign in again.
-    </h1>
+    </p>
     <router-link to="/">Sign in</router-link>
   </base-card>
 </template>

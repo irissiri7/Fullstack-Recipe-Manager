@@ -29,7 +29,7 @@ const setUserInLocalStorage = user => {
   localStorage.setItem('token', user.token)
   localStorage.setItem('refreshToken', user.refreshToken)
   localStorage.setItem('email', user.email)
-  localStorage.setItem('tokenExpirationDate', user.tokenExpirationDate)
+  // localStorage.setItem('tokenExpirationDate', user.tokenExpirationDate)
 }
 
 const getUserFromLocalStorage = () => {
@@ -37,18 +37,17 @@ const getUserFromLocalStorage = () => {
   const token = localStorage.getItem('token')
   const refreshToken = localStorage.getItem('refreshToken')
   const email = localStorage.getItem('email')
-  const tokenExpirationDate = localStorage.getItem('tokenExpirationDate')
+  // const tokenExpirationDate = localStorage.getItem('tokenExpirationDate')
 
-  const userExists =
-    firebaseId && token && refreshToken && email && tokenExpirationDate
+  const userExists = firebaseId && token && refreshToken && email
 
   if (userExists) {
     return {
       firebaseId: firebaseId,
       token: token,
       refreshToken: refreshToken,
-      email: email,
-      tokenExpirationDate: tokenExpirationDate
+      email: email
+      // tokenExpirationDate: tokenExpirationDate
     }
   }
 }
@@ -58,7 +57,7 @@ const removeUserFromLocalStorage = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('refreshToken')
   localStorage.removeItem('email')
-  localStorage.removeItem('tokenExpirationDate')
+  // localStorage.removeItem('tokenExpirationDate')
 }
 
 export default {

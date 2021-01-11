@@ -217,7 +217,7 @@ export default {
             }
           }
         )
-        this.$store.dispatch('signOut')
+        this.$store.dispatch('signOut', { route: '/' })
         this.$router.push('/')
       } catch (error) {
         console.log(error.response.data)

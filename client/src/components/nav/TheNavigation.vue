@@ -27,8 +27,7 @@ export default {
       else this.$router.push('/')
     },
     signOut() {
-      this.$store.dispatch('signOut')
-      this.$router.push('/')
+      this.$store.dispatch('signOut', { route: '/' })
     }
   }
 }

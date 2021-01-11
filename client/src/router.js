@@ -8,6 +8,7 @@ import Authentication from './pages/Authentication.vue'
 import AddRecipe from './pages/AddRecipe.vue'
 import EditRecipe from './pages/EditRecipe.vue'
 import RecipeDetail from './pages/RecipeDetail.vue'
+import AutoSignedOut from './pages/AutoSignedOut.vue'
 
 import store from './store.js'
 
@@ -33,6 +34,7 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     { path: '/my-profile', component: MyProfile, meta: { requiresAuth: true } },
+    { path: '/auto-signed-out', component: AutoSignedOut },
     { path: '/:notFound(.*)', component: NotFound }
   ],
   scrollBehavior(_to, _from, savedPosition) {

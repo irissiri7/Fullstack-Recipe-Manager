@@ -171,13 +171,20 @@ export default {
       try {
         const userData = this.constructFormData()
         await client.updateUserDetails(userData)
-        this.feedback.style = 'informational'
-        this.feedback.message = 'Changes saved!'
+        this.displayFeedback('Changes saved!')
       } catch (error) {
-        this.feedback.style = 'error'
-        this.feedback.message = 'Could not update user information'
+        this.displayFeedback('Could not update user information', 'error')
         console.log(error)
       }
+    },
+    displayFeedback(message, style) {
+      window.scrollTo(0, 0)
+      this.feedback.message = message
+      this.feedback.style = style
+      setTimeout(() => {
+        this.feedback.message = undefined
+        this.feedback.style = undefined
+      }, 3000)
     },
     async getNumberOfRecipes() {
       try {

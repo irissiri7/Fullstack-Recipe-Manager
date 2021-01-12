@@ -112,11 +112,19 @@ export default {
         const user = await client.getUserDetails()
         this.user = user
       } catch (error) {
-        this.feedback.style = 'error'
-        this.feedback.message = 'Could not fetch user information'
+        this.displayFeedback('Could not fetch user information', 'error')
         console.log(error)
       }
     }
+  },
+  displayFeedback(message, style) {
+    window.scrollTo(0, 0)
+    this.feedback.message = message
+    this.feedback.style = style
+    setTimeout(() => {
+      this.feedback.message = undefined
+      this.feedback.style = undefined
+    }, 3000)
   },
   created() {
     this.fetchData()

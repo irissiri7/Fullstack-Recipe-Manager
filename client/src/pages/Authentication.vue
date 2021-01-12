@@ -148,23 +148,35 @@ export default {
         await this.$store.dispatch('setUser', user)
         this.$router.push('/home')
       } catch (error) {
+        this.displayFeedback(
+          `Could not ${mode}. Check your credentials.`,
+          'error'
+        )
         console.log(error)
-        this.feedback.style = 'error'
-        this.feedback.message = `Could not ${mode}. Check your credentials.`
       }
+    },
+    displayFeedback(message, style) {
+      window.scrollTo(0, 0)
+      this.feedback.message = message
+      this.feedback.style = style
+      setTimeout(() => {
+        this.feedback.message = undefined
+        this.feedback.style = undefined
+      }, 3000)
     },
     async resetPassword() {
       try {
         client.resetPassword(this.email)
-        this.feedback.style = 'informational'
-        this.feedback.message =
+        this.displayFeedback(
           'A password reset mail has been sent, check your inbox'
+        )
         this.email = ''
       } catch (error) {
         console.log(error)
-        this.feedback.style = 'error'
-        this.feedback.message =
-          'Something went wrong, could not send password reset mail'
+        this.displayFeedback(
+          'Something went wrong, could not send password reset mail',
+          'error'
+        )
       }
     }
   }

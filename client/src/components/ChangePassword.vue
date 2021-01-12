@@ -67,16 +67,27 @@ export default {
           refreshToken: data.refreshToken,
           email: data.email
         })
-
-        this.feedback.style = 'informational'
-        this.feedback.message = 'Password successfully changed!'
-        this.newPassword = ''
-        this.confirmedPassword = ''
+        this.displayFeedback('Password successfully changed!')
+        this.emptyForm()
       } catch (error) {
-        this.feedback.style = 'error'
-        this.feedback.message =
-          'Something went wrong, could not change Password'
+        this.displayFeedback(
+          'Something went wrong, could not change password',
+          'error'
+        )
       }
+    },
+    emptyForm() {
+      this.newPassword = ''
+      this.confirmedPassword = ''
+    },
+    displayFeedback(message, style) {
+      window.scrollTo(0, 0)
+      this.feedback.message = message
+      this.feedback.style = style
+      setTimeout(() => {
+        this.feedback.message = undefined
+        this.feedback.style = undefined
+      }, 3000)
     }
   }
 }

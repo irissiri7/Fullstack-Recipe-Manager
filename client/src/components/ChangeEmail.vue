@@ -70,15 +70,27 @@ export default {
           refreshToken: data.refreshToken,
           email: data.email
         })
-
-        this.feedback.style = 'informational'
-        this.feedback.message = 'Email successfully changed!'
-        this.newEmail = ''
-        this.confirmedEmail = ''
+        this.displayFeedback('Email successfully changed!')
+        this.emptyForm()
       } catch (error) {
-        this.feedback.style = 'error'
-        this.feedback.message = 'Something went wrong, could not change email'
+        this.displayFeedback(
+          'Something went wrong, could not change email',
+          'error'
+        )
       }
+    },
+    emptyForm() {
+      this.newEmail = ''
+      this.confirmedEmail = ''
+    },
+    displayFeedback(message, style) {
+      window.scrollTo(0, 0)
+      this.feedback.message = message
+      this.feedback.style = style
+      setTimeout(() => {
+        this.feedback.message = undefined
+        this.feedback.style = undefined
+      }, 3000)
     }
   }
 }

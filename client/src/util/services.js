@@ -34,8 +34,16 @@ const removeUserFromLocalStorage = () => {
   localStorage.removeItem('email')
 }
 
+const arrayContentIsSame = (arr1, arr2) => {
+  let arr1Copy = arr1.slice()
+  let arr2Copy = arr2.slice()
+  const result = arr1Copy.sort().join(',') === arr2Copy.sort().join(',')
+  return result
+}
+
 export default {
   setUserInLocalStorage,
   getUserFromLocalStorage,
-  removeUserFromLocalStorage
+  removeUserFromLocalStorage,
+  arrayContentIsSame
 }

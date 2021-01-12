@@ -113,6 +113,7 @@
 
 <script>
 import client from '../util/Client.js'
+import services from '../util/services.js'
 
 export default {
   data() {
@@ -138,11 +139,13 @@ export default {
     hasChanges() {
       if (this.firstName !== this.currentProps.user.firstName) return true
       if (this.lastName !== this.currentProps.user.lastName) return true
-
-      let arr1 = this.foodPreferences.slice()
-      let arr2 = this.currentProps.user.foodPreferences.slice()
-      if (arr1.sort().join(',') !== arr2.sort().join(',')) return true
-
+      if (
+        !services.arrayContentIsSame(
+          this.foodPreferences,
+          this.currentProps.user.foodPreferences
+        )
+      )
+        return true
       if (this.currentProps.changedProfilePicture) return true
 
       return false

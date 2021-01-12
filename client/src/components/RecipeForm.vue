@@ -192,7 +192,10 @@
     </div>
     <div class="field">
       <div v-if="initialRecipeData">
-        <base-button @click.prevent="updateRecipe">
+        <base-button
+          :class="{ disabled: !formIsValid }"
+          @click.prevent="updateRecipe"
+        >
           Update
         </base-button>
         <base-button mode="alert" @click.prevent="showModal = true">
@@ -214,6 +217,7 @@
 <script>
 import dotenv from 'dotenv'
 import client from '../util/Client'
+import services from '../util/services.js'
 
 dotenv.config()
 
@@ -221,6 +225,7 @@ export default {
   data() {
     return {
       recipe: {
+        _id: null,
         title: '',
         imageURL: '',
         ingredients: [],
@@ -252,7 +257,41 @@ export default {
         : 'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg'
     },
     formIsValid() {
-      return !!this.recipe.title
+      if (!this.initialRecipeData) {
+        return !!this.recipe.title
+      } else {
+        if (this.recipe.title != this.initialRecipeData.title) return true
+        if (this.recipe.imageURL != this.initialRecipeData.imageURL) return true
+        if (this.recipe.description != this.initialRecipeData.description)
+          return true
+        if (
+          this.recipe.details.timeToCook !=
+          this.initialRecipeData.details.timeToCook
+        )
+          return true
+        if (
+          !services.arrayContentIsSame(
+            this.recipe.ingredients,
+            this.initialRecipeData.ingredients
+          )
+        )
+          return true
+        if (
+          !services.arrayContentIsSame(
+            this.recipe.details.categories,
+            this.initialRecipeData.details.categories
+          )
+        )
+          return true
+        if (
+          !services.arrayContentIsSame(
+            this.recipe.details.qualities,
+            this.initialRecipeData.details.qualities
+          )
+        )
+          return true
+        else return false
+      }
     }
   },
   methods: {
@@ -325,10 +364,6 @@ export default {
       this.recipe.imageURL = URL.createObjectURL(file)
     },
     async updateRecipe() {
-      if (!this.formIsValid) {
-        this.displayFeedback('Recipes must have a name!', 'error')
-        return
-      }
       try {
         const formData = this.constructFormData()
         await client.updateRecipe(formData)
@@ -336,7 +371,7 @@ export default {
         this.discardRecipe()
       } catch (error) {
         console.log(error)
-        this.displayFeedback(`Could not update recipe :(`, 'error')
+        this.displayFeedback(`Could not update recipe`, 'error')
       }
     },
     async deleteRecipe(confirmed) {
@@ -353,7 +388,14 @@ export default {
   },
   created() {
     if (this.initialRecipeData) {
-      this.recipe = this.initialRecipeData
+      this.recipe._id = this.initialRecipeData._id
+      this.recipe.title = this.initialRecipeData.title
+      this.recipe.ingredients = this.initialRecipeData.ingredients.slice()
+      this.recipe.imageURL = this.initialRecipeData.imageURL
+      this.recipe.description = this.initialRecipeData.description
+      this.recipe.details.categories = this.initialRecipeData.details.categories
+      this.recipe.details.qualities = this.initialRecipeData.details.qualities
+      this.recipe.details.timeToCook = this.initialRecipeData.details.timeToCook
     }
   }
 }

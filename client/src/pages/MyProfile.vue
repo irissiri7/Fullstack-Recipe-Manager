@@ -20,7 +20,12 @@
           </button>
         </div>
         <div class="img-cnt">
-          <img class="profile-pic" :src="profilePictureSrc" ref="image" />
+          <img
+            class="profile-pic"
+            :src="profilePictureSrc"
+            ref="image"
+            alt="profile picture"
+          />
         </div>
       </div>
       <div class="flex navigation-cnt">

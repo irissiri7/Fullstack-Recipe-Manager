@@ -117,9 +117,9 @@ import client from '../util/Client.js'
 export default {
   data() {
     return {
-      firstName: this.user.firstName,
-      lastName: this.user.lastName,
-      foodPreferences: this.user.foodPreferences,
+      firstName: this.currentProps.user.firstName,
+      lastName: this.currentProps.user.lastName,
+      foodPreferences: this.currentProps.user.foodPreferences,
       numberOfRecipes: null,
       feedback: {
         message: null,
@@ -129,29 +129,21 @@ export default {
     }
   },
   props: {
-    user: {
+    currentProps: {
       type: Object,
-      required: true
-    },
-    profilePictureFile: {
-      type: Object,
-      required: false
-    },
-    changedProfilePicture: {
-      type: Boolean,
       required: true
     }
   },
   computed: {
     hasChanges() {
-      if (this.firstName !== this.user.firstName) return true
-      if (this.lastName !== this.user.lastName) return true
+      if (this.firstName !== this.currentProps.user.firstName) return true
+      if (this.lastName !== this.currentProps.user.lastName) return true
 
       let arr1 = this.foodPreferences.slice()
-      let arr2 = this.user.foodPreferences.slice()
+      let arr2 = this.currentProps.user.foodPreferences.slice()
       if (arr1.sort().join(',') !== arr2.sort().join(',')) return true
 
-      if (this.changedProfilePicture) return true
+      if (this.currentProps.changedProfilePicture) return true
 
       return false
     }
@@ -167,8 +159,8 @@ export default {
       }
       //must be stringified?!
       formData.append('user-details', JSON.stringify(newData))
-      if (this.profilePictureFile) {
-        formData.append('image', this.profilePictureFile)
+      if (this.currentProps.profilePictureFile) {
+        formData.append('image', this.currentProps.profilePictureFile)
       }
       return formData
     },

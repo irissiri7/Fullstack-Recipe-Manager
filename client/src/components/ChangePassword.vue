@@ -36,6 +36,12 @@
 <script>
 import client from '../util/Client.js'
 export default {
+  props: {
+    currentProps: {
+      type: Object,
+      required: false
+    }
+  },
   data() {
     return {
       newPassword: '',

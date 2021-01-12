@@ -35,6 +35,12 @@
 <script>
 import client from '../util/Client'
 export default {
+  props: {
+    currentProps: {
+      type: Object,
+      required: false
+    }
+  },
   data() {
     return {
       newEmail: '',

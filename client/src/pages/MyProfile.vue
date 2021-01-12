@@ -21,42 +21,35 @@
         </div>
         <div class="img-cnt">
           <img class="profile-pic" :src="profilePictureSrc" ref="image" />
-          <!-- <img
-            class="profile-pic"
-            src="../assets/profileAvatar.png"
-            ref="image"
-          /> -->
         </div>
       </div>
       <div class="flex navigation-cnt">
         <button
-          @click="activeComponent = 'user-details'"
+          @click="currentComponent = 'user-details'"
           class="nav-btn"
-          :class="{ selected: activeComponent === 'user-details' }"
+          :class="{ selected: currentComponent === 'user-details' }"
         >
           General info
         </button>
         <button
-          @click="activeComponent = 'change-email'"
+          @click="currentComponent = 'change-email'"
           class="nav-btn"
-          :class="{ selected: activeComponent === 'change-email' }"
+          :class="{ selected: currentComponent === 'change-email' }"
         >
           Change email
         </button>
         <button
-          @click="activeComponent = 'change-password'"
+          @click="currentComponent = 'change-password'"
           class="nav-btn"
-          :class="{ selected: activeComponent === 'change-password' }"
+          :class="{ selected: currentComponent === 'change-password' }"
         >
           Change password
         </button>
       </div>
       <component
         v-if="user"
-        :is="activeComponent"
-        :user="user"
-        :profilePictureFile="profilePictureFile"
-        :changedProfilePicture="changedProfilePicture"
+        :is="currentComponent"
+        :currentProps="currentProps"
       ></component>
     </base-card>
   </div>
@@ -78,14 +71,25 @@ export default {
   },
   data() {
     return {
-      activeComponent: 'user-details',
+      currentComponent: 'user-details',
       user: null,
       profilePictureFile: null
     }
   },
   computed: {
+    currentProps() {
+      if (this.currentComponent === 'user-details') {
+        return {
+          user: this.user,
+          profilePictureFile: this.profilePictureFile,
+          changedProfilePicture: this.changedProfilePicture
+        }
+      } else {
+        return null
+      }
+    },
     showChangeProfilePicture() {
-      return this.activeComponent === 'user-details'
+      return this.currentComponent === 'user-details'
     },
     profilePictureSrc() {
       return this.user && this.user.profilePictureURL

@@ -7,6 +7,7 @@
       </transition>
     </router-view>
     <button @click="corruptToken">Corrupt token</button>
+    <button @click="corruptRefreshToken">Corrupt refresh token</button>
   </main>
 </template>
 
@@ -20,7 +21,10 @@ export default {
   },
   methods: {
     corruptToken() {
-      this.$store.state.token = '9034uitjekfdsm'
+      this.$store.state.token = 'badtoken'
+    },
+    corruptRefreshToken() {
+      this.$store.state.refreshToken = 'badrefreshtoken'
     }
   },
   created() {

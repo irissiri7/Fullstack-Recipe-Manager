@@ -8,7 +8,7 @@
       ></i>
     </div>
     <div>
-      <base-logo no-lemon @click="$emit('back-to-home')"></base-logo>
+      <base-logo no-lemon @click="$emit('backtohome')"></base-logo>
     </div>
   </div>
   <transition name="fade">
@@ -42,14 +42,14 @@ export default {
       showMenu: false
     }
   },
-  emits: ['backToHome', 'signOut'],
+  emits: ['backtohome', 'signout'],
   methods: {
     toggleMenu() {
       this.showMenu = !this.showMenu
     },
     signOut() {
       this.showMenu = false
-      this.$emit('sign-out')
+      this.$emit('signout')
     }
   }
 }

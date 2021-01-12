@@ -1,6 +1,6 @@
 <template>
   <div class="flex center">
-    <base-logo @click="$emit('back-to-home')"></base-logo>
+    <base-logo @click="$emit('backtohome')"></base-logo>
     <transition name="fade">
       <nav v-if="$store.getters.isAuth">
         <ul class="nav-list">
@@ -12,7 +12,7 @@
     </transition>
   </div>
   <div v-if="$store.getters.isAuth" id="sign-out-icon">
-    <button class="ui icon button" @click="$emit('sign-out')">
+    <button class="ui icon button" @click="$emit('signout')">
       <i class="sign out alternate icon large"></i>
     </button>
   </div>
@@ -24,7 +24,7 @@ export default {
   components: {
     BaseLogo
   },
-  emits: ['backToHome', 'signOut']
+  emits: ['backtohome', 'signout']
 }
 </script>
 

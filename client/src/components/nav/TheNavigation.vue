@@ -1,13 +1,10 @@
 <template>
   <header>
     <div id="full-menu">
-      <full-menu @sign-out="signOut" @back-to-home="backToHome"></full-menu>
+      <full-menu @signout="signOut" @backtohome="backToHome"></full-menu>
     </div>
     <div id="compact-menu">
-      <compact-menu
-        @sign-out="signOut"
-        @back-to-home="backToHome"
-      ></compact-menu>
+      <compact-menu @signout="signOut" @backtohome="backToHome"></compact-menu>
     </div>
   </header>
 </template>

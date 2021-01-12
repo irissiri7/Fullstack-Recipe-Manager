@@ -64,6 +64,7 @@ class Client {
       }
     })
   }
+
   async changeEmail(newEmail) {
     const response = await this.attemptRequest({
       method: 'POST',
@@ -154,14 +155,12 @@ class Client {
     const unauthorized = 401
     let response = null
     try {
-      console.log('first attempt')
       response = await axios(callObject)
       return response.data
     } catch (error) {
       if (error.response && error.response.status === unauthorized) {
         const refreshedToken = await this.refreshTokens()
         if (refreshedToken) {
-          console.log('second attempt')
           callObject.headers.Authorization = `Basic ${refreshedToken}`
           response = await axios(callObject)
           return response.data
@@ -173,7 +172,6 @@ class Client {
   }
 
   async refreshTokens() {
-    console.log('refreshing tokens')
     try {
       const response = await axios.post(
         `${process.env.VUE_APP_MY_URL}users/user/refresh-token`,

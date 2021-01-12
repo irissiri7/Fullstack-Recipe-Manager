@@ -42,3 +42,5 @@ app.use(Middlewares.errorHandler)
 //Connect to db and start server
 Configurations.connectToDatabase()
 Configurations.connectToPort(app)
+
+export default app

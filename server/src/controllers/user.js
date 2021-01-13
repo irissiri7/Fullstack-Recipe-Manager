@@ -1,7 +1,8 @@
+import dotenv from 'dotenv'
+import axios from 'axios'
 import User from '../models/User.js'
 import Recipe from '../models/Recipe.js'
-import axios from 'axios'
-import dotenv from 'dotenv'
+import StatusCode from '../configurations/StatusCode.js'
 
 // import Middlewares from '../middleware/Middlewares.js'
 import services from '../util/services.js'
@@ -19,12 +20,16 @@ const signIn = async (req, res, _next) => {
         returnSecureToken: true
       }
     )
-    res.status(200).send(response.data)
+    res.status(StatusCode.OK).send(response.data)
   } catch (error) {
     if (error.response) {
-      res.status(400).send({ message: error.response.data.error.message })
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
     } else {
-      res.status(400).send({ message: error.message })
+      console.log(error)
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
     }
   }
 }
@@ -46,12 +51,16 @@ const signUp = async (req, res, _next) => {
       profilePictureURL: ''
     })
     await newUser.save()
-    res.status(201).send(response.data)
+    res.status(StatusCode.CREATED).send(response.data)
   } catch (error) {
     if (error.response) {
-      res.status(400).send({ message: error.response.data.error.message })
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
     } else {
-      res.status(400).send({ message: error.message })
+      console.log(error)
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
     }
   }
 }
@@ -67,10 +76,17 @@ const changeEmail = async (req, res, _next) => {
       }
     )
 
-    res.status(200).send(response.data)
+    res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    if (error.response) console.log(error.response)
-    res.status(400).send({ message: error.message })
+    if (error.response) {
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
+    } else {
+      console.log(error)
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
+    }
   }
 }
 
@@ -85,25 +101,32 @@ const changePassword = async (req, res, _next) => {
       }
     )
 
-    res.status(200).send(response.data)
+    res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    if (error.response) console.log(error.response.data)
-    res
-      .status(400)
-      .send({ message: 'Something went wrong, could not change password' })
+    if (error.response) {
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
+    } else {
+      console.log(error)
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
+    }
   }
 }
 
 const getUserDetails = async (req, res, _next) => {
   try {
-    const response = await User.findOne({ firebaseId: req.query.firebaseId })
-    if (response) {
-      res.status(200).send(response)
+    const user = await User.findOne({ firebaseId: req.query.firebaseId })
+    if (user) {
+      res.status(StatusCode.OK).send(user)
     } else {
-      throw new Error('Could not find user')
+      res.status(StatusCode.NOT_FOUND).send({ message: 'User not found' })
     }
   } catch (error) {
-    res.status(404).send({ message: error.message })
+    res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
@@ -134,10 +157,12 @@ const updateUserDetails = async (req, res, _next) => {
       updatedInformation,
       { new: true }
     )
-    res.status(200).send(updatedUserDetails)
+    res.status(StatusCode.OK).send(updatedUserDetails)
   } catch (error) {
     console.log(error)
-    res.status(400).send(error.message)
+    res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
@@ -165,10 +190,17 @@ const deleteUser = async (req, res, _next) => {
       prefix: `ProfilePictures/${req.query.firebaseId}`
     })
 
-    res.sendStatus(204)
+    res.sendStatus(StatusCode.NO_CONTENT)
   } catch (error) {
-    console.log(error.response)
-    res.status(400).send({ message: error.message })
+    if (error.response) {
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
+    } else {
+      console.log(error)
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
+    }
   }
 }
 
@@ -178,16 +210,20 @@ const refreshToken = async (req, res, _next) => {
       `https://securetoken.googleapis.com/v1/token?key=${process.env.firebase_AUTH_API_KEY}`,
       { grant_type: 'refresh_token', refresh_token: req.body.refreshToken }
     )
-    res.status(200).send({
+    res.status(StatusCode.OK).send({
       token: response.data.id_token,
       refreshToken: response.data.refresh_token,
       expiresIn: response.data.expires_in
     })
   } catch (error) {
     if (error.response) {
-      console.log(error.response.data)
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
+    } else {
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
     }
-    res.status(400).send({ message: error.message })
   }
 }
 
@@ -200,14 +236,16 @@ const resetPassword = async (req, res, _next) => {
         requestType: 'PASSWORD_RESET'
       }
     )
-    res.status(200).send(response.data)
+    res.status(StatusCode.OK).send(response.data)
   } catch (error) {
     if (error.response) {
       console.log(error.response)
       res.status(error.response.status).send(error.response.data)
     } else {
       console.log(error)
-      res.status(500).send({ message: error.message })
+      res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: error.message })
     }
   }
 }

@@ -41,4 +41,6 @@ router.delete(
 
 router.post('/user/refresh-token', userController.refreshToken)
 
+router.post('/user/reset-password', userController.resetPassword)
+
 export default router

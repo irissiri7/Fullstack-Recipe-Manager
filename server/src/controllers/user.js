@@ -191,6 +191,27 @@ const refreshToken = async (req, res, _next) => {
   }
 }
 
+const resetPassword = async (req, res, _next) => {
+  try {
+    const response = await axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.firebase_AUTH_API_KEY}`,
+      {
+        email: req.body.email,
+        requestType: 'PASSWORD_RESET'
+      }
+    )
+    res.status(200).send(response.data)
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response)
+      res.status(error.response.status).send(error.response.data)
+    } else {
+      console.log(error)
+      res.status(500).send({ message: error.message })
+    }
+  }
+}
+
 export default {
   signIn,
   signUp,
@@ -199,5 +220,6 @@ export default {
   getUserDetails,
   updateUserDetails,
   deleteUser,
-  refreshToken
+  refreshToken,
+  resetPassword
 }

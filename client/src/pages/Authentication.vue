@@ -162,11 +162,11 @@ export default {
       setTimeout(() => {
         this.feedback.message = undefined
         this.feedback.style = undefined
-      }, 3000)
+      }, 5000)
     },
     async resetPassword() {
       try {
-        client.resetPassword(this.email)
+        await client.resetPassword(this.email)
         this.displayFeedback(
           'A password reset mail has been sent, check your inbox'
         )

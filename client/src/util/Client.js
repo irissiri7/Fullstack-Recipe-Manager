@@ -123,7 +123,7 @@ class Client {
   }
 
   //These methods are not using attemptRequest() since we are not authenticated in the first place
-  // hence no tokens that we can attempt to refresh
+  // hence no tokens that we can attempt to refresh if first call fails
   async authenticate(email, password, mode) {
     //Default url is for 'signIn'
     let url = `${this.baseUrl}users/user/sign-in`
@@ -141,11 +141,12 @@ class Client {
   }
 
   async resetPassword(email) {
-    await axios({
+    const response = await axios({
       method: 'POST',
-      url: `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.VUE_APP_FIREBASE_API_KEY}`,
-      data: { email: email, requestType: 'PASSWORD_RESET' }
+      url: `${this.baseUrl}users/user/reset-password`,
+      data: { email: email }
     })
+    return response.data
   }
 
   //PRIVATE METHODS

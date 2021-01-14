@@ -47,23 +47,23 @@ const signIn = () => {
   })
 }
 
-const getUserDetails = () => {
-  describe('Testing to get details about existing user', () => {
-    test('Excpecting to get user details', (done) => {
-      Chai.request(app)
-        .get('/users/user/get-user-details')
-        .set('Authorization', token)
-        .query({ firebaseId: user.firebaseId })
-        .end((err, res) => {
-          res.should.have.a.status(200)
-          done()
-        })
-    })
-  })
-}
+// const getUserDetails = () => {
+//   describe('Testing to get details about existing user', () => {
+//     test('Excpecting to get user details', (done) => {
+//       Chai.request(app)
+//         .get('/users/user/get-user-details')
+//         .set('Authorization', token)
+//         .query({ firebaseId: user.firebaseId })
+//         .end((err, res) => {
+//           res.should.have.a.status(200)
+//           done()
+//         })
+//     })
+//   })
+// }
 
 describe('TESTING THE USER API ROUTE', () => {
   testingNonExistentRoute()
   signIn()
-  //   getUserDetails()
+  // getUserDetails()
 })

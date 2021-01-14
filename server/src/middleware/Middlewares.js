@@ -7,7 +7,7 @@ dotenv.config()
 
 const notFound = (req, res, next) => {
   const error = new Error(`Not found at: ${req.originalUrl}`)
-  res.status(404)
+  error.statusCode = StatusCode.NOT_FOUND
   next(error)
 }
 

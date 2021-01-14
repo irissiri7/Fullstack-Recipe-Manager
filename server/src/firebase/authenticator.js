@@ -6,7 +6,7 @@ const authenticateUser = async (req, res, next) => {
     // 1. AUTHENTICATION
 
     //Getting the token
-    const authHeader = req.headers.authorization
+    const authHeader = req.get('Authorization')
     const token = authHeader.split(' ')[1]
 
     //Verify the token with Firebase (verifyIdToken() throws an error if token is invalid)

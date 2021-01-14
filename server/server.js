@@ -31,10 +31,6 @@ app.use(express.static('images'))
 app.use('/users', usersRouter)
 app.use('/recipes', recipesRouter)
 
-app.get('/', (req, res, _next) => {
-  res.send('<h1>Hello world!</h1>')
-})
-
 //Error handling
 app.use(Middlewares.notFound)
 app.use(Middlewares.errorHandler)

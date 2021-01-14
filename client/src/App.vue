@@ -6,8 +6,8 @@
         <component :is="slotProps.Component"></component>
       </transition>
     </router-view>
-    <button @click="corruptToken">Corrupt token</button>
-    <button @click="corruptRefreshToken">Corrupt refresh token</button>
+    <!-- <button @click="corruptToken">Corrupt token</button>
+    <button @click="corruptRefreshToken">Corrupt refresh token</button> -->
   </main>
 </template>
 
@@ -20,15 +20,14 @@ export default {
     TheNavigation
   },
   methods: {
-    corruptToken() {
-      console.log('corrupt token')
-      this.$store.state.token = '123'
-    },
-    corruptRefreshToken() {
-      console.log('corrupt refresh token')
-
-      this.$store.state.refreshToken = '123'
-    }
+    // corruptToken() {
+    //   console.log('corrupt token')
+    //   this.$store.state.token = '123'
+    // },
+    // corruptRefreshToken() {
+    //   console.log('corrupt refresh token')
+    //   this.$store.state.refreshToken = '123'
+    // }
   },
   created() {
     this.$store.dispatch('autoSignIn')

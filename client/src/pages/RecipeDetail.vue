@@ -40,6 +40,7 @@ export default {
         this.recipe = recipe
       } catch (error) {
         console.log(error)
+        this.$router.push('/:notFound(.*)')
       }
     },
     handleRecipeDeletion() {

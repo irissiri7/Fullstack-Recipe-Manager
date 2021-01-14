@@ -10,7 +10,7 @@ import { bucket } from '../firebase/adminSetUp.js'
 
 dotenv.config()
 
-const signIn = async (req, res, _next) => {
+const signIn = async (req, res, next) => {
   try {
     const response = await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -22,19 +22,11 @@ const signIn = async (req, res, _next) => {
     )
     return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    }
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const signUp = async (req, res, _next) => {
+const signUp = async (req, res, next) => {
   try {
     const response = await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -53,19 +45,11 @@ const signUp = async (req, res, _next) => {
     await newUser.save()
     return res.status(StatusCode.CREATED).send(response.data)
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    }
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const changeEmail = async (req, res, _next) => {
+const changeEmail = async (req, res, next) => {
   try {
     const response = await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -77,19 +61,11 @@ const changeEmail = async (req, res, _next) => {
     )
     return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    }
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const changePassword = async (req, res, _next) => {
+const changePassword = async (req, res, next) => {
   try {
     const response = await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -102,43 +78,34 @@ const changePassword = async (req, res, _next) => {
 
     return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    }
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const getUserDetails = async (req, res, _next) => {
+const getUserDetails = async (req, res, next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
     if (!user) {
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'User not found' })
+      const error = new Error('User not found')
+      error.statusCode = StatusCode.NOT_FOUND
+      throw error
     }
     return res.status(StatusCode.OK).send(user)
   } catch (error) {
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const updateUserDetails = async (req, res, _next) => {
+const updateUserDetails = async (req, res, next) => {
   try {
     const data = JSON.parse(req.body['user-details'])
     const file = req.file
     const user = await User.findOne({ firebaseId: data.firebaseId })
-    if (!user)
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Could not find user to update' })
+    if (!user) {
+      const error = new Error('User not found, could not update user details')
+      error.statusCode = StatusCode.NOT_FOUND
+      throw error
+    }
 
     const updatedInformation = {
       foodPreferences: data.foodPreferences,
@@ -161,26 +128,25 @@ const updateUserDetails = async (req, res, _next) => {
       updatedInformation,
       { new: true }
     )
-    if (!updatedUserDetails)
-      return res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Was not able to update user details' })
+    if (!updatedUserDetails) {
+      const error = new Error('Was not able to update user details')
+      error.statusCode = StatusCode.INTERNAL_SERVER_ERROR
+      throw error
+    }
     return res.status(StatusCode.OK).send(updatedUserDetails)
   } catch (error) {
-    console.log(error)
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const deleteUser = async (req, res, _next) => {
+const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
-    if (!user)
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Could not find user to delete' })
+    if (!user) {
+      const error = new Error('Could not find user to delete')
+      error.statusCode = StatusCode.NOT_FOUND
+      throw error
+    }
     //Remove from Firebase
     await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -203,20 +169,11 @@ const deleteUser = async (req, res, _next) => {
 
     return res.sendStatus(StatusCode.NO_CONTENT)
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    } else {
-      return res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
-    }
+    next(error)
   }
 }
 
-const refreshToken = async (req, res, _next) => {
+const refreshToken = async (req, res, next) => {
   try {
     const response = await axios.post(
       `https://securetoken.googleapis.com/v1/token?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -228,19 +185,11 @@ const refreshToken = async (req, res, _next) => {
       expiresIn: response.data.expires_in
     })
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    }
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const resetPassword = async (req, res, _next) => {
+const resetPassword = async (req, res, next) => {
   try {
     const response = await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -251,15 +200,7 @@ const resetPassword = async (req, res, _next) => {
     )
     return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    console.log(error)
-    if (error.isAxiosError && error.response) {
-      return res
-        .status(error.response.status)
-        .send({ message: error.response.data.error.message })
-    }
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 

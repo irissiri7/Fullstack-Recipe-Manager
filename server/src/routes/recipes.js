@@ -1,13 +1,14 @@
 import express from 'express'
 const router = express.Router()
 import recipeController from '../controllers/recipe.js'
-import auth from '../firebase/authenticator.js'
-import middlewares from '../middleware/Middlewares.js'
+import auth from '../middleware/authenticator.js'
+// import middlewares from '../middleware/Middlewares.js'
+import fileUploader from '../middleware/fileUploader.js'
 
 router.post(
   '/recipe/add-recipe',
   auth.authenticateUser,
-  middlewares.upload,
+  fileUploader.upload,
   recipeController.addRecipe
 )
 router.get(
@@ -23,7 +24,7 @@ router.delete(
 router.put(
   '/recipe/update-recipe/',
   auth.authenticateUser,
-  middlewares.upload,
+  fileUploader.upload,
   recipeController.updateRecipe
 )
 

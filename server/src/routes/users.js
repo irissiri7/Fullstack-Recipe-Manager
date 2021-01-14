@@ -1,8 +1,9 @@
 import express from 'express'
 const router = express.Router()
 import userController from '../controllers/user.js'
-import auth from '../firebase/authenticator.js'
-import middlewares from '../middleware/Middlewares.js'
+import auth from '../middleware/authenticator.js'
+// import middlewares from '../middleware/Middlewares.js'
+import fileUploader from '../middleware/fileUploader.js'
 
 router.post('/user/sign-in', userController.signIn)
 
@@ -29,7 +30,7 @@ router.get(
 router.post(
   '/user/update-user-details',
   auth.authenticateUser,
-  middlewares.upload,
+  fileUploader.upload,
   userController.updateUserDetails
 )
 

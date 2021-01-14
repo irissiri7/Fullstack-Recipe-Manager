@@ -8,7 +8,7 @@ import bodyParser from 'body-parser'
 import Configurations from './src/configurations/Configurations.js'
 
 //Middlewares
-import Middlewares from './src/middleware/Middlewares.js'
+import errorHandler from './src/middleware/errorHandler.js'
 
 //Routers
 import usersRouter from './src/routes/users.js'
@@ -32,8 +32,8 @@ app.use('/users', usersRouter)
 app.use('/recipes', recipesRouter)
 
 //Error handling
-app.use(Middlewares.notFound)
-app.use(Middlewares.errorHandler)
+app.use(errorHandler.notFound)
+app.use(errorHandler.errorHandler)
 
 //Connect to db and start server
 Configurations.connectToDatabase()

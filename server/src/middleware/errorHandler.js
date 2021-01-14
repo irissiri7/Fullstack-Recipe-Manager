@@ -1,6 +1,4 @@
 import dotenv from 'dotenv'
-import multer from 'multer'
-import Configurations from '../configurations/Configurations.js'
 import StatusCode from '../configurations/StatusCode.js'
 
 dotenv.config()
@@ -32,13 +30,7 @@ const errorHandler = (error, _req, res, _next) => {
 //     stackTrace: process.env.ENVIROMENT === 'PRODUCTION' ? 'hidden' : error.stack
 //   })
 
-const upload = multer({
-  storage: Configurations.fileStorage,
-  fileFilter: Configurations.fileFilter
-}).single('image')
-
 export default {
   notFound,
-  errorHandler,
-  upload
+  errorHandler
 }

@@ -14,7 +14,11 @@ const addRecipe = async (req, res, _next) => {
     const user = await User.findOne({
       firebaseId: data.firebaseId
     })
-    if (!user) throw new Error('Can not find user to add recipe to')
+    if (!user)
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Can not find user to add recipe to' })
+
     const recipeId = mongoose.Types.ObjectId()
     const newRecipe = new Recipe({
       _id: recipeId,
@@ -38,10 +42,10 @@ const addRecipe = async (req, res, _next) => {
       }
     }
     await newRecipe.save()
-    res.status(StatusCode.CREATED).send(newRecipe)
+    return res.status(StatusCode.CREATED).send(newRecipe)
   } catch (error) {
     console.log(error)
-    res
+    return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
       .send({ message: error.message })
   }
@@ -76,14 +80,15 @@ const updateRecipe = async (req, res, _next) => {
         new: true
       }
     )
-    if (updatedRecipe) {
-      res.status(StatusCode.OK).send(updatedRecipe)
-    } else {
-      throw new Error('Could not update recipe')
+    if (!updatedRecipe) {
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Could not find recipe to update' })
     }
+    return res.status(StatusCode.OK).send(updatedRecipe)
   } catch (error) {
     console.log(error)
-    res
+    return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
       .send({ message: error.message })
   }
@@ -92,39 +97,31 @@ const updateRecipe = async (req, res, _next) => {
 const getRecipes = async (req, res, _next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
+    if (!user)
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Could not find user' })
     const recipes = await Recipe.find(
       { userId: user._id },
       'details ingredients title description imageURL'
     ).sort([['createdAt', 'descending']])
-    res.status(StatusCode.OK).send(recipes)
+    return res.status(StatusCode.OK).send(recipes)
   } catch (error) {
-    res.status(StatusCode.NOT_FOUND).send({ message: error.message })
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
-
-// const getRecipe = async (req, res, _next) => {
-//   try {
-//     const recipe = await Recipe.findById(req.query.recipeId)
-//     if (recipe) {
-//       res.status(StatusCode.OK).send(recipe)
-//     } else {
-//       throw new Error('Could not find recipe')
-//     }
-//   } catch (error) {
-//     res.status(StatusCode.NOT_FOUND).send({ message: error.message })
-//   }
-// }
 
 const getRecipe = async (req, res, _next) => {
   try {
     const recipe = await Recipe.findById(req.query.recipeId)
-    if (recipe) {
-      return res.status(StatusCode.OK).send(recipe)
-    } else {
+    if (!recipe) {
       return res
         .status(StatusCode.NOT_FOUND)
         .send({ message: 'Recipe not found' })
     }
+    return res.status(StatusCode.OK).send(recipe)
   } catch (error) {
     return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
@@ -135,16 +132,16 @@ const getRecipe = async (req, res, _next) => {
 const deleteRecipe = async (req, res, _next) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.recipeId)
+    if (!deletedRecipe)
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Could not find a recipe to delete' })
     if (deletedRecipe.imageName) {
       await services.deleteImageFromStorage(deletedRecipe.imageName)
     }
-    if (deletedRecipe) {
-      res.sendStatus(StatusCode.NO_CONTENT)
-    } else {
-      throw new Error('Could not find a recipe to delete')
-    }
+    return res.sendStatus(StatusCode.NO_CONTENT)
   } catch (error) {
-    res
+    return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
       .send({ message: error.message })
   }

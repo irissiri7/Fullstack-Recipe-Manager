@@ -102,16 +102,33 @@ const getRecipes = async (req, res, _next) => {
   }
 }
 
+// const getRecipe = async (req, res, _next) => {
+//   try {
+//     const recipe = await Recipe.findById(req.query.recipeId)
+//     if (recipe) {
+//       res.status(StatusCode.OK).send(recipe)
+//     } else {
+//       throw new Error('Could not find recipe')
+//     }
+//   } catch (error) {
+//     res.status(StatusCode.NOT_FOUND).send({ message: error.message })
+//   }
+// }
+
 const getRecipe = async (req, res, _next) => {
   try {
     const recipe = await Recipe.findById(req.query.recipeId)
     if (recipe) {
-      res.status(StatusCode.OK).send(recipe)
+      return res.status(StatusCode.OK).send(recipe)
     } else {
-      throw new Error('Could not find recipe')
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Recipe not found' })
     }
   } catch (error) {
-    res.status(StatusCode.NOT_FOUND).send({ message: error.message })
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: 'Could not get recipe' })
   }
 }
 

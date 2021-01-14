@@ -20,17 +20,17 @@ const signIn = async (req, res, _next) => {
         returnSecureToken: true
       }
     )
-    res.status(StatusCode.OK).send(response.data)
+    return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
-    } else {
-      console.log(error)
-      res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     }
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
@@ -51,17 +51,17 @@ const signUp = async (req, res, _next) => {
       profilePictureURL: ''
     })
     await newUser.save()
-    res.status(StatusCode.CREATED).send(response.data)
+    return res.status(StatusCode.CREATED).send(response.data)
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
-    } else {
-      console.log(error)
-      res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     }
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
@@ -75,18 +75,17 @@ const changeEmail = async (req, res, _next) => {
         returnSecureToken: true
       }
     )
-
-    res.status(StatusCode.OK).send(response.data)
+    return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
-    } else {
-      console.log(error)
-      res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     }
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
@@ -101,30 +100,31 @@ const changePassword = async (req, res, _next) => {
       }
     )
 
-    res.status(StatusCode.OK).send(response.data)
+    return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
-    } else {
-      console.log(error)
-      res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     }
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
 const getUserDetails = async (req, res, _next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
-    if (user) {
-      res.status(StatusCode.OK).send(user)
-    } else {
-      res.status(StatusCode.NOT_FOUND).send({ message: 'User not found' })
+    if (!user) {
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'User not found' })
     }
+    return res.status(StatusCode.OK).send(user)
   } catch (error) {
-    res
+    return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
       .send({ message: error.message })
   }
@@ -135,7 +135,11 @@ const updateUserDetails = async (req, res, _next) => {
     const data = JSON.parse(req.body['user-details'])
     const file = req.file
     const user = await User.findOne({ firebaseId: data.firebaseId })
-    if (!user) throw new Error('Could not find a user to update')
+    if (!user)
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Could not find user to update' })
+
     const updatedInformation = {
       foodPreferences: data.foodPreferences,
       firstName: data.firstName,
@@ -157,10 +161,14 @@ const updateUserDetails = async (req, res, _next) => {
       updatedInformation,
       { new: true }
     )
-    res.status(StatusCode.OK).send(updatedUserDetails)
+    if (!updatedUserDetails)
+      return res
+        .status(StatusCode.INTERNAL_SERVER_ERROR)
+        .send({ message: 'Was not able to update user details' })
+    return res.status(StatusCode.OK).send(updatedUserDetails)
   } catch (error) {
     console.log(error)
-    res
+    return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
       .send({ message: error.message })
   }
@@ -169,7 +177,10 @@ const updateUserDetails = async (req, res, _next) => {
 const deleteUser = async (req, res, _next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
-    if (!user) throw new Error('Could not find user to delete')
+    if (!user)
+      return res
+        .status(StatusCode.NOT_FOUND)
+        .send({ message: 'Could not find user to delete' })
     //Remove from Firebase
     await axios.post(
       `https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${process.env.firebase_AUTH_API_KEY}`,
@@ -190,14 +201,15 @@ const deleteUser = async (req, res, _next) => {
       prefix: `ProfilePictures/${req.query.firebaseId}`
     })
 
-    res.sendStatus(StatusCode.NO_CONTENT)
+    return res.sendStatus(StatusCode.NO_CONTENT)
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     } else {
-      console.log(error)
-      res
+      return res
         .status(StatusCode.INTERNAL_SERVER_ERROR)
         .send({ message: error.message })
     }
@@ -210,20 +222,21 @@ const refreshToken = async (req, res, _next) => {
       `https://securetoken.googleapis.com/v1/token?key=${process.env.firebase_AUTH_API_KEY}`,
       { grant_type: 'refresh_token', refresh_token: req.body.refreshToken }
     )
-    res.status(StatusCode.OK).send({
+    return res.status(StatusCode.OK).send({
       token: response.data.id_token,
       refreshToken: response.data.refresh_token,
       expiresIn: response.data.expires_in
     })
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
-    } else {
-      res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     }
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 
@@ -236,17 +249,17 @@ const resetPassword = async (req, res, _next) => {
         requestType: 'PASSWORD_RESET'
       }
     )
-    res.status(StatusCode.OK).send(response.data)
+    return res.status(StatusCode.OK).send(response.data)
   } catch (error) {
-    if (error.response) {
-      console.log(error.response)
-      res.status(error.response.status).send(error.response.data)
-    } else {
-      console.log(error)
-      res
-        .status(StatusCode.INTERNAL_SERVER_ERROR)
-        .send({ message: error.message })
+    console.log(error)
+    if (error.isAxiosError && error.response) {
+      return res
+        .status(error.response.status)
+        .send({ message: error.response.data.error.message })
     }
+    return res
+      .status(StatusCode.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message })
   }
 }
 

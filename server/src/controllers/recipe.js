@@ -7,18 +7,18 @@ import StatusCode from '../configurations/StatusCode.js'
 
 dotenv.config()
 
-const addRecipe = async (req, res, _next) => {
+const addRecipe = async (req, res, next) => {
   try {
     const data = JSON.parse(req.body.recipe)
     const file = req.file
     const user = await User.findOne({
       firebaseId: data.firebaseId
     })
-    if (!user)
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Can not find user to add recipe to' })
-
+    if (!user) {
+      const error = new Error('Can not find user to add recipe to')
+      error.statusCode = StatusCode.NOT_FOUND
+      throw error
+    }
     const recipeId = mongoose.Types.ObjectId()
     const newRecipe = new Recipe({
       _id: recipeId,
@@ -44,14 +44,11 @@ const addRecipe = async (req, res, _next) => {
     await newRecipe.save()
     return res.status(StatusCode.CREATED).send(newRecipe)
   } catch (error) {
-    console.log(error)
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const updateRecipe = async (req, res, _next) => {
+const updateRecipe = async (req, res, next) => {
   try {
     const data = JSON.parse(req.body.recipe)
     const file = req.file
@@ -81,69 +78,62 @@ const updateRecipe = async (req, res, _next) => {
       }
     )
     if (!updatedRecipe) {
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Could not find recipe to update' })
+      const error = new Error('Could not update recipe')
+      error.statusCode = StatusCode.INTERNAL_SERVER_ERROR
+      throw error
     }
     return res.status(StatusCode.OK).send(updatedRecipe)
   } catch (error) {
-    console.log(error)
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const getRecipes = async (req, res, _next) => {
+const getRecipes = async (req, res, next) => {
   try {
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
-    if (!user)
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Could not find user' })
+    if (!user) {
+      const error = new Error('Could not find user')
+      error.statusCode = StatusCode.NOT_FOUND
+      throw error
+    }
     const recipes = await Recipe.find(
       { userId: user._id },
       'details ingredients title description imageURL'
     ).sort([['createdAt', 'descending']])
     return res.status(StatusCode.OK).send(recipes)
   } catch (error) {
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 
-const getRecipe = async (req, res, _next) => {
+const getRecipe = async (req, res, next) => {
   try {
     const recipe = await Recipe.findById(req.query.recipeId)
     if (!recipe) {
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Recipe not found' })
+      const error = new Error('Recipe not found')
+      error.statusCode = StatusCode.NOT_FOUND
+      throw error
     }
     return res.status(StatusCode.OK).send(recipe)
   } catch (error) {
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: 'Could not get recipe' })
+    next(error)
   }
 }
 
-const deleteRecipe = async (req, res, _next) => {
+const deleteRecipe = async (req, res, next) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.recipeId)
-    if (!deletedRecipe)
-      return res
-        .status(StatusCode.NOT_FOUND)
-        .send({ message: 'Could not find a recipe to delete' })
+    if (!deletedRecipe) {
+      const error = new Error('Could not delete recipe')
+      error.statusCode = StatusCode.INTERNAL_SERVER_ERROR
+      throw error
+    }
     if (deletedRecipe.imageName) {
       await services.deleteImageFromStorage(deletedRecipe.imageName)
     }
     return res.sendStatus(StatusCode.NO_CONTENT)
   } catch (error) {
-    return res
-      .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .send({ message: error.message })
+    next(error)
   }
 }
 export default {

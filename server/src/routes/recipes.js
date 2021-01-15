@@ -2,13 +2,14 @@ import express from 'express'
 const router = express.Router()
 import recipeController from '../controllers/recipe.js'
 import auth from '../middleware/authenticator.js'
-// import middlewares from '../middleware/Middlewares.js'
 import fileUploader from '../middleware/fileUploader.js'
+import recipeValidator from '../middleware/recipeValidator.js'
 
 router.post(
   '/recipe/add-recipe',
   auth.authenticateUser,
   fileUploader.upload,
+  recipeValidator.validateRecipe,
   recipeController.addRecipe
 )
 router.get(

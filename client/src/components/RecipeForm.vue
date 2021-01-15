@@ -169,7 +169,6 @@
           type="radio"
           value="About 15 min"
           v-model="recipe.details.timeToCook"
-          checked="checked"
         />
         <label>About 15 min</label>
       </div>

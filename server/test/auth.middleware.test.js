@@ -72,10 +72,9 @@ const invalidToken = () => {
   })
 }
 
-//Maybe make test for both firebaseId in body and firebaseId in query??
-const tokenAndFirebaseIdDoNotMatch = () => {
-  describe('Testing if token does not match firebaseId', () => {
-    it('Should throw an error with statusCode 401', (done) => {
+const tokenAndFirebaseIdInRequestBodyDoNotMatch = () => {
+  describe('Testing if token does not match firebaseId in the request body', () => {
+    it('Should throw an error with statusCode UNAUTHORIZED/401', (done) => {
       //Faking a valid token response
       sinon.stub(auth, 'verifyIdToken')
       auth.verifyIdToken.returns({ uid: '321' })
@@ -96,9 +95,35 @@ const tokenAndFirebaseIdDoNotMatch = () => {
   })
 }
 
+const tokenAndFirebaseIdInRequestQueryDoNotMatch = () => {
+  describe('Testing if token does not match firebaseId in the request query', () => {
+    it('Should throw an error with statusCode UNAUTHORIZED/401', (done) => {
+      //Faking a valid token response
+      sinon.stub(auth, 'verifyIdToken')
+      auth.verifyIdToken.returns({ uid: '321' })
+
+      //Make sure request body firebaseId is correct so we get to second if check
+      req.body.firebaseId = '321'
+      authenticator
+        .authenticateUser(req, res, () => {})
+        .then((result) => {
+          expect(result).to.be.an('error')
+          expect(result)
+            .to.have.a.property('statusCode')
+            .eq(StatusCode.UNAUTHORIZED)
+          done()
+        })
+        .catch(done)
+
+      auth.verifyIdToken.restore()
+    })
+  })
+}
+
 //MAIN TEST
 describe('TESTING THE AUTHENTICATOR MIDDLEWARE', () => {
   validToken()
   invalidToken()
-  tokenAndFirebaseIdDoNotMatch()
+  tokenAndFirebaseIdInRequestBodyDoNotMatch()
+  tokenAndFirebaseIdInRequestQueryDoNotMatch()
 })

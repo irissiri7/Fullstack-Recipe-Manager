@@ -15,18 +15,18 @@ const user = {
   firebaseId: 'y3P3obc09wVWYbeoXQRsFQmBY133'
 }
 
-const testingNonExistentRoute = () => {
-  describe('Testing a route that does not exist', () => {
-    test('Expecting 404 not found', (done) => {
-      Chai.request(app)
-        .get(`/${randomString}`)
-        .end((req, res) => {
-          res.should.have.a.status(404)
-          done()
-        })
-    })
-  })
-}
+// const testingNonExistentRoute = () => {
+//   describe('Testing a route that does not exist', () => {
+//     test('Expecting 404 not found', (done) => {
+//       Chai.request(app)
+//         .get(`/${randomString}`)
+//         .end((req, res) => {
+//           res.should.have.a.status(404)
+//           done()
+//         })
+//     })
+//   })
+// }
 
 const signIn = () => {
   describe('Testing sign in (POST) for existing user', () => {
@@ -63,7 +63,7 @@ const signIn = () => {
 // }
 
 describe('TESTING THE USER API ROUTE', () => {
-  testingNonExistentRoute()
+  // testingNonExistentRoute()
   signIn()
   // getUserDetails()
 })

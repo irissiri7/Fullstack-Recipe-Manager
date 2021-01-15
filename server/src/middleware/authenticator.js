@@ -1,5 +1,6 @@
 //Firebase auth object (from the firebase-admin SDK)
 import { auth } from '../firebase/adminSetUp.js'
+import StatusCode from '../configurations/StatusCode.js'
 
 const authenticateUser = async (req, res, next) => {
   try {
@@ -19,23 +20,27 @@ const authenticateUser = async (req, res, next) => {
     // 2. AUTHORIZATION
     //I want to make sure that an authenticated user can only POST and/or GET
     //information associated with him/herself.
-
     //Extraxt the firebaseId from the decoded token
     const firebaseId = decodedToken.uid
 
     if (req.body.firebaseId && req.body.firebaseId != firebaseId) {
-      throw new Error('Unauthorized')
+      const error = new Error('Unauthorized')
+      error.statusCode = StatusCode.UNAUTHORIZED
+      throw error
     }
     if (req.query.firebaseId && req.query.firebaseId != firebaseId) {
-      throw new Error('Unauthorized')
+      const error = new Error('Unauthorized')
+      error.statusCode = StatusCode.UNAUTHORIZED
+      throw error
     }
 
     //If no errors are thrown at this point, user is authenticated and authorized, calling next()
     next()
-
+    return
     //Any errors are caught and we send a 401 response.
   } catch (error) {
-    res.status(401).send({ message: error.message })
+    next(error)
+    return error
   }
 }
 

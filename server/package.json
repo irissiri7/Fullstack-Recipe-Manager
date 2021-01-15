@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 5000",
     "serve": "nodemon server.js"
   },
   "keywords": [
@@ -35,7 +35,8 @@
     "chai-http": "^4.3.0",
     "eslint": "^7.13.0",
     "mocha": "^8.2.1",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "sinon": "^9.2.3"
   },
   "prettier": {
     "trailingComma": "none",

@@ -39,7 +39,9 @@ const authenticateUser = async (req, res, next) => {
     return
     //Any errors are caught and we send a 401 response.
   } catch (error) {
-    next(error)
+    res
+      .status(StatusCode.UNAUTHORIZED)
+      .send({ message: 'Could not authenticate user' })
     return error
   }
 }

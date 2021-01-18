@@ -7,8 +7,8 @@ import app from '../server.js'
 Chai.should()
 Chai.use(ChaiHTTP)
 
-const randomString = Math.random().toString(36).substring(10)
-const token = 'dummytoken'
+// const randomString = Math.random().toString(36).substring(10)
+// const token = 'dummytoken'
 const user = {
   email: 'dwight@example.com',
   password: '111111',

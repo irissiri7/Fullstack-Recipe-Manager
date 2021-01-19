@@ -3,7 +3,6 @@ node_modules
 dist
 /server/images
 .env
-server/src/firebase/service-account-key.js
 
 # local env files
 .env.local

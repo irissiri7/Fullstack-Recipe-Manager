@@ -5,8 +5,12 @@ import store from '../store.js'
 dotenv.config()
 
 class Client {
-  constructor(baseUrl) {
-    baseUrl ? (this.baseUrl = baseUrl) : (this.baseUrl = '')
+  constructor() {
+    if (process.env.ENVIROMENT === 'DEVELOPEMENT') {
+      this.baseUrl = 'http://localhost:5000/'
+    } else {
+      this.baseUrl = ''
+    }
   }
   //PUBLIC METHODS
   async addRecipe(recipeData) {
@@ -193,6 +197,6 @@ class Client {
   }
 }
 
-const client = new Client(`${process.env.VUE_APP_DEV_URL}`)
+const client = new Client()
 
 export default client

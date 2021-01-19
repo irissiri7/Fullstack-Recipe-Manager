@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "mocha --timeout 5000",
-    "serve": "nodemon server.js"
+    "serve": "nodemon server.js",
+    "install-frontend": "cd ../client && npm install",
+    "build-frontend": "cd ../client && npm run build"
   },
   "keywords": [
     "RestAPI",

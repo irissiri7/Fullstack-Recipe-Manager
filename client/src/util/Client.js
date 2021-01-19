@@ -175,7 +175,7 @@ class Client {
   async refreshTokens() {
     try {
       const response = await axios.post(
-        `${process.env.VUE_APP_MY_URL}users/user/refresh-token`,
+        `${this.baseUrl}users/user/refresh-token`,
         {
           refreshToken: store.getters.refreshToken
         }
@@ -193,6 +193,6 @@ class Client {
   }
 }
 
-const client = new Client(`${process.env.VUE_APP_MY_URL}`)
+const client = new Client(`${process.env.VUE_APP_DEV_URL}`)
 
 export default client

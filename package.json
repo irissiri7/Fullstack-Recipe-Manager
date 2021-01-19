@@ -1,0 +1,22 @@
+{
+  "name": "recipe-manager",
+  "version": "1.0.0",
+  "description": "A fullstack project built Vue and NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "cd server && npm install && npm run install-frontend && npm run build-frontend",
+    "start": "cd server && node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irissiri7/Fullstack-Recipe-Manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irissiri7/Fullstack-Recipe-Manager/issues"
+  },
+  "homepage": "https://github.com/irissiri7/Fullstack-Recipe-Manager#readme"
+}

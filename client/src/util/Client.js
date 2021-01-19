@@ -6,7 +6,7 @@ dotenv.config()
 
 class Client {
   constructor(baseUrl) {
-    this.baseUrl = baseUrl
+    baseUrl ? (this.baseUrl = baseUrl) : (this.baseUrl = '')
   }
   //PUBLIC METHODS
   async addRecipe(recipeData) {

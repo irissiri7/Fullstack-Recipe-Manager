@@ -4,6 +4,12 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
+// import path from 'path'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 //Configurations
 import Configurations from './src/configurations/Configurations.js'
 
@@ -17,19 +23,35 @@ import recipesRouter from './src/routes/recipes.js'
 //Creating the server
 const app = express()
 
-//Apply middleware packages
-app.use(helmet())
+// Apply middleware packages
 app.use(morgan('common'))
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-//serve static files/images
-app.use(express.static('images'))
+//Modifying helmet to set csp headers that allow images from ex firebase storage and to fetch data from spoonacular API
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      // prettier-ignore
+      'default-src': ['\'self\'', 'api.spoonacular.com'],
+      // prettier-ignore
+      'img-src': ['\'self\'', 'blob:',  '*']
+    }
+  })
+)
 
 //Apply routes
 app.use('/users', usersRouter)
 app.use('/recipes', recipesRouter)
+
+//Serve Vue app
+app.use(express.static(path.join(__dirname, '../client/dist')))
+
+//Serve Vue app as default
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+})
 
 //Error handling
 app.use(errorHandler.notFound)

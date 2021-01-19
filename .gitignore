@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/dist
+client/dist
 /server/images
 .env
 server/src/firebase/service-account-key.js

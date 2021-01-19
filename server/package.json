@@ -7,6 +7,7 @@
   "scripts": {
     "test": "mocha --timeout 5000",
     "serve": "nodemon server.js",
+    "start": "node server.js",
     "install-frontend": "cd ../client && npm install",
     "build-frontend": "cd ../client && npm run build"
   },

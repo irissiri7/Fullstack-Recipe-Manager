@@ -12,9 +12,9 @@
     "test": "mocha --timeout 5000",
     "serve": "nodemon server.js",
     "start": "node server.js",
-    "install-frontend": "cd frontend && npm install",
+    "install-frontend": "cd frontend && NODE_ENV=development && npm install && NODE_ENV=production",
     "build-frontend": "cd frontend && npm run build",
-    "heroku-postbuild": "npm install && NODE_ENV=development && npm run install-frontend && npm run build-frontend && NODE_ENV=production"
+    "heroku-postbuild": "npm install && npm run install-frontend && npm run build-frontend"
   },
   "keywords": [
     "RestAPI",

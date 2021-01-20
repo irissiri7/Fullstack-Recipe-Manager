@@ -38,7 +38,7 @@ app.use(
       // prettier-ignore
       'img-src': ['\'self\'', 'blob:',  '*'],
       // prettier-ignore
-      'script-scr': ['\'self\'', 'unsafe-eval']
+      'script-src': ['\'self\'', 'unsafe-eval']
     }
   })
 )

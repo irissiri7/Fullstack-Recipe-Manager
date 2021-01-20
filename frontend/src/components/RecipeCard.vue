@@ -12,7 +12,7 @@
     </transition>
     <div v-if="showCompact" class="flex-cnt">
       <h2>{{ recipe.title }}</h2>
-      <div>
+      <div class="icon-btn-cnt">
         <base-button class="icon" @click="editRecipe">
           <i class="pencil alternate icon inverted"></i>
         </base-button>
@@ -123,6 +123,14 @@ export default {
 <style scoped>
 @import '../assets/keyframes.css';
 
+h2 {
+  word-break: break-word;
+}
+.icon-btn-cnt {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
 .description {
   word-break: break-word;
 }

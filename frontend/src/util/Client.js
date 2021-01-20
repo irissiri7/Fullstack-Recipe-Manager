@@ -4,14 +4,9 @@ import store from '../store.js'
 
 dotenv.config()
 
-//REFACTOR! Must not have this kind of logic in constructor.
 class Client {
-  constructor() {
-    if (process.env.VUE_APP_ENVIROMENT === 'DEVELOPEMENT') {
-      this.baseUrl = 'http://localhost:5000'
-    } else {
-      this.baseUrl = ''
-    }
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl
   }
   //PUBLIC METHODS
   async addRecipe(recipeData) {
@@ -198,6 +193,10 @@ class Client {
   }
 }
 
-const client = new Client()
+const baseUrl =
+  process.env.VUE_APP_ENVIROMENT === 'DEVELOPEMENT'
+    ? 'http://localhost:5000'
+    : ''
+const client = new Client(baseUrl)
 
 export default client

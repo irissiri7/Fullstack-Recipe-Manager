@@ -1,6 +1,8 @@
 <template>
   <div>
-    <cursive-header centered> Welcome {{ firstName }}! </cursive-header>
+    <cursive-header centered>
+      Great to see you {{ firstName }}!
+    </cursive-header>
     <base-card>
       <p>Recipe Manager is your own personal recipe book, put online.</p>
       <p>

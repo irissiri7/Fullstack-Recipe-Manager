@@ -4,6 +4,7 @@ import store from '../store.js'
 
 dotenv.config()
 
+//REFACTOR! Must not have this kind of logic in constructor.
 class Client {
   constructor() {
     if (process.env.VUE_APP_ENVIROMENT === 'DEVELOPEMENT') {

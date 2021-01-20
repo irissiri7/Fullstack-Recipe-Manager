@@ -50,6 +50,15 @@ app.use('/recipes', recipesRouter)
 //Serve Vue app
 app.use(express.static(path.join(__dirname, 'frontend/dist')))
 
+//Make sure requests always use https
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    else next()
+  })
+}
+
 //Serve Vue app as default
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'frontend/dist/index.html'))

@@ -42,14 +42,6 @@ app.use(
     }
   })
 )
-
-//Apply routes
-app.use('/users', usersRouter)
-app.use('/recipes', recipesRouter)
-
-//Serve Vue app
-app.use(express.static(path.join(__dirname, 'frontend/dist')))
-
 //Make sure requests always use https
 if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
@@ -58,6 +50,13 @@ if (process.env.NODE_ENV === 'production') {
     else next()
   })
 }
+
+//Apply routes
+app.use('/users', usersRouter)
+app.use('/recipes', recipesRouter)
+
+//Serve Vue app
+app.use(express.static(path.join(__dirname, 'frontend/dist')))
 
 //Serve Vue app as default
 app.get('*', (_req, res) => {

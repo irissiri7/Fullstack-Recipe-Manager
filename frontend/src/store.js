@@ -45,7 +45,6 @@ const store = createStore({
           refreshToken: user.refreshToken,
           email: user.email
         })
-        router.push('/home')
       }
     },
     signOut(context, payload) {

@@ -3,6 +3,7 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import compression from 'compression'
 
 // import path from 'path'
 import path, { dirname } from 'path'
@@ -28,6 +29,7 @@ app.use(morgan('common'))
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(compression())
 //Modifying helmet to set csp headers that allow images from ex firebase storage and to fetch data from spoonacular API
 app.use(
   helmet.contentSecurityPolicy({

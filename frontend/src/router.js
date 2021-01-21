@@ -51,6 +51,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.path === '/' && store.getters.isAuth) {
+    return next('/home')
+  }
   to.meta.requiresAuth && !store.getters.isAuth ? next('/') : next()
 })
 

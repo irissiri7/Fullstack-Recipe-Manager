@@ -16,7 +16,7 @@ class Client {
       data: recipeData,
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
   }
@@ -28,17 +28,21 @@ class Client {
       data: recipeData,
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
   }
 
-  async getRecipes() {
+  async getRecipes(queryParams) {
+    let url = `${this.baseUrl}/recipes/get-recipes/?firebaseId=${store.getters.firebaseId}`
+    if (queryParams) {
+      url += `&${queryParams}`
+    }
     const response = await this.attemptRequest({
       method: 'GET',
-      url: `${this.baseUrl}/recipes/get-recipes/?firebaseId=${store.getters.firebaseId}`,
+      url: url,
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
     return response
@@ -49,7 +53,7 @@ class Client {
       method: 'GET',
       url: `${this.baseUrl}/recipes/recipe/get-recipe/?recipeId=${id}`,
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
     return data
@@ -60,7 +64,7 @@ class Client {
       method: 'DELETE',
       url: `${this.baseUrl}/recipes/recipe/delete-recipe/${recipeId}`,
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
   }
@@ -71,7 +75,7 @@ class Client {
       url: `${this.baseUrl}/users/user/change-email`,
       data: { email: newEmail },
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
     return response
@@ -83,7 +87,7 @@ class Client {
       url: `${this.baseUrl}/users/user/change-password`,
       data: { password: newPassword },
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
     return response
@@ -96,7 +100,7 @@ class Client {
       data: userData,
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
   }
@@ -106,7 +110,7 @@ class Client {
       method: 'DELETE',
       url: `${this.baseUrl}/users/user/delete-user/?firebaseId=${store.getters.firebaseId}`,
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
   }
@@ -116,7 +120,7 @@ class Client {
       method: 'GET',
       url: `${this.baseUrl}/users/user/get-user-details/?firebaseId=${store.getters.firebaseId}`,
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
     return data
@@ -134,7 +138,7 @@ class Client {
       url: url,
       data: { email: email, password: password },
       headers: {
-        Authorization: `Basic ${store.getters.token}`
+        Authorization: `Bearer ${store.getters.token}`
       }
     })
     return response.data
@@ -162,7 +166,7 @@ class Client {
       if (error.response && error.response.status === unauthorized) {
         const refreshedToken = await this.refreshTokens()
         if (refreshedToken) {
-          callObject.headers.Authorization = `Basic ${refreshedToken}`
+          callObject.headers.Authorization = `Bearer ${refreshedToken}`
           response = await axios(callObject)
           return response.data
         }

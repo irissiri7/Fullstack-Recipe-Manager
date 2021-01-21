@@ -4,10 +4,21 @@
       <cursive-header>
         My Recipes!
       </cursive-header>
-      <button class="circular ui huge icon button" @click="addRecipe">
-        <i id="add-icon" class="icon inverted plus"></i>
-      </button>
+      <div>
+        <button class="circular ui icon button" @click="addRecipe">
+          <i id="add-icon" class="icon inverted plus"></i>
+        </button>
+        <button class="circular ui icon button" @click="toggleFilters">
+          <i id="add-icon" class="icon inverted filter"></i>
+        </button>
+      </div>
     </div>
+    <transition name="filters">
+      <recipe-filters
+        v-if="showFilters"
+        @filtering="handleFiltering"
+      ></recipe-filters>
+    </transition>
     <transition-group tag="ul" name="recipe-card" class="positioned">
       <li v-for="recipe in recipes" :key="recipe._id">
         <recipe-card
@@ -25,29 +36,32 @@ import RecipeCard from '../components/RecipeCard.vue'
 import CursiveHeader from '../components/CursiveHeader.vue'
 import dotenv from 'dotenv'
 import client from '../util/Client.js'
+import RecipeFilters from '../components/RecipeFilters.vue'
 
 dotenv.config()
 
 export default {
   components: {
     RecipeCard,
-    CursiveHeader
+    CursiveHeader,
+    RecipeFilters
   },
   created() {
     this.fetchData()
   },
   data() {
     return {
-      recipes: []
+      recipes: [],
+      showFilters: false
     }
   },
   methods: {
     addRecipe() {
       this.$router.push('/my-recipes/add-recipe')
     },
-    async fetchData() {
+    async fetchData(queryParams) {
       try {
-        const recipes = await client.getRecipes()
+        const recipes = await client.getRecipes(queryParams)
         this.recipes = recipes
       } catch (error) {
         console.log(error)
@@ -55,12 +69,19 @@ export default {
     },
     refreshData() {
       this.fetchData()
+    },
+    toggleFilters() {
+      this.showFilters = !this.showFilters
+    },
+    handleFiltering(queryParams) {
+      this.fetchData(queryParams)
     }
   }
 }
 </script>
 
 <style scoped>
+@import '../assets/keyframes.css';
 .positioned {
   position: relative;
 }
@@ -70,11 +91,11 @@ export default {
   align-items: center;
 }
 
-.circular.ui.huge.icon.button {
+.circular.ui.icon.button {
   background-color: var(--main-pine);
   border: 1px solid var(--main-pine);
 }
-.circular.ui.huge.icon.button:hover {
+.circular.ui.icon.button:hover {
   background-color: white;
 }
 #add-icon:hover {
@@ -101,5 +122,12 @@ export default {
 
 .recipe-card-move {
   transition: transform 0.5s ease;
+}
+
+.filters-enter-active {
+  animation: fade 0.5s ease;
+}
+.filters-leave-active {
+  animation: fade 0.5s ease reverse;
 }
 </style>

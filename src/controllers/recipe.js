@@ -90,14 +90,33 @@ const updateRecipe = async (req, res, next) => {
 
 const getRecipes = async (req, res, next) => {
   try {
+    console.log(req.query)
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
     if (!user) {
       const error = new Error('Could not find user')
       error.statusCode = StatusCode.NOT_FOUND
       throw error
     }
+    //make middleware that constructs query object??
+    const queryObject = {
+      userId: user._id
+    }
+    if (req.query.categories) {
+      queryObject['details.categories'] = { $in: req.query.categories }
+    }
+    if (req.query.qualities) {
+      queryObject['details.qualities'] = { $in: req.query.qualities }
+    }
+    if (req.query.timeToCook) {
+      queryObject['details.timeToCook'] = req.query.timeToCook
+    }
+    console.log(queryObject)
     const recipes = await Recipe.find(
-      { userId: user._id },
+      // {
+      //   userId: user._id,
+      //   'details.categories': { $in: req.query.categories }
+      // },
+      queryObject,
       'details ingredients title description imageURL'
     ).sort([['createdAt', 'descending']])
     return res.status(StatusCode.OK).send(recipes)

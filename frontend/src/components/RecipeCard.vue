@@ -44,7 +44,8 @@
       <a
         v-for="category in recipe.details.categories"
         :key="category"
-        class="ui blue circular label"
+        class="ui circular label"
+        :class="randomizeColor()"
         >{{ category }}</a
       >
       <h4>Qualities</h4>
@@ -52,7 +53,8 @@
         <a
           v-for="quality in recipe.details.qualities"
           :key="quality"
-          class="ui red circular label"
+          class="ui circular label"
+          :class="randomizeColor()"
           >{{ quality }}</a
         >
       </div>
@@ -116,6 +118,21 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    randomizeColor() {
+      const colorOptions = [
+        'red',
+        'orange',
+        'yellow',
+        'olive',
+        'green',
+        'teal',
+        'blue',
+        'violet',
+        'purple',
+        'pink'
+      ]
+      return colorOptions[Math.floor(Math.random() * colorOptions.length)]
     }
   }
 }

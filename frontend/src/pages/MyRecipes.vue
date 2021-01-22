@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex-corners">
-      <cursive-header>
+      <cursive-header class="cursive-header">
         My Recipes!
       </cursive-header>
       <div>
@@ -13,13 +13,11 @@
         </button>
       </div>
     </div>
-    <transition name="filters">
+    <transition-group tag="ul" name="recipe-card" class="positioned">
       <recipe-filters
         v-if="showFilters"
         @filtering="handleFiltering"
       ></recipe-filters>
-    </transition>
-    <transition-group tag="ul" name="recipe-card" class="positioned">
       <li v-for="recipe in recipes" :key="recipe._id">
         <recipe-card
           :recipe="recipe"
@@ -81,7 +79,6 @@ export default {
 </script>
 
 <style scoped>
-@import '../assets/keyframes.css';
 .positioned {
   position: relative;
 }
@@ -124,10 +121,12 @@ export default {
   transition: transform 0.5s ease;
 }
 
-.filters-enter-active {
-  animation: fade 0.5s ease;
-}
-.filters-leave-active {
-  animation: fade 0.5s ease reverse;
+@media screen and (max-width: 900px) {
+  .flex-corners {
+    display: block;
+  }
+  .cursive-header {
+    margin-bottom: 1rem;
+  }
 }
 </style>

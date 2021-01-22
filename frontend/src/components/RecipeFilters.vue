@@ -33,6 +33,14 @@
         <label>{{ option }}</label>
       </div>
     </div>
+    <div class="flex clear-btn-cnt">
+      <base-button
+        mode="alert"
+        class="compact mini clear-btn"
+        @click="clearFilters"
+        >Clear filters</base-button
+      >
+    </div>
   </base-card>
 </template>
 
@@ -69,6 +77,12 @@ export default {
         searchparams.append('timeToCook', this.selectedTimeToCook)
       }
       this.$emit('filtering', searchparams.toString())
+    },
+    clearFilters() {
+      this.selectedCategories = []
+      this.selectedQualities = []
+      this.selectedTimeToCook = ''
+      this.filtering()
     }
   }
 }
@@ -83,5 +97,11 @@ fieldset {
 
 .ui.checkbox {
   margin-left: 5px;
+}
+.clear-btn-cnt {
+  justify-content: flex-end;
+}
+.clear-btn {
+  margin-top: 1.2rem;
 }
 </style>

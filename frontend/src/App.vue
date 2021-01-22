@@ -19,6 +19,20 @@ export default {
   components: {
     TheNavigation
   },
+  provide: {
+    recipeDetailOptions: {
+      categories: [
+        'Breakfast',
+        'Lunch',
+        'Dinner',
+        'Starter',
+        'Dessert',
+        'Other'
+      ],
+      qualities: ['Gluten free', 'Lactose free', 'Vegetarian', 'Vegan'],
+      timeToCook: ['About 15 min', 'About 30 min', '60 min or more']
+    }
+  },
   methods: {
     // corruptToken() {
     //   console.log('corrupt token')

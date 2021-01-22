@@ -3,7 +3,11 @@
     <h2>Select filters</h2>
     <h4>Category</h4>
     <div class="field">
-      <div class="ui checkbox" v-for="category in categories" :key="category">
+      <div
+        class="ui checkbox"
+        v-for="category in recipeDetailOptions.categories"
+        :key="category"
+      >
         <input
           type="checkbox"
           :value="category.toLowerCase()"
@@ -13,7 +17,11 @@
         <label>{{ category }}</label>
       </div>
       <h4>Quality</h4>
-      <div class="ui checkbox" v-for="quality in qualities" :key="quality">
+      <div
+        class="ui checkbox"
+        v-for="quality in recipeDetailOptions.qualities"
+        :key="quality"
+      >
         <input
           type="checkbox"
           :value="quality.toLowerCase()"
@@ -23,7 +31,11 @@
         <label>{{ quality }}</label>
       </div>
       <h4>Time to cook</h4>
-      <div class="ui radio checkbox" v-for="option in timeToCook" :key="option">
+      <div
+        class="ui radio checkbox"
+        v-for="option in recipeDetailOptions.timeToCook"
+        :key="option"
+      >
         <input
           type="radio"
           :value="option"
@@ -47,18 +59,9 @@
 <script>
 export default {
   emits: ['filtering'],
+  inject: ['recipeDetailOptions'],
   data() {
     return {
-      categories: [
-        'Breakfast',
-        'Lunch',
-        'Dinner',
-        'Starter',
-        'Dessert',
-        'Other'
-      ],
-      qualities: ['Gluten free', 'Lactose free', 'Vegetarian', 'Vegan'],
-      timeToCook: ['About 15 min', 'About 30 min', '60 min or more'],
       selectedCategories: [],
       selectedQualities: [],
       selectedTimeToCook: ''

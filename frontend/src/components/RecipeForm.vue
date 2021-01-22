@@ -78,115 +78,47 @@
     <h3 class="ui dividing header">Details</h3>
     <h4>Category</h4>
     <div class="field">
-      <div class="ui checkbox">
+      <div
+        class="ui checkbox"
+        v-for="category in recipeDetailOptions.categories"
+        :key="category"
+      >
         <input
           type="checkbox"
-          value="breakfast"
+          :value="category.toLowerCase()"
           v-model="recipe.details.categories"
         />
-        <label>Breakfast</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="lunch"
-          v-model="recipe.details.categories"
-        />
-        <label>Lunch</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="dinner"
-          v-model="recipe.details.categories"
-        />
-        <label>Dinner</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="starter"
-          v-model="recipe.details.categories"
-        />
-        <label>Starter</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="dessert"
-          v-model="recipe.details.categories"
-        />
-        <label>Dessert</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="other"
-          v-model="recipe.details.categories"
-        />
-        <label>Other</label>
+        <label>{{ category }}</label>
       </div>
     </div>
     <h4>Quality</h4>
     <div class="field">
-      <div class="ui checkbox">
+      <div
+        class="ui checkbox"
+        v-for="quality in recipeDetailOptions.qualities"
+        :key="quality"
+      >
         <input
           type="checkbox"
-          value="gluten free"
+          :value="quality.toLowerCase()"
           v-model="recipe.details.qualities"
         />
-        <label>Gluten Free</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="lactose free"
-          v-model="recipe.details.qualities"
-        />
-        <label>Lactose Free</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="vegetarian"
-          v-model="recipe.details.qualities"
-        />
-        <label>Vegetarian</label>
-      </div>
-      <div class="ui checkbox">
-        <input
-          type="checkbox"
-          value="vegan"
-          v-model="recipe.details.qualities"
-        />
-        <label>Vegan</label>
+        <label>{{ quality }}</label>
       </div>
     </div>
     <h4>Time to cook</h4>
     <div class="field">
-      <div class="ui radio checkbox">
+      <div
+        class="ui radio checkbox"
+        v-for="option in recipeDetailOptions.timeToCook"
+        :key="option"
+      >
         <input
           type="radio"
-          value="About 15 min"
+          :value="option"
           v-model="recipe.details.timeToCook"
         />
-        <label>About 15 min</label>
-      </div>
-      <div class="ui radio checkbox">
-        <input
-          type="radio"
-          value="About 30 min"
-          v-model="recipe.details.timeToCook"
-        />
-        <label>About 30 min</label>
-      </div>
-      <div class="ui radio checkbox">
-        <input
-          type="radio"
-          value="60 min or more"
-          v-model="recipe.details.timeToCook"
-        />
-        <label>60 min or more</label>
+        <label>{{ option }}</label>
       </div>
     </div>
     <div class="field">
@@ -221,6 +153,7 @@ import services from '../util/services.js'
 dotenv.config()
 
 export default {
+  inject: ['recipeDetailOptions'],
   data() {
     return {
       recipe: {
@@ -255,6 +188,7 @@ export default {
         ? this.recipe.imageURL
         : 'https://peacemakersnetwork.org/wp-content/uploads/2019/09/placeholder.jpg'
     },
+    // Ugly AF method. Please refactor
     formIsValid() {
       if (!this.initialRecipeData) {
         return !!this.recipe.title

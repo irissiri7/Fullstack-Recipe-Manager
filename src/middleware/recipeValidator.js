@@ -29,9 +29,9 @@ const validateRecipe = (req, res, next) => {
       recipe.details.categories = []
     }
     if (
-      recipe.details.timeToCook !== 'About 15 min' ||
-      recipe.details.timeToCook !== 'About 30 min' ||
-      recipe.details.timeToCook !== 'About 60 min'
+      recipe.details.timeToCook !== 'About 15 min' &&
+      recipe.details.timeToCook !== 'About 30 min' &&
+      recipe.details.timeToCook !== '60 min or more'
     ) {
       recipe.details.timeToCook = 'About 15 min'
     }

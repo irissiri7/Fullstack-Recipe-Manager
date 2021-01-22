@@ -3,12 +3,14 @@
     <cursive-header v-if="recipe">
       {{ recipe.title }}
     </cursive-header>
+    <base-button light mode="link" @click="goBack"
+      >Back to My Recipes</base-button
+    >
     <recipe-card
       v-if="recipe"
       :recipe="recipe"
       @deleted-recipe="handleRecipeDeletion"
     ></recipe-card>
-    <base-button light mode="link" @click="goBack">Go back</base-button>
   </div>
 </template>
 
@@ -32,7 +34,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.push('/my-recipes')
     },
     async fetchRecipe() {
       try {

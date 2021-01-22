@@ -26,6 +26,7 @@ router.put(
   '/recipe/update-recipe/',
   auth.authenticateUser,
   fileUploader.upload,
+  recipeValidator.validateRecipe,
   recipeController.updateRecipe
 )
 

@@ -259,6 +259,7 @@ export default {
       if (!this.initialRecipeData) {
         return !!this.recipe.title
       } else {
+        if (!this.recipe.title) return false
         if (this.recipe.title != this.initialRecipeData.title) return true
         if (this.recipe.imageURL != this.initialRecipeData.imageURL) return true
         if (this.recipe.description != this.initialRecipeData.description)
@@ -366,8 +367,7 @@ export default {
       try {
         const formData = this.constructFormData()
         await client.updateRecipe(formData)
-        this.displayFeedback('Recipe updated!')
-        this.discardRecipe()
+        this.$router.push(`/my-recipes/${this.initialRecipeData._id}`)
       } catch (error) {
         console.log(error)
         this.displayFeedback(`Could not update recipe`, 'error')

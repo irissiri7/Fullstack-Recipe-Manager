@@ -1,11 +1,15 @@
 <template>
-  <base-card>
-    <h1>Edit recipe</h1>
-    <recipe-form
-      v-if="initialRecipeData"
-      :initialRecipeData="initialRecipeData"
-    />
-  </base-card>
+  <div>
+    <base-button light mode="link" @click="goBack">Go back</base-button>
+
+    <base-card>
+      <h1>Edit recipe</h1>
+      <recipe-form
+        v-if="initialRecipeData"
+        :initialRecipeData="initialRecipeData"
+      />
+    </base-card>
+  </div>
 </template>
 
 <script>
@@ -19,6 +23,11 @@ export default {
   data() {
     return {
       initialRecipeData: null
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   },
   async created() {

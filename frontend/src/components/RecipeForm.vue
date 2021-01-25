@@ -231,7 +231,7 @@ export default {
   methods: {
     addIngredient() {
       if (this.recipe.ingredients.includes(this.ingredient)) {
-        this.displayFeedback('You have already added this ingredient')
+        this.displayFeedback('You have already added this ingredient', 'error')
         this.ingredient = ''
       }
       if (this.ingredient != '') {

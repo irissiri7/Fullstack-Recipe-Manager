@@ -60,6 +60,17 @@
 export default {
   emits: ['filtering'],
   inject: ['recipeDetailOptions'],
+  props: {
+    selectedFilters: {
+      type: Object,
+      required: true
+    }
+  },
+  created() {
+    this.selectedCategories = this.selectedFilters.categories
+    this.selectedQualities = this.selectedFilters.qualities
+    this.selectedTimeToCook = this.selectedFilters.timeToCook
+  },
   data() {
     return {
       selectedCategories: [],
@@ -79,7 +90,14 @@ export default {
       if (this.selectedTimeToCook) {
         searchparams.append('timeToCook', this.selectedTimeToCook)
       }
-      this.$emit('filtering', searchparams.toString())
+      this.$emit('filtering', {
+        query: searchparams.toString(),
+        selectedFilters: {
+          categories: this.selectedCategories,
+          qualities: this.selectedQualities,
+          timeToCook: this.selectedTimeToCook
+        }
+      })
     },
     clearFilters() {
       this.selectedCategories = []

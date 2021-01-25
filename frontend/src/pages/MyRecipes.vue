@@ -16,8 +16,10 @@
     <transition-group tag="ul" name="recipe-card" class="positioned">
       <recipe-filters
         v-if="showFilters"
+        :selectedFilters="selectedFilters"
         @filtering="handleFiltering"
       ></recipe-filters>
+
       <li v-for="recipe in recipes" :key="recipe._id">
         <recipe-card
           :recipe="recipe"
@@ -25,6 +27,8 @@
           @deletedRecipe="refreshData"
         ></recipe-card>
       </li>
+
+      <p v-if="recipes.length === 0">No recipes found</p>
     </transition-group>
   </div>
 </template>
@@ -50,7 +54,12 @@ export default {
   data() {
     return {
       recipes: [],
-      showFilters: false
+      showFilters: false,
+      selectedFilters: {
+        categories: [],
+        qualities: [],
+        timeToCook: ''
+      }
     }
   },
   methods: {
@@ -71,14 +80,19 @@ export default {
     toggleFilters() {
       this.showFilters = !this.showFilters
     },
-    handleFiltering(queryParams) {
-      this.fetchData(queryParams)
+    handleFiltering(queryData) {
+      this.fetchData(queryData.query)
+      this.selectedFilters = queryData.selectedFilters
     }
   }
 }
 </script>
 
 <style scoped>
+p {
+  color: white;
+  margin-top: 1em;
+}
 .positioned {
   position: relative;
 }

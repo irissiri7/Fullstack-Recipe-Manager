@@ -112,10 +112,6 @@ const getRecipes = async (req, res, next) => {
     }
     console.log(queryObject)
     const recipes = await Recipe.find(
-      // {
-      //   userId: user._id,
-      //   'details.categories': { $in: req.query.categories }
-      // },
       queryObject,
       'details ingredients title description imageURL'
     ).sort([['createdAt', 'descending']])

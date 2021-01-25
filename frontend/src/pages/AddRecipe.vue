@@ -1,6 +1,8 @@
 <template>
   <div>
-    <base-button light mode="link" @click="goBack">Go back</base-button>
+    <base-button light mode="link" @click="goBack"
+      >Back to My Recipes</base-button
+    >
     <base-card>
       <h1>Add New Recipe</h1>
       <recipe-form />
@@ -17,7 +19,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.push('/my-recipes')
     }
   }
 }

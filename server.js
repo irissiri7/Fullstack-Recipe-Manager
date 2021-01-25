@@ -39,8 +39,6 @@ app.use(
       'default-src': ['\'self\'', 'api.spoonacular.com'],
       // prettier-ignore
       'img-src': ['\'self\'', 'blob:',  '*']
-      // prettier-ignore
-      // 'script-src': ['\'self\'', 'unsafe-eval']
     }
   })
 )

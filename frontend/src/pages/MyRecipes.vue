@@ -28,7 +28,7 @@
         ></recipe-card>
       </li>
 
-      <p v-if="recipes.length === 0">No recipes found</p>
+      <p v-if="recipes.length === 0 && initialFetch">No recipes found</p>
     </transition-group>
   </div>
 </template>
@@ -48,11 +48,13 @@ export default {
     CursiveHeader,
     RecipeFilters
   },
-  created() {
-    this.fetchData()
+  async created() {
+    await this.fetchData()
+    this.initialFetch = true
   },
   data() {
     return {
+      initialFetch: false,
       recipes: [],
       showFilters: false,
       selectedFilters: {

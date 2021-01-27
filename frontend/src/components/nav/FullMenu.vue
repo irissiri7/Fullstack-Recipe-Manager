@@ -3,7 +3,7 @@
     <base-logo @click="$emit('backtohome')"></base-logo>
     <transition name="fade">
       <nav v-if="$store.getters.isAuth">
-        <ul class="nav-list">
+        <ul>
           <li><router-link to="/home">Home</router-link></li>
           <li><router-link to="/my-recipes">My Recipes</router-link></li>
           <li><router-link to="/my-profile">My Profile</router-link></li>
@@ -54,29 +54,23 @@ a {
   display: inline-block;
 }
 
-a:hover,
-a:active,
-a.active {
-  color: #30292f;
-  border-color: #30292f;
-  background-color: #eeb63d;
-  border-radius: 10px;
-}
-
-.ui.header {
-  color: var(--main-coffee);
-  cursor: pointer;
-}
-
-.content {
-  font-family: Rochester, sans-serif;
-  font-size: 50px;
-}
 .ui.icon.button {
   background-color: var(--main-orange);
 }
 .sign.out.alternate.icon.large {
   background-color: var(--main-orange);
+}
+
+a:hover,
+.ui.icon.button:hover {
+  color: #30292f;
+  border: 1px solid #30292f;
+  background-color: #eeb63d;
+  border-radius: 10px;
+}
+
+.ui.icon.button:hover .sign.out.alternate.icon.large {
+  background-color: #eeb63d;
 }
 
 .fade-enter-active {

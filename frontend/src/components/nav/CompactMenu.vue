@@ -1,6 +1,6 @@
 <template>
   <div class="flex outer">
-    <div id="icon">
+    <div id="menu-icon">
       <i
         v-if="$store.getters.isAuth"
         class="align justify icon large"
@@ -56,6 +56,7 @@ export default {
 </script>
 
 <style scoped>
+/* Miscellaneous styles */
 nav {
   margin-top: 1em;
 }
@@ -63,19 +64,11 @@ nav {
   align-items: center;
   flex-wrap: wrap-reverse;
 }
-#icon {
+#menu-icon {
   margin-right: 1em;
 }
-.ui.header {
-  color: var(--main-coffee);
-  cursor: pointer;
-}
 
-.content {
-  font-family: Rochester, sans-serif;
-  font-size: 50px;
-}
-
+/* Drop down menu styles */
 li {
   margin-bottom: 10px;
 }
@@ -87,14 +80,13 @@ a {
   border-bottom: none;
 }
 
-a:hover,
-a:active,
-a.active {
-  background-color: #e9a40f;
+a:hover {
+  background-color: #eeb63d;
   color: var(--main-coffee);
   border-bottom: none;
 }
 
+/* Animating drop down menu */
 .fade-enter-from {
   opacity: 0;
   transform: translateY(-10px);
@@ -116,11 +108,5 @@ a.active {
 .fade-leave-to {
   opacity: 0;
   transform: translateY(-10px);
-}
-
-@media screen and (max-width: 400px) {
-  .content {
-    font-size: 35px;
-  }
 }
 </style>

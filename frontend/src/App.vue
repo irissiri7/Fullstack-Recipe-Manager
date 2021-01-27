@@ -99,6 +99,7 @@ ul {
   list-style: none;
 }
 
+/* Stick TheNavigation to top of screen */
 .stick {
   position: fixed;
   top: 0;
@@ -120,6 +121,8 @@ ul {
   justify-content: center;
   align-items: center;
 }
+
+/* Route animations */
 
 .route-enter-active {
   animation: fade-slide-top 0.5s ease;

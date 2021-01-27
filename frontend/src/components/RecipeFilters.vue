@@ -46,10 +46,7 @@
       </div>
     </div>
     <div class="flex clear-btn-cnt">
-      <base-button
-        mode="alert"
-        class="compact mini clear-btn"
-        @click="clearFilters"
+      <base-button class="compact mini alert" @click="clearFilters"
         >Clear filters</base-button
       >
     </div>
@@ -110,19 +107,10 @@ export default {
 </script>
 
 <style scoped>
-fieldset {
-  border: 1px solid rgba(158, 155, 155, 0.76);
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
 .ui.checkbox {
   margin-left: 5px;
 }
 .clear-btn-cnt {
   justify-content: flex-end;
-}
-.clear-btn {
-  margin-top: 1.2rem;
 }
 </style>

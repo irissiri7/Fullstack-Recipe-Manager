@@ -129,7 +129,7 @@
         >
           Update
         </base-button>
-        <base-button mode="alert" @click.prevent="showModal = true">
+        <base-button class="alert" @click.prevent="showModal = true">
           Delete
         </base-button>
       </div>
@@ -137,7 +137,7 @@
         <base-button @click.prevent="addRecipe">
           Add
         </base-button>
-        <base-button mode="alert" @click.prevent="discardRecipe">
+        <base-button class="alert" @click.prevent="discardRecipe">
           Discard
         </base-button>
       </div>
@@ -335,6 +335,8 @@ ul {
 div.ui.checkbox {
   margin-right: 5px;
 }
+
+/* Custom styles for trash icon (remove ingredient) */
 .circular.ui.icon.button {
   background: none;
 }

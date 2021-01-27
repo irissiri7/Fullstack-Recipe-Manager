@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-button light mode="link" @click="goBack">Go back</base-button>
+    <base-button class="link light" @click="goBack">Go back</base-button>
 
     <base-card>
       <h1>Edit recipe</h1>

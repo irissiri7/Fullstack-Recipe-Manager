@@ -1,28 +1,15 @@
 <template>
-  <button class="ui button" :class="[mode, { light: light }]">
+  <button class="ui button">
     <slot></slot>
   </button>
 </template>
 
 <script>
-export default {
-  props: {
-    mode: {
-      type: String,
-      required: false,
-      default: null
-    },
-    light: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  }
-}
+export default {}
 </script>
 
 <style scoped>
-/* Default button styles */
+/* Regular */
 .ui.button {
   background-color: var(--main-pine);
   border: 1px solid var(--main-pine);
@@ -33,8 +20,7 @@ export default {
   background-color: white;
   color: var(--main-pine);
 }
-
-/* Alert button styles */
+/* Alert */
 .ui.button.alert {
   background-color: var(--main-alert);
   border: 1px solid var(--main-alert);
@@ -43,8 +29,7 @@ export default {
   background-color: white;
   color: var(--main-alert);
 }
-
-/* Link looking button styles */
+/* Link-dark-look */
 .ui.button.link {
   background-color: transparent;
   border: none;
@@ -54,17 +39,16 @@ export default {
   padding: 0px 0px 3px 0px;
 }
 .ui.button.link:hover {
-  color: var(--main-pine);
-  border-bottom: 1px solid var(--main-pine);
+  color: var(--main-orange);
+  border-bottom: 1px solid var(--main-orange);
 }
-
-/* Light link looking button styles */
+/* Link-light-look*/
 .ui.button.link.light {
   color: white;
   border-bottom: 1px solid white;
 }
 .ui.button.link.light:hover {
-  color: var(--main-pine);
-  border-bottom: 1px solid var(--main-pine);
+  color: var(--main-orange);
+  border-bottom: 1px solid var(--main-orange);
 }
 </style>

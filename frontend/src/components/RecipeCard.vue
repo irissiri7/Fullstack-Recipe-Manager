@@ -14,10 +14,10 @@
       <h2>{{ recipe.title }}</h2>
       <div class="icon-btn-cnt">
         <base-button class="icon" @click="editRecipe">
-          <i class="pencil alternate icon inverted"></i>
+          <i class="pencil icon"></i>
         </base-button>
-        <base-button class="icon" mode="alert" @click="showModal = true">
-          <i class="trash icon inverted"></i>
+        <base-button class="icon alert" @click="showModal = true">
+          <i class="trash icon"></i>
         </base-button>
       </div>
     </div>
@@ -70,7 +70,7 @@
       <base-button @click="editRecipe">
         Edit
       </base-button>
-      <base-button mode="alert" @click="showModal = true">
+      <base-button class="alert" @click="showModal = true">
         Delete
       </base-button>
     </div>
@@ -176,12 +176,7 @@ h2 {
 .ui.circular.label {
   cursor: default;
 }
-i:hover {
-  color: var(--main-pine);
-}
-.trash.icon.inverted:hover {
-  color: var(--main-alert);
-}
+
 .float-right {
   justify-content: flex-end;
   margin-top: 15px;

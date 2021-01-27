@@ -8,7 +8,7 @@
           <base-button @click="$emit('user-selection', true)"
             >Confirm</base-button
           >
-          <base-button mode="alert" @click="$emit('user-selection', false)"
+          <base-button class="alert" @click="$emit('user-selection', false)"
             >Cancel</base-button
           >
         </base-card>

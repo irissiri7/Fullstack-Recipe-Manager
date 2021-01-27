@@ -100,8 +100,7 @@
         </div>
         <div class="field">
           <base-button
-            class="full-width"
-            mode="alert"
+            class="full-width alert"
             @click.prevent="showModal = true"
             >Delete Profile</base-button
           >
@@ -214,6 +213,7 @@ export default {
   width: 100%;
 }
 
+/* Transitions */
 .modal-enter-active {
   animation: fade 0.5s ease;
 }

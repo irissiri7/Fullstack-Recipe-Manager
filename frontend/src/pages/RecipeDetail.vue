@@ -3,7 +3,7 @@
     <cursive-header v-if="recipe">
       {{ recipe.title }}
     </cursive-header>
-    <base-button light mode="link" @click="goBack"
+    <base-button class="link light" @click="goBack"
       >Back to My Recipes</base-button
     >
     <recipe-card

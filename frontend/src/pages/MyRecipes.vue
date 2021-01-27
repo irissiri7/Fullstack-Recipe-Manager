@@ -5,12 +5,12 @@
         My Recipes!
       </cursive-header>
       <div>
-        <button class="circular ui icon button" @click="addRecipe">
-          <i id="add-icon" class="icon inverted plus"></i>
-        </button>
-        <button class="circular ui icon button" @click="toggleFilters">
-          <i id="add-icon" class="icon inverted filter"></i>
-        </button>
+        <base-button class="circular icon" @click="addRecipe">
+          <i class="icon plus"></i>
+        </base-button>
+        <base-button class="circular icon" @click="toggleFilters">
+          <i class="icon filter"></i>
+        </base-button>
       </div>
     </div>
     <transition-group tag="ul" name="recipe-card" class="positioned">
@@ -104,17 +104,7 @@ p {
   align-items: center;
 }
 
-.circular.ui.icon.button {
-  background-color: var(--main-pine);
-  border: 1px solid var(--main-pine);
-}
-.circular.ui.icon.button:hover {
-  background-color: white;
-}
-#add-icon:hover {
-  color: var(--main-pine);
-}
-
+/* Transitions/Animations */
 .recipe-card-enter-from,
 .recipe-card-leave-to {
   opacity: 0;

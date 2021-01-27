@@ -64,7 +64,7 @@
         </base-button>
       </div>
       <div class="field" v-if="mode == 'sign up' || mode == 'reset password'">
-        <base-button type="button" mode="link" @click="mode = 'sign in'"
+        <base-button type="button" class="link" @click="mode = 'sign in'"
           >Back to sign in</base-button
         >
       </div>
@@ -72,13 +72,13 @@
         <div class="flex corner">
           <base-button
             type="button"
-            mode="link"
+            class="link"
             @click="mode = 'reset password'"
             >Forgot password?</base-button
           >
           <div class="flex" v-if="mode == 'sign in'">
             <p>Not a user?</p>
-            <base-button type="button" mode="link" @click="mode = 'sign up'"
+            <base-button type="button" class="link" @click="mode = 'sign up'"
               >Sign Up</base-button
             >
           </div>

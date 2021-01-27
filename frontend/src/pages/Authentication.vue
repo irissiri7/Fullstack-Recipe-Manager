@@ -1,8 +1,10 @@
 <template>
   <base-card>
-    <base-feedback-card v-if="feedback.message" :style="feedback.style">
-      {{ feedback.message }}
-    </base-feedback-card>
+    <transition name="feedback">
+      <base-feedback-card v-if="feedback.message" :style="feedback.style">
+        {{ feedback.message }}
+      </base-feedback-card>
+    </transition>
     <h1 v-if="mode == 'sign in'">Sign In</h1>
     <h1 v-if="mode == 'sign up'">Sign Up</h1>
     <h1 v-if="mode == 'reset password'">Reset Password</h1>
@@ -173,6 +175,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../assets/keyframes.css';
+
 h1 {
   color: var(--main-coffee);
 }
@@ -181,5 +185,12 @@ p {
 }
 .same-width {
   width: 7rem;
+}
+
+.feedback-enter-active {
+  animation: fade 0.3s ease;
+}
+.feedback-leave-active {
+  animation: fade 0.3s ease reverse;
 }
 </style>

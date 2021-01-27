@@ -1,18 +1,20 @@
 <template>
-  <div class="overlay">
-    <div class="modal">
-      <base-card>
-        <slot name="title"></slot>
-        <slot name="content"></slot>
-        <base-button @click="$emit('user-selection', true)"
-          >Confirm</base-button
-        >
-        <base-button mode="alert" @click="$emit('user-selection', false)"
-          >Cancel</base-button
-        >
-      </base-card>
+  <teleport to="body">
+    <div class="overlay">
+      <div class="modal">
+        <base-card>
+          <slot name="title"></slot>
+          <slot name="content"></slot>
+          <base-button @click="$emit('user-selection', true)"
+            >Confirm</base-button
+          >
+          <base-button mode="alert" @click="$emit('user-selection', false)"
+            >Cancel</base-button
+          >
+        </base-card>
+      </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>

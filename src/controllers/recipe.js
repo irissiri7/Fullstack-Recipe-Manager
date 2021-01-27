@@ -90,7 +90,6 @@ const updateRecipe = async (req, res, next) => {
 
 const getRecipes = async (req, res, next) => {
   try {
-    console.log(req.query)
     const user = await User.findOne({ firebaseId: req.query.firebaseId })
     if (!user) {
       const error = new Error('Could not find user')
@@ -110,7 +109,6 @@ const getRecipes = async (req, res, next) => {
     if (req.query.timeToCook) {
       queryObject['details.timeToCook'] = req.query.timeToCook
     }
-    console.log(queryObject)
     const recipes = await Recipe.find(
       queryObject,
       'details ingredients title description imageURL'

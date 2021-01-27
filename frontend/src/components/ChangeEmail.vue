@@ -34,7 +34,9 @@
 
 <script>
 import client from '../util/Client'
+import feedback from '../mixins/feedback.js'
 export default {
+  mixins: [feedback],
   props: {
     currentProps: {
       type: Object,
@@ -44,11 +46,7 @@ export default {
   data() {
     return {
       newEmail: '',
-      confirmedEmail: '',
-      feedback: {
-        message: null,
-        style: null
-      }
+      confirmedEmail: ''
     }
   },
   computed: {
@@ -82,15 +80,6 @@ export default {
     emptyForm() {
       this.newEmail = ''
       this.confirmedEmail = ''
-    },
-    displayFeedback(message, style) {
-      window.scrollTo(0, 0)
-      this.feedback.message = message
-      this.feedback.style = style
-      setTimeout(() => {
-        this.feedback.message = undefined
-        this.feedback.style = undefined
-      }, 3000)
     }
   }
 }

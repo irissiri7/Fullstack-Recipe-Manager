@@ -114,18 +114,16 @@
 <script>
 import client from '../util/Client.js'
 import services from '../util/services.js'
+import feedback from '../mixins/feedback.js'
 
 export default {
+  mixins: [feedback],
   data() {
     return {
       firstName: this.currentProps.user.firstName,
       lastName: this.currentProps.user.lastName,
       foodPreferences: this.currentProps.user.foodPreferences,
       numberOfRecipes: null,
-      feedback: {
-        message: null,
-        style: null
-      },
       showModal: false
     }
   },
@@ -176,15 +174,6 @@ export default {
         this.displayFeedback('Could not update user information', 'error')
         console.log(error)
       }
-    },
-    displayFeedback(message, style) {
-      window.scrollTo(0, 0)
-      this.feedback.message = message
-      this.feedback.style = style
-      setTimeout(() => {
-        this.feedback.message = undefined
-        this.feedback.style = undefined
-      }, 3000)
     },
     async getNumberOfRecipes() {
       try {

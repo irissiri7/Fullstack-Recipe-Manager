@@ -35,7 +35,9 @@
 
 <script>
 import client from '../util/Client.js'
+import feedback from '../mixins/feedback.js'
 export default {
+  mixins: [feedback],
   props: {
     currentProps: {
       type: Object,
@@ -45,11 +47,7 @@ export default {
   data() {
     return {
       newPassword: '',
-      confirmedPassword: '',
-      feedback: {
-        message: null,
-        style: null
-      }
+      confirmedPassword: ''
     }
   },
   computed: {
@@ -79,15 +77,6 @@ export default {
     emptyForm() {
       this.newPassword = ''
       this.confirmedPassword = ''
-    },
-    displayFeedback(message, style) {
-      window.scrollTo(0, 0)
-      this.feedback.message = message
-      this.feedback.style = style
-      setTimeout(() => {
-        this.feedback.message = undefined
-        this.feedback.style = undefined
-      }, 3000)
     }
   }
 }

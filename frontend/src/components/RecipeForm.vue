@@ -149,11 +149,13 @@
 import dotenv from 'dotenv'
 import client from '../util/Client'
 import services from '../util/services.js'
+import feedback from '../mixins/feedback.js'
 
 dotenv.config()
 
 export default {
   inject: ['recipeDetailOptions'],
+  mixins: [feedback],
   data() {
     return {
       recipe: {
@@ -169,10 +171,6 @@ export default {
         }
       },
       ingredient: '',
-      feedback: {
-        message: undefined,
-        style: undefined
-      },
       showModal: false
     }
   },
@@ -241,15 +239,6 @@ export default {
     },
     removeIngredient(index) {
       this.recipe.ingredients.splice(index, 1)
-    },
-    displayFeedback(message, style) {
-      window.scrollTo(0, 0)
-      this.feedback.message = message
-      this.feedback.style = style
-      setTimeout(() => {
-        this.feedback.message = undefined
-        this.feedback.style = undefined
-      }, 3000)
     },
     constructFormData() {
       const formData = new FormData()

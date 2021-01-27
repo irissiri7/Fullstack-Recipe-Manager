@@ -92,21 +92,19 @@
 import dotenv from 'dotenv'
 import client from '../util/Client.js'
 import services from '../util/services.js'
+import feedback from '../mixins/feedback.js'
 
 dotenv.config()
 
 export default {
+  mixins: [feedback],
   data() {
     return {
       mode: 'sign in',
       email: '',
       password: '',
       confirmedPassword: null,
-      acceptsTermsOfUse: false,
-      feedback: {
-        message: null,
-        style: null
-      }
+      acceptsTermsOfUse: false
     }
   },
   computed: {
@@ -154,15 +152,6 @@ export default {
         )
         console.log(error)
       }
-    },
-    displayFeedback(message, style) {
-      window.scrollTo(0, 0)
-      this.feedback.message = message
-      this.feedback.style = style
-      setTimeout(() => {
-        this.feedback.message = undefined
-        this.feedback.style = undefined
-      }, 5000)
     },
     async resetPassword() {
       try {

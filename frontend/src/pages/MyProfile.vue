@@ -66,6 +66,7 @@ import ChangeEmail from '../components/ChangeEmail.vue'
 import ChangePassword from '../components/ChangePassword.vue'
 import CursiveHeader from '../components/CursiveHeader.vue'
 import client from '../util/Client'
+import feedback from '../mixins/feedback.js'
 
 export default {
   components: {
@@ -74,6 +75,7 @@ export default {
     ChangePassword,
     CursiveHeader
   },
+  mixins: [feedback],
   data() {
     return {
       currentComponent: 'user-details',
@@ -121,15 +123,6 @@ export default {
         console.log(error)
       }
     }
-  },
-  displayFeedback(message, style) {
-    window.scrollTo(0, 0)
-    this.feedback.message = message
-    this.feedback.style = style
-    setTimeout(() => {
-      this.feedback.message = undefined
-      this.feedback.style = undefined
-    }, 3000)
   },
   created() {
     this.fetchData()

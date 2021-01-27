@@ -37,12 +37,12 @@ export default {
   components: {
     BaseLogo
   },
+  emits: ['backtohome', 'signout'],
   data() {
     return {
       showMenu: false
     }
   },
-  emits: ['backtohome', 'signout'],
   methods: {
     toggleMenu() {
       this.showMenu = !this.showMenu

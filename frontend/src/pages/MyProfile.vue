@@ -107,6 +107,9 @@ export default {
       return !!this.profilePictureFile
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
     async handleFileUpload() {
       const file = this.$refs.file.files[0]
@@ -123,9 +126,6 @@ export default {
         console.log(error)
       }
     }
-  },
-  created() {
-    this.fetchData()
   }
 }
 </script>

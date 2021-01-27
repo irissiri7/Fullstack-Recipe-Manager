@@ -32,6 +32,9 @@ export default {
       recipe: null
     }
   },
+  created() {
+    this.fetchRecipe()
+  },
   methods: {
     goBack() {
       this.$router.push('/my-recipes')
@@ -48,9 +51,6 @@ export default {
     handleRecipeDeletion() {
       this.$router.push('/my-recipes')
     }
-  },
-  created() {
-    this.fetchRecipe()
   }
 }
 </script>

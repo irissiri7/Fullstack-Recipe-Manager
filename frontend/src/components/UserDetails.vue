@@ -117,6 +117,12 @@ import feedback from '../mixins/feedback.js'
 
 export default {
   mixins: [feedback],
+  props: {
+    currentProps: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       firstName: this.currentProps.user.firstName,
@@ -124,12 +130,6 @@ export default {
       foodPreferences: this.currentProps.user.foodPreferences,
       numberOfRecipes: null,
       showModal: false
-    }
-  },
-  props: {
-    currentProps: {
-      type: Object,
-      required: true
     }
   },
   computed: {
@@ -147,6 +147,9 @@ export default {
 
       return false
     }
+  },
+  created() {
+    this.getNumberOfRecipes()
   },
   methods: {
     constructFormData() {
@@ -194,9 +197,6 @@ export default {
         console.log(error.message)
       }
     }
-  },
-  created() {
-    this.getNumberOfRecipes()
   }
 }
 </script>

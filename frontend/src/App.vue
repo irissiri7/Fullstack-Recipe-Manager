@@ -33,6 +33,9 @@ export default {
       timeToCook: ['About 15 min', 'About 30 min', '60 min or more']
     }
   },
+  created() {
+    this.$store.dispatch('autoSignIn')
+  },
   methods: {
     // corruptToken() {
     //   console.log('corrupt token')
@@ -42,9 +45,6 @@ export default {
     //   console.log('corrupt refresh token')
     //   this.$store.state.refreshToken = '123'
     // }
-  },
-  created() {
-    this.$store.dispatch('autoSignIn')
   }
 }
 </script>

@@ -79,12 +79,8 @@
 
 <script>
 import client from '../util/Client.js'
+
 export default {
-  data() {
-    return {
-      showModal: false
-    }
-  },
   props: {
     showCompact: {
       type: Boolean,
@@ -95,6 +91,11 @@ export default {
     }
   },
   emits: ['deleted-recipe'],
+  data() {
+    return {
+      showModal: false
+    }
+  },
   computed: {
     src() {
       return this.recipe.imageURL

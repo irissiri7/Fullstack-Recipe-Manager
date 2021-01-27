@@ -156,6 +156,12 @@ dotenv.config()
 export default {
   inject: ['recipeDetailOptions'],
   mixins: [feedback],
+  props: {
+    initialRecipeData: {
+      type: Object,
+      default: null
+    }
+  },
   data() {
     return {
       recipe: {
@@ -172,12 +178,6 @@ export default {
       },
       ingredient: '',
       showModal: false
-    }
-  },
-  props: {
-    initialRecipeData: {
-      type: Object,
-      default: null
     }
   },
   computed: {
@@ -224,6 +224,18 @@ export default {
           return true
         else return false
       }
+    }
+  },
+  created() {
+    if (this.initialRecipeData) {
+      this.recipe._id = this.initialRecipeData._id
+      this.recipe.title = this.initialRecipeData.title
+      this.recipe.ingredients = this.initialRecipeData.ingredients.slice()
+      this.recipe.imageURL = this.initialRecipeData.imageURL
+      this.recipe.description = this.initialRecipeData.description
+      this.recipe.details.categories = this.initialRecipeData.details.categories
+      this.recipe.details.qualities = this.initialRecipeData.details.qualities
+      this.recipe.details.timeToCook = this.initialRecipeData.details.timeToCook
     }
   },
   methods: {
@@ -306,18 +318,6 @@ export default {
         console.log(error)
         this.displayFeedback('Could not delete recipe', 'error')
       }
-    }
-  },
-  created() {
-    if (this.initialRecipeData) {
-      this.recipe._id = this.initialRecipeData._id
-      this.recipe.title = this.initialRecipeData.title
-      this.recipe.ingredients = this.initialRecipeData.ingredients.slice()
-      this.recipe.imageURL = this.initialRecipeData.imageURL
-      this.recipe.description = this.initialRecipeData.description
-      this.recipe.details.categories = this.initialRecipeData.details.categories
-      this.recipe.details.qualities = this.initialRecipeData.details.qualities
-      this.recipe.details.timeToCook = this.initialRecipeData.details.timeToCook
     }
   }
 }

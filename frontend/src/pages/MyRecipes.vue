@@ -48,10 +48,6 @@ export default {
     CursiveHeader,
     RecipeFilters
   },
-  async created() {
-    await this.fetchData()
-    this.initialFetch = true
-  },
   data() {
     return {
       initialFetch: false,
@@ -63,6 +59,10 @@ export default {
         timeToCook: ''
       }
     }
+  },
+  async created() {
+    await this.fetchData()
+    this.initialFetch = true
   },
   methods: {
     addRecipe() {

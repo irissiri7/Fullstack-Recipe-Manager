@@ -25,17 +25,17 @@ export default {
       initialRecipeData: null
     }
   },
-  methods: {
-    goBack() {
-      this.$router.go(-1)
-    }
-  },
   async created() {
     try {
       const recipe = await client.getRecipeById(this.$route.params.id)
       this.initialRecipeData = recipe
     } catch (error) {
       console.log(error)
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 }

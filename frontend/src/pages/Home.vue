@@ -58,6 +58,10 @@ export default {
         : 'https://spoonacular.com/'
     }
   },
+  created() {
+    this.fetchData()
+    this.fetchImage()
+  },
   methods: {
     async fetchData() {
       try {
@@ -78,10 +82,6 @@ export default {
         console.log(error)
       }
     }
-  },
-  created() {
-    this.fetchData()
-    this.fetchImage()
   }
 }
 </script>

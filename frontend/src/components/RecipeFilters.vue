@@ -55,7 +55,6 @@
 
 <script>
 export default {
-  emits: ['filtering'],
   inject: ['recipeDetailOptions'],
   props: {
     selectedFilters: {
@@ -63,17 +62,18 @@ export default {
       required: true
     }
   },
-  created() {
-    this.selectedCategories = this.selectedFilters.categories
-    this.selectedQualities = this.selectedFilters.qualities
-    this.selectedTimeToCook = this.selectedFilters.timeToCook
-  },
+  emits: ['filtering'],
   data() {
     return {
       selectedCategories: [],
       selectedQualities: [],
       selectedTimeToCook: ''
     }
+  },
+  created() {
+    this.selectedCategories = this.selectedFilters.categories
+    this.selectedQualities = this.selectedFilters.qualities
+    this.selectedTimeToCook = this.selectedFilters.timeToCook
   },
   methods: {
     filtering() {

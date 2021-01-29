@@ -1,7 +1,7 @@
 <template>
   <base-card>
     <transition name="feedback">
-      <base-feedback-card v-if="feedback.message" :style="feedback.style">
+      <base-feedback-card v-if="feedback.message" :mode="feedback.mode">
         {{ feedback.message }}
       </base-feedback-card>
     </transition>

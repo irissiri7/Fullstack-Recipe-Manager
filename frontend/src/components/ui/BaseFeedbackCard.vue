@@ -1,5 +1,5 @@
 <template>
-  <div class="box" :class="style">
+  <div class="box" :class="mode">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    style: {
+    mode: {
       type: String,
       default: 'informational'
     }

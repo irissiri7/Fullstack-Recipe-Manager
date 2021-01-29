@@ -3,18 +3,18 @@ export default {
     return {
       feedback: {
         message: undefined,
-        style: undefined
+        mode: undefined
       }
     }
   },
   methods: {
-    displayFeedback(message, style) {
+    displayFeedback(message, mode) {
       window.scrollTo(0, 0)
       this.feedback.message = message
-      this.feedback.style = style
+      this.feedback.mode = mode
       setTimeout(() => {
         this.feedback.message = undefined
-        this.feedback.style = undefined
+        this.feedback.mode = undefined
       }, 3000)
     }
   }

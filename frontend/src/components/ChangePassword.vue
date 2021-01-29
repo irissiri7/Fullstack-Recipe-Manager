@@ -1,5 +1,5 @@
 <template>
-  <base-feedback-card v-if="feedback.message" :style="feedback.style">
+  <base-feedback-card v-if="feedback.message" :mode="feedback.mode">
     {{ feedback.message }}
   </base-feedback-card>
   <form class="ui form" @submit.prevent="changePassword">

@@ -1,15 +1,22 @@
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 
 import router from './router'
 import store from './store'
 import App from './App.vue'
 
+//REGULAR COMPONENTS
 import BaseCard from './components/ui/BaseCard.vue'
 import BaseButton from './components/ui/BaseButton.vue'
-import BaseFeedbackCard from './components/ui/BaseFeedbackCard.vue'
-import BaseModal from './components/ui/BaseModal.vue'
 import BaseImage from './components/ui/BaseImage.vue'
 import BaseLink from './components/ui/BaseLink.vue'
+
+//ASYNC COMPONENTS (only loaded when needed)
+const BaseModal = defineAsyncComponent(() =>
+  import('./components/ui/BaseModal.vue')
+)
+const BaseFeedbackCard = defineAsyncComponent(() =>
+  import('./components/ui/BaseFeedbackCard.vue')
+)
 
 const app = createApp(App)
 

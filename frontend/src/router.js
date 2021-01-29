@@ -1,14 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+//Always load
 import Home from './pages/Home.vue'
 import MyRecipes from './pages/MyRecipes.vue'
-import MyProfile from './pages/MyProfile.vue'
-import NotFound from './pages/NotFound.vue'
-import Authentication from './pages/Authentication.vue'
 import AddRecipe from './pages/AddRecipe.vue'
 import EditRecipe from './pages/EditRecipe.vue'
 import RecipeDetail from './pages/RecipeDetail.vue'
-import AutoSignedOut from './pages/AutoSignedOut.vue'
+
+//Load when needed
+const Authentication = () => import('./pages/Authentication.vue')
+const AutoSignedOut = () => import('./pages/AutoSignedOut.vue')
+const NotFound = () => import('./pages/NotFound.vue')
+const MyProfile = () => import('./pages/MyProfile.vue')
 
 import store from './store.js'
 

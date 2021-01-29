@@ -54,7 +54,7 @@ export default {
 @import './assets/keyframes.css';
 
 :root {
-  --main-orange: #f1a80a;
+  --main-orange: #f1a80ae0;
   --main-coffee: #30292f;
   --main-pine: #63a088;
   --main-alert: #e3655b;

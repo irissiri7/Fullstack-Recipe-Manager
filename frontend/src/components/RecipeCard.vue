@@ -144,6 +144,9 @@ export default {
 h2 {
   word-break: break-word;
 }
+.ui.circular.label {
+  margin-bottom: 0.2rem;
+}
 .icon-btn-cnt {
   display: flex;
   flex-wrap: nowrap;

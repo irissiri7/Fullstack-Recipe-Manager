@@ -55,10 +55,10 @@ a {
 }
 
 .ui.icon.button {
-  background-color: var(--main-orange);
+  background-color: transparent;
 }
 .sign.out.alternate.icon.large {
-  background-color: var(--main-orange);
+  background-color: transparent;
 }
 
 a:hover,

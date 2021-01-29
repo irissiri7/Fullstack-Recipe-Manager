@@ -22,6 +22,10 @@ h1 {
   margin: 0 0 0 10px;
   font-family: Rochester, sans-serif;
   font-size: 40px;
+  color: var(--main-coffee);
+}
+i {
+  color: var(--main-coffee);
 }
 
 @media screen and (max-width: 768px) {

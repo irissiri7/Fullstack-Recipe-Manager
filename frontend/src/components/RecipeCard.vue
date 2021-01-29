@@ -170,7 +170,7 @@ h2 {
   margin: 0;
   padding: 10px 0;
   height: 50%;
-  background-image: linear-gradient(to bottom, transparent, white);
+  background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
 }
 
 .flex-cnt {

@@ -81,9 +81,8 @@ a {
 }
 
 a:hover {
-  background-color: #eeb63d;
   color: var(--main-coffee);
-  border-bottom: none;
+  border-bottom: 1px solid var(--main-coffee);
 }
 
 /* Animating drop down menu */

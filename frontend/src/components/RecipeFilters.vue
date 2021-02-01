@@ -2,49 +2,48 @@
   <base-card>
     <h2>Select filters</h2>
     <h4>Category</h4>
-    <div class="field">
-      <div
-        class="ui checkbox"
-        v-for="category in recipeDetailOptions.categories"
-        :key="category"
-      >
-        <input
-          type="checkbox"
-          :value="category.toLowerCase()"
-          v-model="selectedCategories"
-          @change="filtering"
-        />
-        <label>{{ category }}</label>
-      </div>
-      <h4>Quality</h4>
-      <div
-        class="ui checkbox"
-        v-for="quality in recipeDetailOptions.qualities"
-        :key="quality"
-      >
-        <input
-          type="checkbox"
-          :value="quality.toLowerCase()"
-          v-model="selectedQualities"
-          @change="filtering"
-        />
-        <label>{{ quality }}</label>
-      </div>
-      <h4>Time to cook</h4>
-      <div
-        class="ui radio checkbox"
-        v-for="option in recipeDetailOptions.timeToCook"
-        :key="option"
-      >
-        <input
-          type="radio"
-          :value="option"
-          v-model="selectedTimeToCook"
-          @change="filtering"
-        />
-        <label>{{ option }}</label>
-      </div>
+    <div
+      class="ui checkbox"
+      v-for="category in recipeDetailOptions.categories"
+      :key="category"
+    >
+      <input
+        type="checkbox"
+        :value="category.toLowerCase()"
+        v-model="selectedCategories"
+        @change="filtering"
+      />
+      <label>{{ category }}</label>
     </div>
+    <h4>Quality</h4>
+    <div
+      class="ui checkbox"
+      v-for="quality in recipeDetailOptions.qualities"
+      :key="quality"
+    >
+      <input
+        type="checkbox"
+        :value="quality.toLowerCase()"
+        v-model="selectedQualities"
+        @change="filtering"
+      />
+      <label>{{ quality }}</label>
+    </div>
+    <h4>Time to cook</h4>
+    <div
+      class="ui radio checkbox"
+      v-for="option in recipeDetailOptions.timeToCook"
+      :key="option"
+    >
+      <input
+        type="radio"
+        :value="option"
+        v-model="selectedTimeToCook"
+        @change="filtering"
+      />
+      <label>{{ option }}</label>
+    </div>
+
     <div class="flex clear-btn-cnt">
       <base-button class="compact mini alert" @click="clearFilters"
         >Clear filters</base-button

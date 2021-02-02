@@ -6,8 +6,8 @@
     <base-card>
       <p>Recipe Manager is your own personal recipe book, put online.</p>
       <p>
-        We make it super easy for you to add, edit and delete your favourit
-        recipes, all in one place.
+        We make it super easy for you to add and edit all your favourit recipes,
+        all in one place.
       </p>
       <p>
         No more sticky and greasy note books in the kitchen.

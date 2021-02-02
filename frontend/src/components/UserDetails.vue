@@ -33,7 +33,7 @@
             type="text"
             name="first-name"
             placeholder="First Name"
-            v-model="firstName"
+            v-model.trim="firstName"
           />
         </div>
         <div class="field">
@@ -41,7 +41,7 @@
             type="text"
             name="last-name"
             placeholder="Last Name"
-            v-model="lastName"
+            v-model.trim="lastName"
           />
         </div>
       </div>
@@ -123,6 +123,8 @@ export default {
       required: true
     }
   },
+  /* eslint-disable vue/custom-event-name-casing */
+  emits: ['userUpdated'],
   data() {
     return {
       firstName: this.currentProps.user.firstName,
@@ -160,7 +162,6 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName
       }
-      //must be stringified?!
       formData.append('user-details', JSON.stringify(newData))
       if (this.currentProps.profilePictureFile) {
         formData.append('image', this.currentProps.profilePictureFile)
@@ -172,6 +173,7 @@ export default {
         const userData = this.constructFormData()
         await client.updateUserDetails(userData)
         this.displayFeedback('Changes saved!')
+        this.$emit('userUpdated')
       } catch (error) {
         this.displayFeedback('Could not update user information', 'error')
         console.log(error)

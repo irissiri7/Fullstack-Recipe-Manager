@@ -55,6 +55,7 @@
         v-if="user"
         :is="currentComponent"
         :currentProps="currentProps"
+        @user-updated="onUserUpdate"
       ></component>
     </base-card>
   </div>
@@ -125,6 +126,10 @@ export default {
         this.displayFeedback('Could not fetch user information', 'error')
         console.log(error)
       }
+    },
+    onUserUpdate() {
+      this.fetchData()
+      this.profilePictureFile = null
     }
   }
 }

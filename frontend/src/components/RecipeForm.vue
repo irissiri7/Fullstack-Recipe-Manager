@@ -78,32 +78,36 @@
     <h3 class="ui dividing header">Details</h3>
     <h4>Category</h4>
     <div class="field">
-      <div
-        class="ui checkbox"
-        v-for="category in recipeDetailOptions.categories"
-        :key="category"
-      >
-        <input
-          type="checkbox"
-          :value="category.toLowerCase()"
-          v-model="recipe.details.categories"
-        />
-        <label>{{ category }}</label>
+      <div class="grid">
+        <div
+          class="ui checkbox"
+          v-for="category in recipeDetailOptions.categories"
+          :key="category"
+        >
+          <input
+            type="checkbox"
+            :value="category.toLowerCase()"
+            v-model="recipe.details.categories"
+          />
+          <label>{{ category }}</label>
+        </div>
       </div>
     </div>
     <h4>Quality</h4>
     <div class="field">
-      <div
-        class="ui checkbox"
-        v-for="quality in recipeDetailOptions.qualities"
-        :key="quality"
-      >
-        <input
-          type="checkbox"
-          :value="quality.toLowerCase()"
-          v-model="recipe.details.qualities"
-        />
-        <label>{{ quality }}</label>
+      <div class="grid">
+        <div
+          class="ui checkbox"
+          v-for="quality in recipeDetailOptions.qualities"
+          :key="quality"
+        >
+          <input
+            type="checkbox"
+            :value="quality.toLowerCase()"
+            v-model="recipe.details.qualities"
+          />
+          <label>{{ quality }}</label>
+        </div>
       </div>
     </div>
     <h4>Time to cook</h4>
@@ -333,7 +337,7 @@ ul {
   width: 100%;
 }
 div.ui.checkbox {
-  margin-right: 5px;
+  margin: 0px 5px 5px 0px;
 }
 
 /* Custom styles for trash icon (remove ingredient) */
@@ -392,5 +396,10 @@ div.ui.checkbox {
 
 .twelve.wide.field {
   margin-bottom: 5px !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
 }
 </style>

@@ -389,4 +389,8 @@ div.ui.checkbox {
 .feedback-leave-active {
   animation: fade 0.3s ease reverse;
 }
+
+.twelve.wide.field {
+  margin-bottom: 5px !important;
+}
 </style>

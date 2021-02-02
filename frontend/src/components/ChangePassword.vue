@@ -10,8 +10,9 @@
         name="new-password"
         placeholder="New Password"
         minlength="6"
+        @keydown.space.prevent
         required
-        v-model="newPassword"
+        v-model.trim="newPassword"
       />
     </div>
     <div class="field">
@@ -21,8 +22,9 @@
         name="new-password-confirmed"
         placeholder="Confirmed Password"
         minlength="6"
+        @keydown.space.prevent
         required
-        v-model="confirmedPassword"
+        v-model.trim="confirmedPassword"
       />
     </div>
     <div class="field">
@@ -44,6 +46,8 @@ export default {
       required: false
     }
   },
+  /* eslint-disable vue/custom-event-name-casing */
+  emits: ['userUpdated'],
   data() {
     return {
       newPassword: '',
@@ -67,6 +71,7 @@ export default {
         })
         this.displayFeedback('Password successfully changed!')
         this.emptyForm()
+        this.$emit('userUpdated')
       } catch (error) {
         this.displayFeedback(
           'Something went wrong, could not change password',

@@ -12,6 +12,7 @@
         type="email"
         name="new-email"
         placeholder="New Email"
+        @keydown.space.prevent
         v-model="newEmail"
         required
       />
@@ -22,6 +23,7 @@
         type="email"
         name="new-email-confirmed"
         placeholder="Confirmed Email"
+        @keydown.space.prevent
         v-model="confirmedEmail"
         required
       />
@@ -43,6 +45,8 @@ export default {
       required: false
     }
   },
+  /* eslint-disable vue/custom-event-name-casing */
+  emits: ['userUpdated'],
   data() {
     return {
       newEmail: '',
@@ -70,6 +74,7 @@ export default {
         })
         this.displayFeedback('Email successfully changed!')
         this.emptyForm()
+        this.$emit('userUpdated')
       } catch (error) {
         this.displayFeedback(
           'Something went wrong, could not change email',

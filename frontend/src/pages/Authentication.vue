@@ -16,6 +16,7 @@
           type="email"
           name="email"
           placeholder="name@email.com"
+          @keydown.space.prevent
           required
         />
       </div>
@@ -27,6 +28,7 @@
           placeholder="Password"
           v-model="password"
           minlength="6"
+          @keydown.space.prevent
           required
         />
       </div>
@@ -37,6 +39,7 @@
           type="password"
           name="confirmedPassword"
           placeholder="Confirm Password"
+          @keydown.space.prevent
           minlength="6"
           required
         />

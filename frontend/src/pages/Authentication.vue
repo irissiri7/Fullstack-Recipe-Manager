@@ -73,7 +73,7 @@
         </p>
         <br />
         <p>
-          By creating an account you agree to us saving information related to
+          By creating an account you agree that we save information related to
           you as a user. You can delete your account at any time.
         </p>
         <br />

@@ -55,8 +55,29 @@
       <div class="field" v-if="mode == 'sign up'">
         <div class="ui checkbox">
           <input type="checkbox" name="example" v-model="acceptsTermsOfUse" />
-          <label>I agree to terms of use</label>
+          <label
+            >I agree to
+            <base-button
+              type="button"
+              class="link"
+              @click="showTerms = !showTerms"
+              >terms of use</base-button
+            >
+          </label>
         </div>
+      </div>
+      <div class="field" v-if="showTerms && mode == 'sign up'">
+        <p>
+          Recipe Manager is a website created primarily for educational
+          purposes. It might be taken down in the near future.
+        </p>
+        <br />
+        <p>
+          By creating an account you agree to us saving information related to
+          you as a user. You can delete your account at any time.
+        </p>
+        <br />
+        <p>Recipe Manager is 100% free of charge.</p>
       </div>
       <div class="field" v-if="mode == 'sign up'">
         <base-button type="submit" :class="{ disabled: !validForm }">
@@ -69,7 +90,10 @@
         </base-button>
       </div>
       <div class="field" v-if="mode == 'sign up' || mode == 'reset password'">
-        <base-button type="button" class="link" @click="mode = 'sign in'"
+        <base-button
+          type="button"
+          class="link"
+          @click=";(mode = 'sign in'), (showTerms = false)"
           >Back to sign in</base-button
         >
       </div>
@@ -108,6 +132,7 @@ export default {
       mode: 'sign in',
       email: '',
       password: '',
+      showTerms: false,
       confirmedPassword: null,
       acceptsTermsOfUse: false
     }

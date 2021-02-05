@@ -8,7 +8,6 @@ import App from './App.vue'
 import BaseCard from './components/ui/BaseCard.vue'
 import BaseButton from './components/ui/BaseButton.vue'
 import BaseImage from './components/ui/BaseImage.vue'
-import BaseLink from './components/ui/BaseLink.vue'
 
 //ASYNC COMPONENTS (only loaded when needed)
 const BaseModal = defineAsyncComponent(() =>
@@ -28,6 +27,5 @@ app.component('base-button', BaseButton)
 app.component('base-feedback-card', BaseFeedbackCard)
 app.component('base-modal', BaseModal)
 app.component('base-image', BaseImage)
-app.component('base-link', BaseLink)
 
 app.mount('#app')

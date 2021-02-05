@@ -98,7 +98,9 @@ main {
 ul {
   list-style: none;
 }
-
+a {
+  font-weight: 700;
+}
 /* Stick TheNavigation to top of screen */
 .stick {
   position: fixed;

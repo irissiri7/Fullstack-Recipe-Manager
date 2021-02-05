@@ -11,4 +11,18 @@
 export default {}
 </script>
 
-<style></style>
+<style scoped>
+a {
+  font-weight: 700;
+  color: var(--main-coffee);
+  border-bottom: 1px solid var(--main-coffee);
+}
+
+a:hover {
+  color: var(--main-orange);
+  border-bottom: 1px solid var(--main-orange);
+}
+a:visited {
+  color: none;
+}
+</style>

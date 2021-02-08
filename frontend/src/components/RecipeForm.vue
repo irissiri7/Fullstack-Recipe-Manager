@@ -249,7 +249,7 @@ export default {
         this.ingredient = ''
       }
       if (this.ingredient != '') {
-        this.recipe.ingredients.unshift(this.ingredient)
+        this.recipe.ingredients.push(this.ingredient)
         this.ingredient = ''
       }
     },

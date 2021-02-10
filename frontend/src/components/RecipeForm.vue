@@ -33,6 +33,7 @@
         type="file"
         name="image"
         ref="file"
+        accept="image/jpg, image/jpeg, image/x-png, "
         id="file-uploader"
         @change="handleFileUpload"
       />

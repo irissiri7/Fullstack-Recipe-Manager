@@ -26,7 +26,7 @@
     </div>
     <h3 class="ui dividing header">Image</h3>
     <div class="field">
-      <base-image :src="src" alt="dish" ref="image" />
+      <base-image :src="src" alt="dish" ref="image" height="20" />
     </div>
     <div class="field" id="file-upload-cnt">
       <input

@@ -26,7 +26,7 @@
     </div>
     <h3 class="ui dividing header">Image</h3>
     <div class="field">
-      <base-image :src="src" alt="dish" ref="image" height="20" />
+      <base-image :src="src" alt="dish" ref="image" :height="20" />
     </div>
     <div class="field" id="file-upload-cnt">
       <input
@@ -138,13 +138,15 @@
           Delete
         </base-button>
       </div>
-      <div v-else>
-        <base-button @click.prevent="addRecipe">
-          Add
-        </base-button>
-        <base-button class="alert" @click.prevent="discardRecipe">
-          Discard
-        </base-button>
+      <div v-else class="flex right-corner">
+        <div>
+          <base-button @click.prevent="addRecipe">
+            Add
+          </base-button>
+          <base-button class="alert" @click.prevent="discardRecipe">
+            Discard
+          </base-button>
+        </div>
       </div>
     </div>
   </form>
@@ -287,6 +289,7 @@ export default {
     },
     discardRecipe() {
       this.ingredient = ''
+      this.$refs.file.value = ''
       this.recipe = {
         title: '',
         imageURL: '',
@@ -402,5 +405,9 @@ div.ui.checkbox {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+}
+
+.right-corner {
+  justify-content: flex-end;
 }
 </style>

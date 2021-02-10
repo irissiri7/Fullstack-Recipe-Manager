@@ -20,7 +20,7 @@
         @filtering="handleFiltering"
       ></recipe-filters>
 
-      <li v-for="recipe in recipes" :key="recipe._id">
+      <li class="recipe-li-item" v-for="recipe in recipes" :key="recipe._id">
         <recipe-card
           :recipe="recipe"
           show-compact
@@ -102,6 +102,9 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.recipe-li-item {
+  min-width: 100%;
 }
 
 /* Transitions/Animations */

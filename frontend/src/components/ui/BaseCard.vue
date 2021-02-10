@@ -15,5 +15,6 @@ export default {}
   margin: 1rem auto 3rem;
   padding: 2rem;
   background-color: white;
+  min-width: 100%;
 }
 </style>

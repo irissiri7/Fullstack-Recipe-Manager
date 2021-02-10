@@ -57,6 +57,9 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/' && store.getters.isAuth) {
     return next('/home')
   }
+  if (to.path === '/auto-signed-out' && store.getters.isAuth) {
+    return next('/home')
+  }
   to.meta.requiresAuth && !store.getters.isAuth ? next('/') : next()
 })
 

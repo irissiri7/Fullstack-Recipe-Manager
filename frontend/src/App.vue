@@ -35,17 +35,17 @@ export default {
   },
   created() {
     this.$store.dispatch('autoSignIn')
-  },
-  methods: {
-    // corruptToken() {
-    //   console.log('corrupt token')
-    //   this.$store.state.token = '123'
-    // },
-    // corruptRefreshToken() {
-    //   console.log('corrupt refresh token')
-    //   this.$store.state.refreshToken = '123'
-    // }
   }
+  // methods: {
+  //   corruptToken() {
+  //     console.log('corrupt token')
+  //     this.$store.state.token = '123'
+  //   },
+  //   corruptRefreshToken() {
+  //     console.log('corrupt refresh token')
+  //     this.$store.state.refreshToken = '123'
+  //   }
+  // }
 }
 </script>
 

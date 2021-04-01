@@ -2,7 +2,6 @@ import express from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import cors from 'cors'
-import bodyParser from 'body-parser'
 import compression from 'compression'
 
 // import path from 'path'
@@ -27,10 +26,9 @@ const app = express()
 // Apply middleware packages
 app.use(morgan('common'))
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(express.json())
 app.use(compression())
-//Modifying helmet to set csp headers that allow images from ex firebase storage and to fetch data from spoonacular API
+//Modifying helmet to set csp headers that allow images from ex firebase storage
 app.use(
   helmet.contentSecurityPolicy({
     directives: {

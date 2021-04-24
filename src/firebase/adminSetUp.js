@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-import serviceKey from './service-account-key.js'
+import serviceKey from './serviceKey.js'
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceKey),
